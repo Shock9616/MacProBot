@@ -17,9 +17,9 @@ loader = lb.Loader()
 
 
 @loader.command
-class CxRating(
+class CxCheck(
     lb.SlashCommand,
-    name="cx_rating",
+    name="cxcheck",
     description="Get the searched game's star rating on the CrossOver Compatibility Database",
 ):
     # Options
