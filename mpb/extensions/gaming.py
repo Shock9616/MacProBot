@@ -104,4 +104,10 @@ class CxRating(
             inline=False,
         )
 
+        embed.add_field(  # pyright:ignore
+            name="Page Link",
+            value=game_page_url,
+            inline=False,
+        )
+
         _ = await ctx.respond("", embed=embed)
