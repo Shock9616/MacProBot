@@ -72,9 +72,8 @@ class CxRating(
                 if star["class"] == ["active"]:
                     star_count += 1
             except KeyError:
-                pass
+                break
 
-        rating_desc = "Unkown"
         match star_count:
             case 1:
                 rating_desc = "Will Not Install"
@@ -87,7 +86,7 @@ class CxRating(
             case 5:
                 rating_desc = "Runs Great"
             case _:
-                pass
+                rating_desc = "Unkown"
 
         embed = hk.Embed(
             title=db_name,  # pyright:ignore
