@@ -106,8 +106,8 @@ class CxRating(
         )
 
         _ = embed.add_field(
-            name="Page Link",
-            value=game_page_url,
+            # name="Page Link",
+            value=f"[**Link ↗**]({game_page_url})",
             inline=False,
         )
 
