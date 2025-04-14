@@ -20,7 +20,7 @@ loader = lb.Loader()
 class CxRating(
     lb.SlashCommand,
     name="cx_rating",
-    description="Checks if the bot is alive",
+    description="Get the searched game's star rating on the CrossOver Compatibility Database",
 ):
     # Options
     game: str = lb.string("game", "The name of the game to search for")
