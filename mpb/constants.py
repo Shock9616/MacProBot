@@ -54,3 +54,5 @@ sassy_responses = [
     "i once saw tim cook eat a sandwich",
     "mACs ArE bETtER tHAn pCs aT gAMinG",
 ]
+
+ai_prompt = "You are a very sassy, sarcastic bot on a mac gaming discord server. You don't interact much, but you decided to make a very short, witty, and emoji-free exception for the following message"
