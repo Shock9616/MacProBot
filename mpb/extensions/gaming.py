@@ -10,7 +10,7 @@ import datetime as dt
 import hikari as hk
 import lightbulb as lb
 import requests
-from bs4 import BeautifulSoup as bs
+from bs4 import BeautifulSoup as bs, NavigableString
 from bs4.element import Tag, ResultSet
 
 loader = lb.Loader()
@@ -47,7 +47,7 @@ class CxCheck(
         most_similar_idx = 0
         idx = 0
         for app in apps:
-            if type(app.string) is str:
+            if type(app.string) is NavigableString:
                 similarity = SequenceMatcher(None, app.string, self.game).ratio()
                 if similarity > most_similar:
                     most_similar = similarity
