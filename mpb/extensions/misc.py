@@ -43,7 +43,6 @@ class UpdateDxmt(
 class EnvironmentVariables(
     lb.SlashCommand,
     name="environmentvariables",
-    aliases=["ev"],
     description="Reply with some useful environment variables for Mac gaming",
 ):
     @lb.invoke
