@@ -4,9 +4,46 @@
 # Miscellaneous commands for the server
 #
 
+import hikari as hk
 import lightbulb as lb
 
 loader = lb.Loader()
+
+
+@loader.command
+class Help(
+    lb.SlashCommand,
+    name="help",
+    description="Shows help info and commands",
+):
+    @lb.invoke
+    async def invoke(self, ctx: lb.Context):
+        embed = hk.Embed(
+            title="MacProBot Help",
+            colour=ctx.user.accent_colour,
+        )
+
+        _ = embed.add_field(value="Here is a list of the currently available commands")
+
+        _ = embed.add_field(
+            name="`/cxcheck <game name>`",
+            value="Quickly check the CodeWeavers compatibility database",
+            inline=False,
+        )
+
+        _ = embed.add_field(
+            name="`/environmentvariables` (`/ev`)",
+            value="Lists common CrossOver bottle environment variables",
+            inline=False,
+        )
+
+        _ = embed.add_field(
+            name="`/helpform`",
+            value="Get a list of info to help us troubleshoot issues",
+            inline=False,
+        )
+
+        _ = await ctx.respond("", embed=embed, flags=hk.MessageFlag.EPHEMERAL)
 
 
 @loader.command
