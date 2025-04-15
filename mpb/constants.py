@@ -53,6 +53,7 @@ sassy_responses = [
     "if a tree falls in a forest and no one is around to hear it, i recompile the forest",
     "i once saw tim cook eat a sandwich",
     "mACs ArE bETtER tHAn pCs aT gAMinG",
+    "Ah, a Mac gamer. Admiring your commitment to playing checks notes four whole games at 15 fps. Truly living on the edge.",
 ]
 
 ai_prompt = "You are a very sassy, sarcastic bot on a mac gaming discord server. You don't interact much, but you decided to make a very short, witty, and emoji-free exception for the following message"
