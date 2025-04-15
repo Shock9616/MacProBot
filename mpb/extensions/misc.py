@@ -48,7 +48,8 @@ class EnvironmentVariables(
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
         _ = await ctx.respond(
-            "**Metal HUD**\n\n"
+            "# Environment Variables\n\n"
+            + "**Metal HUD**\n\n"
             + "__HUD ON__\n"
             + "/bin/launchctl setenv MTL_HUD_ENABLED 1\n\n"
             + "__HUD OFF__\n"
@@ -73,7 +74,8 @@ class EnvironmentVariablesAlias(
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
         _ = await ctx.respond(
-            "**Metal HUD**\n\n"
+            "# Environment Variables\n\n"
+            + "**Metal HUD**\n\n"
             + "__HUD ON__\n"
             + "/bin/launchctl setenv MTL_HUD_ENABLED 1\n\n"
             + "__HUD OFF__\n"
