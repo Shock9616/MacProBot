@@ -86,11 +86,15 @@ class Support1(
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
         _ = await ctx.respond(
-            ":red_circle: **Guidelines for video recording:**\n"
-            + "*If possible, please include a screen recording showing:*\n"
+            ":red_circle: **Recording Guidelines for Support**: *If possible, please include a screen recording that shows:*\n"
             + "1. Opening CrossOver and your bottle settings\n"
             + "2. Launching the game platform (Steam, GOG, Epic, etc.)\n"
-            + "3. Starting the game and any errors that appear\n"
+            + "3. Starting the game and any errors that appear\n\n"
+            + ":bulb: **Tip**: *You can use QuickTime Player to record your screen—especially helpful if the issue happens in-game:*\n"
+            + "1. Open QuickTime Player and go to `File`\n"
+            + "2. Select `New Screen Recording` or press `⌘ + ⌃ + N`\n"
+            + "3. If you have multiple displays, choose which one to record\n"
+            + "4. Press `⌘ + ⌃ + Esc` to stop recording\n"
         )
 
 
