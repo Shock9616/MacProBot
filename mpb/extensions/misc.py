@@ -32,14 +32,26 @@ class Help(
         )
 
         _ = embed.add_field(
-            name="`/environmentvariables` (`/ev`)",
+            name="`/ev`",
             value="Lists common CrossOver bottle environment variables",
             inline=False,
         )
 
         _ = embed.add_field(
             name="`/helpform`",
-            value="Get a list of info to help us troubleshoot issues",
+            value="Lists helpful info for troubleshooting issues",
+            inline=False,
+        )
+
+        _ = embed.add_field(
+            name="`/metalhud`",
+            value="Lists some helpful utilities/instructions for the Metal HUD",
+            inline=False,
+        )
+
+        _ = embed.add_field(
+            name="`/updatedxmt`",
+            value="Link to a tutorial and download for updating DXMT",
             inline=False,
         )
 
