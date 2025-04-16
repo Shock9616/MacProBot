@@ -1,6 +1,6 @@
 # MacProBot
 
-A custom Discord bot for the official MacProTips Discord server
+The official discord bot for the Mac Gaming discord server hosted by MacProTips!
 
 ## Deployment
 
@@ -15,8 +15,16 @@ works and will be added in the future.
 - `/cxcheck <game name>`
   - Searches the CrossOver compatibility database and retrieves the current
     compatibility rating for the searched game
-- `/environmentvariables` (`/ev`)
+- `/ev` (environment variables)
   - Lists common CrossOver bottle environment variables
 - `/helpform`
   - Lists some common info that is helpful for troubleshooting issues with Mac
     gaming
+- `/metalhud`
+  - Lists some helpful utilities/instructions for the Metal HUD
+- `/updatedxmt`
+  - Gives a link for the MacProTips tutorial for updating DXMT in CrossOver, and
+    a link to download the latest version
+
+The bot also responds to pings and has a small chance to respond to any message
+in the server with a snarky AI generated response
