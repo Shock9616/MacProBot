@@ -78,6 +78,23 @@ class Support(
 
 
 @loader.command
+class Support1(
+    lb.SlashCommand,
+    name="support1",
+    description="Guidelines for video recording for troubleshooting",
+):
+    @lb.invoke
+    async def invoke(self, ctx: lb.Context):
+        _ = await ctx.respond(
+            ":red_circle: **Guidelines for video recording:**\n"
+            + "*If possible, please include a screen recording showing:*\n"
+            + "1. Opening CrossOver and your bottle settings\n"
+            + "2. Launching the game platform (Steam, GOG, Epic, etc.)\n"
+            + "3. Starting the game and any errors that appear\n"
+        )
+
+
+@loader.command
 class UpdateDxmt(
     lb.SlashCommand,
     name="updatedxmt",
