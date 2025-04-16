@@ -73,7 +73,10 @@ class UpdateDxmt(
 ):
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
-        _ = await ctx.respond("https://www.youtube.com/watch?v=5uIEd-6DqFM")
+        _ = await ctx.respond(
+            "- [**How to update DXMT inside CrossOver ↗**](https://www.youtube.com/watch?v=5uIEd-6DqFM)"
+            + "- [**Link to download the latest DXMT version ↗**](https://github.com/3Shain/dxmt/releases)"
+        )
 
 
 @loader.command
@@ -112,4 +115,21 @@ class EnvironmentVariables(
             + "# Tips\n"
             + "  1. `Fn + Shift + F9` to show/hide the Metal HUD once enabled\n"
             + "  2. `Fn + Shift + F7` to move the Metal HUD around the screen\n"
+        )
+
+
+@loader.command
+class MetalHud(
+    lb.SlashCommand,
+    name="metalhud",
+    description="Reply with instructions for setting up the MetalHUD toolbar shortcut",
+):
+    @lb.invoke
+    async def invoke(self, ctx: lb.Context):
+        _ = await ctx.respond(
+            "## [**Get MetalHUD shortcut here ↗**](https://discord.com/channels/1235385881586831451/1237550504846823425/1242331906146570351)"
+            + "**Instructions**: Unzip `FPS_Counter.zip` , move `FPS Counter.app` into Applications, then launch it. A gamepad icon will appear in top right toolbar. Enable FPS counter and restart CrossOver."
+            + "### Keyboard Shorcuts"
+            + "`Fn + Shift + F9` to show/hide the Metal HUD once enabled"
+            + "`Fn + Shift + F7` to move the Metal HUD around the screen"
         )
