@@ -17,11 +17,11 @@ works and will be added in the future.
     compatibility rating for the searched game
 - `/ev` (environment variables)
   - Lists common CrossOver bottle environment variables
-- `/helpform`
-  - Lists some common info that is helpful for troubleshooting issues with Mac
-    gaming
 - `/metalhud`
   - Lists some helpful utilities/instructions for the Metal HUD
+- `/support`
+  - Lists some common info that is helpful for troubleshooting issues with Mac
+    gaming
 - `/updatedxmt`
   - Gives a link for the MacProTips tutorial for updating DXMT in CrossOver, and
     a link to download the latest version

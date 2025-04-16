@@ -38,14 +38,14 @@ class Help(
         )
 
         _ = embed.add_field(
-            name="`/helpform`",
-            value="Lists helpful info for troubleshooting issues",
+            name="`/metalhud`",
+            value="Lists some helpful utilities/instructions for the Metal HUD",
             inline=False,
         )
 
         _ = embed.add_field(
-            name="`/metalhud`",
-            value="Lists some helpful utilities/instructions for the Metal HUD",
+            name="`/support`",
+            value="Lists helpful info for troubleshooting issues",
             inline=False,
         )
 
@@ -59,9 +59,9 @@ class Help(
 
 
 @loader.command
-class HelpForm(
+class Support(
     lb.SlashCommand,
-    name="helpform",
+    name="support",
     description="Reply with a quick form to fill out to help with game troubleshooting",
 ):
     @lb.invoke
