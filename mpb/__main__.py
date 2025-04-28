@@ -4,7 +4,7 @@
 # The launching point for the bot
 #
 
-from typing_extensions import Sequence
+from collections.abc import Sequence
 from . import extensions
 
 import hikari as hk
