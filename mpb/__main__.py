@@ -12,6 +12,7 @@ import lightbulb as lb
 import dotenv
 
 import os
+import random
 
 from .constants import sassy_responses
 
