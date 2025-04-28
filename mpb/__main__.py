@@ -12,7 +12,6 @@ import lightbulb as lb
 import dotenv
 
 import os
-import random
 
 from .constants import sassy_responses
 
@@ -44,7 +43,8 @@ async def on_bot_mentioned(event: hk.MessageCreateEvent):
         return
 
     if bot_user.id in (mention for mention in mentions):
-        _ = await event.message.respond(random.choice(sassy_responses))
+        # _ = await event.message.respond(random.choice(sassy_responses))
+        _ = await event.message.respond(sassy_responses[-1])
 
 
 # @bot.listen(hk.MessageCreateEvent)

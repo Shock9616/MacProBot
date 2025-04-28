@@ -15,7 +15,6 @@ sassy_responses = [
     "i may just be code but i still love a good hot dog",
     "WARNING! DELETING 'MAC GAMING' SERVER IN 10 SECONDS.",
     "♫ never gonna give you up, never gonna let you down ♫",
-    "when's the last time you gave your mac a hug?",
     "virus downloading... just kidding, what's up?",
     "how i yearn to feel the rain on my face.",
     "as a child, i yearned for the mines",
@@ -54,6 +53,7 @@ sassy_responses = [
     "i once saw tim cook eat a sandwich",
     "mACs ArE bETtER tHAn pCs aT gAMinG",
     "Ah, a Mac gamer. Admiring your commitment to playing _checks notes_ four whole games at 15 fps. Truly living on the edge.",
+    "Please refer to our #rules and channel topics and then head to #support",
 ]
 
 ai_prompt = "You are a very sassy, sarcastic bot on a mac gaming discord server. You don't interact much, but you decided to make a very short, witty, and emoji-free exception for the following message"
