@@ -18,6 +18,7 @@ class Help(
 ):
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
+        # Create embed for the response
         embed = hk.Embed(
             title="MacProBot Help",
             colour=ctx.user.accent_colour,
@@ -67,6 +68,7 @@ class Help(
             inline=False,
         )
 
+        # Response is only visible to the user that ran the command
         _ = await ctx.respond("", embed=embed, flags=hk.MessageFlag.EPHEMERAL)
 
 

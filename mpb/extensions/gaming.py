@@ -5,13 +5,14 @@
 #
 
 from difflib import SequenceMatcher
+from typing import cast
 import datetime as dt
 
 import hikari as hk
 import lightbulb as lb
 import requests
-from bs4 import BeautifulSoup as bs, NavigableString
-from bs4.element import Tag, ResultSet
+from bs4 import BeautifulSoup as bs
+from bs4.element import Tag, ResultSet, NavigableString
 
 from ..constants import glossary
 
@@ -66,7 +67,8 @@ class CxCheck(
         soup = bs(game_page.content, "html.parser")
 
         # Find current star rating
-        star_table: Tag = soup.find_all("ul", class_="star-rating-table")[0]
+        all_star_tables = soup.find_all("ul", class_="star-rating-table")
+        star_table: Tag = cast(Tag, all_star_tables[0])
 
         # Count stars
         star_count = 0
@@ -78,6 +80,7 @@ class CxCheck(
                 except KeyError:
                     break
 
+        # Set rating description based on star count
         match star_count:
             case 1:
                 rating_desc = "Will Not Install"
@@ -92,6 +95,7 @@ class CxCheck(
             case _:
                 rating_desc = "Unkown"
 
+        # Create embed for the response
         embed = hk.Embed(
             title=db_name,
             colour=ctx.user.accent_colour,
@@ -143,12 +147,15 @@ class Define(
 
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
+        # Ensure that the argument passed is a string
         if type(self.term) is not str:
             return
         else:
-            self.term = self.term.lower()
+            self.term = self.term.lower()  # Make search case-insensitive
 
+        # Respond with definition for the requested term if it exists
         if self.term in glossary.keys():
+            # Create embed for the response
             embed = hk.Embed(
                 title=glossary[self.term]["name"],
                 colour=ctx.user.accent_colour,

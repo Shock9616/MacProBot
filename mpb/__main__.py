@@ -19,6 +19,7 @@ from .constants import sassy_responses, ai_prompt
 
 _ = dotenv.load_dotenv()
 
+# Create/setup bot
 bot = hk.GatewayBot(
     token=os.environ["TOKEN"],
     intents=(hk.Intents.GUILD_MESSAGES | hk.Intents.MESSAGE_CONTENT),
@@ -28,6 +29,8 @@ client = lb.client_from_app(bot)
 
 @bot.listen(hk.StartingEvent)
 async def on_starting(_: hk.StartingEvent) -> None:
+    """Load bot extensions on startup"""
+
     await client.load_extensions_from_package(extensions)
 
     await client.start()
@@ -35,6 +38,8 @@ async def on_starting(_: hk.StartingEvent) -> None:
 
 @bot.listen(hk.MessageCreateEvent)
 async def on_bot_mentioned(event: hk.MessageCreateEvent):
+    """Respond with a randomly selected response when pinged"""
+
     if not event.message or event.is_bot:
         return
 
@@ -50,9 +55,14 @@ async def on_bot_mentioned(event: hk.MessageCreateEvent):
 
 @bot.listen(hk.MessageCreateEvent)
 async def on_message_created(event: hk.MessageCreateEvent):
-    if not event.message.content or event.is_bot:
+    """Occasionally use AI to respond to a message unprompted"""
+
+    if not event.message.content or event.is_bot:  # Ignore empty messages and bots
         return
+
     if len(event.message.content.split()) > 8 and random.randint(0, 100) == 69:
+        # Respond to ~1/100 messages that are more than 8 words long
+
         client = OpenAI(
             base_url="https://openrouter.ai/api/v1",
             api_key=os.environ["AI_API_KEY"],
