@@ -32,6 +32,12 @@ class Help(
         )
 
         _ = embed.add_field(
+            name="`/define <term>`",
+            value="Get a quick definition for the given Mac gaming related term",
+            inline=False,
+        )
+
+        _ = embed.add_field(
             name="`/ev`",
             value="Lists common CrossOver bottle environment variables",
             inline=False,
@@ -46,6 +52,12 @@ class Help(
         _ = embed.add_field(
             name="`/support`",
             value="Lists helpful info for troubleshooting issues",
+            inline=False,
+        )
+
+        _ = embed.add_field(
+            name="`/support1`",
+            value="Gives some helpful tips for recording footage for troubleshooting",
             inline=False,
         )
 

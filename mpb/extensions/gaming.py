@@ -13,6 +13,8 @@ import requests
 from bs4 import BeautifulSoup as bs, NavigableString
 from bs4.element import Tag, ResultSet
 
+from ..constants import glossary
+
 loader = lb.Loader()
 
 
@@ -38,7 +40,8 @@ class CxCheck(
             apps: ResultSet[Tag] = app_list.find_all("a")
         else:
             _ = await ctx.respond(
-                f"Sorry, I couldn't find {self.game} in the CrossOver Compatibility Database."
+                f"Sorry, I couldn't find {self.game} in the CrossOver Compatibility Database.",
+                flags=hk.MessageFlag.EPHEMERAL,
             )
             return
 
@@ -106,9 +109,68 @@ class CxCheck(
         )
 
         _ = embed.add_field(
-            # name="Page Link",
             value=f"[**Link ↗**]({game_page_url})",
             inline=False,
         )
 
         _ = await ctx.respond("", embed=embed)
+
+
+async def define_autocomplete(ctx: lb.AutocompleteContext[str]):
+    """Autocomplete Callback for the define command"""
+
+    if type(ctx.focused.value) is not str:
+        return
+
+    current_value = ctx.focused.value or ""
+    values_to_recommend = [
+        key for key in glossary if key.startswith(current_value.lower())
+    ]
+
+    await ctx.respond(values_to_recommend)
+
+
+@loader.command
+class Define(
+    lb.SlashCommand,
+    name="define",
+    description="Get a definition from a glossary of Mac gaming related terms",
+):
+    # Options
+    term: str = lb.string(
+        "term", "The term to get the definition of", autocomplete=define_autocomplete
+    )
+
+    @lb.invoke
+    async def invoke(self, ctx: lb.Context):
+        if type(self.term) is not str:
+            return
+        else:
+            self.term = self.term.lower()
+
+        if self.term in glossary.keys():
+            embed = hk.Embed(
+                title=glossary[self.term]["name"],
+                colour=ctx.user.accent_colour,
+                timestamp=dt.datetime.now(dt.timezone.utc),
+            )
+
+            _ = embed.set_footer(
+                text=f"Requested by {ctx.user.username}", icon=ctx.user.avatar_url
+            )
+
+            _ = embed.add_field(
+                value=glossary[self.term]["def"],
+                inline=False,
+            )
+
+            _ = embed.add_field(
+                value=f"[**More Information ↗**]({glossary[self.term]['link']})"
+            )
+
+            _ = await ctx.respond("", embed=embed)
+        else:
+            _ = await ctx.respond(
+                f"Sorry, I couldn't find a definition for '{self.term}'. Please check your spelling and try again.",
+                flags=hk.MessageFlag.EPHEMERAL,
+            )
