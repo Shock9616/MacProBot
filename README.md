@@ -15,6 +15,9 @@ works and will be added in the future.
 - `/cxcheck <game name>`
   - Searches the CrossOver compatibility database and retrieves the current
     compatibility rating for the searched game
+- `/define <term>`
+  - Responds with a quick definition for one of a number of common Mac gaming
+    related terms
 - `/ev` (environment variables)
   - Lists common CrossOver bottle environment variables
 - `/metalhud`
@@ -22,6 +25,8 @@ works and will be added in the future.
 - `/support`
   - Lists some common info that is helpful for troubleshooting issues with Mac
     gaming
+- `/support1`
+  - Gives some helpful tips for recording footage for troubleshooting
 - `/updatedxmt`
   - Gives a link for the MacProTips tutorial for updating DXMT in CrossOver, and
     a link to download the latest version
