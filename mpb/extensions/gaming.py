@@ -40,7 +40,7 @@ class CxCheck(
             apps: ResultSet[Tag] = app_list.find_all("a")
         else:
             _ = await ctx.respond(
-                f"Sorry, I couldn't find {self.game} in the CrossOver Compatibility Database.",
+                f"Sorry, I couldn't find '{self.game}' in the CrossOver Compatibility Database.",
                 flags=hk.MessageFlag.EPHEMERAL,
             )
             return

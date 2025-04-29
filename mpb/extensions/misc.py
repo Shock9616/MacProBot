@@ -141,7 +141,7 @@ class EnvironmentVariables(
             + "```/bin/launchctl setenv MTL_HUD_ENABLED 1```\n"
             + "### HUD OFF\n"
             + "Hides Metal HUD permanently by default\n"
-            + "```/bin/launchctl setenv MTL_HUD_ENABLED 0```\n"
+            + "```/bin/launchctl unsetenv MTL_HUD_ENABLED```\n"
             + "## Allow AVX/FC16\n"
             + "### Enable AVX\n"
             + "A command to enable Advanced Vector Extensions in CrossOver (likely for improved performance or get past game crashing).\n"
