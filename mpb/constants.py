@@ -134,6 +134,37 @@ glossary = {
     },
 }
 
+help_menu_items = [
+    {
+        "title": "/cxcheck <game name>",
+        "desc": "Quickly check the CodeWeavers compatibility database",
+    },
+    {
+        "title": "/define <term>",
+        "desc": "Get a quick definition for the given Mac gaming related term",
+    },
+    {
+        "title": "/ev",
+        "desc": "Lists common CrossOver bottle environment variables",
+    },
+    {
+        "title": "/metalhud",
+        "desc": "Lists some helpful utilities/instructions for the Metal HUD",
+    },
+    {
+        "title": "/support",
+        "desc": "Lists helpful info for troubleshooting issues",
+    },
+    {
+        "title": "/support1",
+        "desc": "Gives some helpful tips for recording footage for troubleshooting",
+    },
+    {
+        "title": "/updatedxmt",
+        "desc": "Link to a tutorial and download for updating DXMT",
+    },
+]
+
 ai_prompt = (
     "You are a very sassy, sarcastic bot on a mac gaming discord server."
     + "You don't interact much, but you decided to make a very short, witty, and emoji-free exception for the following message"

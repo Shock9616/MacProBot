@@ -4,72 +4,10 @@
 # Miscellaneous commands for the server
 #
 
-import hikari as hk
 import lightbulb as lb
 
+
 loader = lb.Loader()
-
-
-@loader.command
-class Help(
-    lb.SlashCommand,
-    name="help",
-    description="Shows help info and commands",
-):
-    @lb.invoke
-    async def invoke(self, ctx: lb.Context):
-        # Create embed for the response
-        embed = hk.Embed(
-            title="MacProBot Help",
-            colour=ctx.user.accent_colour,
-        )
-
-        _ = embed.add_field(value="Here is a list of the currently available commands")
-
-        _ = embed.add_field(
-            name="`/cxcheck <game name>`",
-            value="Quickly check the CodeWeavers compatibility database",
-            inline=False,
-        )
-
-        _ = embed.add_field(
-            name="`/define <term>`",
-            value="Get a quick definition for the given Mac gaming related term",
-            inline=False,
-        )
-
-        _ = embed.add_field(
-            name="`/ev`",
-            value="Lists common CrossOver bottle environment variables",
-            inline=False,
-        )
-
-        _ = embed.add_field(
-            name="`/metalhud`",
-            value="Lists some helpful utilities/instructions for the Metal HUD",
-            inline=False,
-        )
-
-        _ = embed.add_field(
-            name="`/support`",
-            value="Lists helpful info for troubleshooting issues",
-            inline=False,
-        )
-
-        _ = embed.add_field(
-            name="`/support1`",
-            value="Gives some helpful tips for recording footage for troubleshooting",
-            inline=False,
-        )
-
-        _ = embed.add_field(
-            name="`/updatedxmt`",
-            value="Link to a tutorial and download for updating DXMT",
-            inline=False,
-        )
-
-        # Response is only visible to the user that ran the command
-        _ = await ctx.respond("", embed=embed, flags=hk.MessageFlag.EPHEMERAL)
 
 
 @loader.command

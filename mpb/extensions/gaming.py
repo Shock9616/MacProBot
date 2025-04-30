@@ -42,7 +42,7 @@ class CxCheck(
         else:
             _ = await ctx.respond(
                 f"Sorry, I couldn't find '{self.game}' in the CrossOver Compatibility Database.",
-                flags=hk.MessageFlag.EPHEMERAL,
+                ephemeral=True,
             )
             return
 
@@ -179,5 +179,5 @@ class Define(
         else:
             _ = await ctx.respond(
                 f"Sorry, I couldn't find a definition for '{self.term}'. Please check your spelling and try again.",
-                flags=hk.MessageFlag.EPHEMERAL,
+                ephemeral=True,
             )
