@@ -6,7 +6,6 @@
 
 from difflib import SequenceMatcher
 from typing import cast
-import datetime as dt
 
 import hikari as hk
 import lightbulb as lb
@@ -141,11 +140,11 @@ class AgwCheck(
         embed = hk.Embed(
             title=game_name,
             colour=ctx.user.accent_colour,
-            timestamp=dt.datetime.now(dt.timezone.utc),
         )
 
         _ = embed.set_footer(
-            text=f"Requested by {ctx.user.username}", icon=ctx.user.avatar_url
+            "via applegamingwiki.com",
+            icon="https://static.pcgamingwiki.com/favicons/applegamingwiki.png",
         )
 
         for method in compat_data:
@@ -243,11 +242,11 @@ class CxCheck(
         embed = hk.Embed(
             title=db_name,
             colour=ctx.user.accent_colour,
-            timestamp=dt.datetime.now(dt.timezone.utc),
         )
 
         _ = embed.set_footer(
-            text=f"Requested by {ctx.user.username}", icon=ctx.user.avatar_url
+            "via codeweavers.com",
+            icon="https://media.codeweavers.com/pub/crossover/website/images/cw_logo_128.png",
         )
 
         _ = embed.add_field(
@@ -303,11 +302,6 @@ class Define(
             embed = hk.Embed(
                 title=glossary[self.term]["name"],
                 colour=ctx.user.accent_colour,
-                timestamp=dt.datetime.now(dt.timezone.utc),
-            )
-
-            _ = embed.set_footer(
-                text=f"Requested by {ctx.user.username}", icon=ctx.user.avatar_url
             )
 
             _ = embed.add_field(
