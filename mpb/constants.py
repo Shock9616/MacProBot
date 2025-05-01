@@ -136,6 +136,10 @@ glossary = {
 
 help_menu_items = [
     {
+        "title": "/agwcheck <game name>",
+        "desc": "Quickly check game compatibility on AppleGamingWiki",
+    },
+    {
         "title": "/cxcheck <game name>",
         "desc": "Quickly check the CodeWeavers compatibility database",
     },

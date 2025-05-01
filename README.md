@@ -12,6 +12,9 @@ can easily be deployed on any hosting service that supports Python
 This is only the list of currently available commands. More features are in the
 works and will be added in the future.
 
+- `/agwcheck <game name>`
+  - Searches AppleGamingWiki and retrieves all compatibility ratings for the
+    searched game
 - `/cxcheck <game name>`
   - Searches the CrossOver compatibility database and retrieves the current
     compatibility rating for the searched game
