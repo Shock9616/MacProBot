@@ -20,6 +20,130 @@ loader = lb.Loader()
 
 
 @loader.command
+class AgwCheck(
+    lb.SlashCommand,
+    name="agwcheck",
+    description="Get the compatibility ratings for the searched game from AppleGamingWiki",
+):
+    # Options
+    game: str = lb.string("game", "The name of the game to search for")
+
+    @lb.invoke
+    async def invoke(self, ctx: lb.Context):
+        game_search = "+".join(self.game.split(" "))
+        game_page_url = f"https://www.applegamingwiki.com/w/index.php?search={game_search}&title=Special:Search"
+
+        # Get page data
+        game_page = requests.get(game_page_url)
+        soup = bs(game_page.content, "html.parser")
+
+        # Get all data rows from compatibility table
+        compat_table = soup.find("table", {"id": "table-compatibility"})
+
+        if type(compat_table) is not Tag:
+            search_results: ResultSet[Tag] = soup.find_all(
+                "div", {"class": "mw-search-result-heading"}
+            )
+
+            most_similar = 0
+            most_similar_idx = 0
+            idx = 0
+            for result in search_results:
+                result_a = result.find("a")
+                assert type(result_a) is Tag
+
+                result_name = result_a.string
+                assert type(result_name) is NavigableString
+
+                similarity = SequenceMatcher(None, result_name, self.game).ratio()
+                if similarity > most_similar:
+                    most_similar = similarity
+                    most_similar_idx = idx
+                idx += 1
+
+            rel_link_a = search_results[most_similar_idx].find("a")
+            assert type(rel_link_a) is Tag
+            rel_link = rel_link_a["href"]
+
+            game_page_url = f"https://applegamingwiki.com{rel_link}"
+            game_page = requests.get(game_page_url)
+            soup = bs(game_page.content, "html.parser")
+            compat_table = soup.find("table", {"id": "table-compatibility"})
+            assert type(compat_table) is Tag
+
+        data_rows: ResultSet[Tag] = compat_table.find_all(
+            "tr", {"class": "template-infotable-body table-compatibility-body-row"}
+        )
+
+        game_name_header = soup.find("h1", {"class": "article-title"})
+        assert type(game_name_header) is Tag
+        game_name = game_name_header.string
+        assert type(game_name) is NavigableString
+
+        compat_data: list[dict[str, str]] = []
+
+        for row in data_rows:
+            row_data = {
+                "method": "",
+                "rating": "",
+            }
+
+            try:
+                method_th = row.find("th", {"class": "table-compatibility-body-method"})
+                assert type(method_th) is Tag
+
+                method_a = method_th.find("a")
+                assert type(method_a) is Tag
+
+                method = method_a.string
+            except AssertionError:
+                method_th = row.find("th", {"class": "table-compatibility-body-method"})
+                assert type(method_th) is Tag
+
+                method = method_th.string
+
+            assert type(method) is NavigableString
+            row_data["method"] = method
+
+            # ----------
+
+            rating_td = row.find("td", {"class": "table-compatibility-body-rating"})
+            assert type(rating_td) is Tag
+
+            rating_span = rating_td.find("span")
+            assert type(rating_span) is Tag
+
+            rating = rating_span.string
+
+            assert type(rating) is NavigableString
+            row_data["rating"] = rating
+
+            compat_data.append(row_data)
+
+        embed = hk.Embed(
+            title=game_name,
+            colour=ctx.user.accent_colour,
+            timestamp=dt.datetime.now(dt.timezone.utc),
+        )
+
+        _ = embed.set_footer(
+            text=f"Requested by {ctx.user.username}", icon=ctx.user.avatar_url
+        )
+
+        for method in compat_data:
+            _ = embed.add_field(
+                name=method["method"], value=method["rating"], inline=True
+            )
+
+        _ = embed.add_field(
+            value=f"[**Link ↗**]({game_page_url})",
+            inline=False,
+        )
+
+        _ = await ctx.respond("", embed=embed)
+
+
+@loader.command
 class CxCheck(
     lb.SlashCommand,
     name="cxcheck",
@@ -41,7 +165,7 @@ class CxCheck(
             apps: ResultSet[Tag] = app_list.find_all("a")
         else:
             _ = await ctx.respond(
-                f"Sorry, I couldn't find '{self.game}' in the CrossOver Compatibility Database.",
+                f"Sorry, I couldn't find '{self.game}' in the CrossOver Compatibility Database. Please check your spelling and try again (Some games have things like ™ in the name which may cause this issue)",
                 ephemeral=True,
             )
             return
@@ -51,12 +175,13 @@ class CxCheck(
         most_similar_idx = 0
         idx = 0
         for app in apps:
-            if type(app.string) is NavigableString:
-                similarity = SequenceMatcher(None, app.string, self.game).ratio()
-                if similarity > most_similar:
-                    most_similar = similarity
-                    most_similar_idx = idx
-                idx += 1
+            assert type(app.string) is NavigableString
+
+            similarity = SequenceMatcher(None, app.string, self.game).ratio()
+            if similarity > most_similar:
+                most_similar = similarity
+                most_similar_idx = idx
+            idx += 1
 
         db_name = apps[most_similar_idx].string
         rel_link = apps[most_similar_idx]["href"]
