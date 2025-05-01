@@ -41,10 +41,13 @@ class AgwCheck(
         compat_table = soup.find("table", {"id": "table-compatibility"})
 
         if type(compat_table) is not Tag:
+            # No game perfectly matches search, find closest search result instead
+
             search_results: ResultSet[Tag] = soup.find_all(
                 "div", {"class": "mw-search-result-heading"}
             )
 
+            # Find result with most similar name
             most_similar = 0
             most_similar_idx = 0
             idx = 0
@@ -61,20 +64,32 @@ class AgwCheck(
                     most_similar_idx = idx
                 idx += 1
 
-            rel_link_a = search_results[most_similar_idx].find("a")
+            try:
+                rel_link_a = search_results[most_similar_idx].find("a")
+            except IndexError:
+                # If we still don't have a valid search result, the game is not there
+                _ = await ctx.respond(
+                    f"Sorry, I couldn't find '{self.game}' on AppleGamingWiki. Please check your spelling and try again",
+                    ephemeral=True,
+                )
+                return
+
             assert type(rel_link_a) is Tag
             rel_link = rel_link_a["href"]
 
+            # Get new page data
             game_page_url = f"https://applegamingwiki.com{rel_link}"
             game_page = requests.get(game_page_url)
             soup = bs(game_page.content, "html.parser")
             compat_table = soup.find("table", {"id": "table-compatibility"})
             assert type(compat_table) is Tag
 
+        # Get table rows containing compatibility data
         data_rows: ResultSet[Tag] = compat_table.find_all(
             "tr", {"class": "template-infotable-body table-compatibility-body-row"}
         )
 
+        # Get proper game title
         game_name_header = soup.find("h1", {"class": "article-title"})
         assert type(game_name_header) is Tag
         game_name = game_name_header.string
@@ -82,12 +97,14 @@ class AgwCheck(
 
         compat_data: list[dict[str, str]] = []
 
+        # Extract compatibility data from table rows
         for row in data_rows:
             row_data = {
                 "method": "",
                 "rating": "",
             }
 
+            # Method (e.x. Native, Rosetta 2, CrossOver, Parallels, etc.)
             try:
                 method_th = row.find("th", {"class": "table-compatibility-body-method"})
                 assert type(method_th) is Tag
@@ -105,7 +122,7 @@ class AgwCheck(
             assert type(method) is NavigableString
             row_data["method"] = method
 
-            # ----------
+            # Rating (e.x. Perfect, Playable, Unplayable, Unknown, etc.)
 
             rating_td = row.find("td", {"class": "table-compatibility-body-rating"})
             assert type(rating_td) is Tag
@@ -120,6 +137,7 @@ class AgwCheck(
 
             compat_data.append(row_data)
 
+        # Create embed for the response
         embed = hk.Embed(
             title=game_name,
             colour=ctx.user.accent_colour,
@@ -165,7 +183,7 @@ class CxCheck(
             apps: ResultSet[Tag] = app_list.find_all("a")
         else:
             _ = await ctx.respond(
-                f"Sorry, I couldn't find '{self.game}' in the CrossOver Compatibility Database. Please check your spelling and try again (Some games have things like ™ in the name which may cause this issue)",
+                f"Sorry, I couldn't find '{self.game}' in the CrossOver Compatibility Database. Please check your spelling and try again",
                 ephemeral=True,
             )
             return
@@ -192,18 +210,19 @@ class CxCheck(
         soup = bs(game_page.content, "html.parser")
 
         # Find current star rating
-        all_star_tables = soup.find_all("ul", class_="star-rating-table")
+        all_star_tables = soup.find_all("ul", {"class": "star-rating-table"})
         star_table: Tag = cast(Tag, all_star_tables[0])
 
         # Count stars
         star_count = 0
         for star in star_table:
-            if type(star) is Tag:
-                try:
-                    if star["class"] == ["active"]:
-                        star_count += 1
-                except KeyError:
-                    break
+            assert type(star) is Tag
+
+            try:
+                if star["class"] == ["active"]:
+                    star_count += 1
+            except KeyError:
+                break
 
         # Set rating description based on star count
         match star_count:
