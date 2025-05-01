@@ -110,16 +110,16 @@ class AgwCheck(
                 assert type(method_th) is Tag
 
                 method_a = method_th.find("a")
-                assert type(method_a) is Tag
 
-                method = method_a.string
-            except AssertionError:
-                method_th = row.find("th", {"class": "table-compatibility-body-method"})
-
-                if type(method_th) is Tag:
-                    method = method_th.string
+                if type(method_a) is Tag:
+                    method = method_a.string
                 else:
                     return
+            except AssertionError:
+                method_th = row.find("th", {"class": "table-compatibility-body-method"})
+                assert type(method_th) is Tag
+
+                method = method_th.string
 
             assert type(method) is NavigableString
             row_data["method"] = method
