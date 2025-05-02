@@ -6,8 +6,12 @@
 
 import hikari as hk
 import lightbulb as lb
+import dotenv
+import os
 
 from hikari import Permissions
+
+_ = dotenv.load_dotenv()
 
 loader = lb.Loader()
 
@@ -44,8 +48,8 @@ class Announce(
             )
             return
 
-        mod_channel = 1312991157264846898
-        announcements_channel = 1366552674228506654
+        announcements_channel = int(os.environ["ANNOUNCEMENTS_CHANNEL_ID"])
+        mod_channel = int(os.environ["MOD_CHANNEL_ID"])
 
         if ctx.channel_id != mod_channel:
             _ = await ctx.respond(
