@@ -35,6 +35,8 @@ works and will be added in the future.
 - `/updatedxmt`
   - Gives a link for the MacProTips tutorial for updating DXMT in CrossOver, and
     a link to download the latest version
+- `/wallpaper`
+  - Respond with a random wallpaper from the configured wallpapers channel
 
 ### Admin/Mod Commands
 

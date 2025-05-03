@@ -167,6 +167,10 @@ help_menu_items = [
         "title": "/updatedxmt",
         "desc": "Link to a tutorial and download for updating DXMT",
     },
+    {
+        "title": "/wallpaper",
+        "desc": "Select a random wallpaper from the #wallpapers channel",
+    },
 ]
 
 ai_prompt = (
