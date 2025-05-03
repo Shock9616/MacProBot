@@ -117,14 +117,12 @@ class VideoFaq(
             ":red_circle: **Recording Guidelines for Support**: *If possible, please include a screen recording that shows:*\n"
             + "1. Opening CrossOver and your bottle settings\n"
             + "2. Launching the game platform (Steam, GOG, Epic, etc.)\n"
-            + "3. Starting the game and any errors that appear\n"
-            + " \n"
+            + "3. Starting the game and any errors that appear\n\n"
             + ":bulb: **Tip**: *You can use QuickTime Player to record your screen—especially helpful if the issue happens in-game:*\n"
             + "1. Open QuickTime Player and go to `File`\n"
             + "2. Select `New Screen Recording` or press `⌘ + ⌃ + N`\n"
             + "3. If you have multiple displays, choose which one to record\n"
-            + "4. Press `⌘ + ⌃ + Esc` to stop recording\n"
-            + " \n"
+            + "4. Press `⌘ + ⌃ + Esc` to stop recording\n\n"
             + "<:macprotip:1368106561045659678> **MacProTip**: We recommend [**QuickRecorder**](https://lihaoyun6.github.io/quickrecorder/) - a **free open-source**, light-weight, powerful screen recorder for macOS\n"
         )
 
