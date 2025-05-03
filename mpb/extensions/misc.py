@@ -20,7 +20,7 @@ loader = lb.Loader()
 class EnvironmentVariables(
     lb.SlashCommand,
     name="ev",
-    description="Reply with some useful environment variables for Mac gaming",
+    description="Useful environment variables for Mac gaming",
 ):
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
@@ -59,7 +59,7 @@ class EnvironmentVariables(
 class MetalHud(
     lb.SlashCommand,
     name="metalhud",
-    description="Reply with instructions for setting up the MetalHUD toolbar shortcut",
+    description="Instructions for setting up the MetalHUD toolbar shortcut",
 ):
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
@@ -76,7 +76,7 @@ class MetalHud(
 class Support(
     lb.SlashCommand,
     name="support",
-    description="Reply with a quick form to fill out to help with game troubleshooting",
+    description="A quick form to fill out to help with game troubleshooting",
 ):
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
@@ -116,7 +116,7 @@ class Support1(
 class UpdateDxmt(
     lb.SlashCommand,
     name="updatedxmt",
-    description="Reply with a link to a quick tutorial on how to update DXMT in CrossOver",
+    description="Link to a quick tutorial on how to update DXMT in CrossOver",
 ):
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
@@ -130,7 +130,7 @@ class UpdateDxmt(
 class Wallpaper(
     lb.SlashCommand,
     name="wallpaper",
-    description="Reply with a randomly selected wallpaper from the #wallpapers channel",
+    description="Randomly select a wallpaper from the #wallpapers channel",
 ):
     @lb.invoke
     async def invoke(self, ctx: lb.Context):

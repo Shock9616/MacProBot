@@ -101,7 +101,7 @@ class HelpMenu(lb.components.Menu):
 class Help(
     lb.SlashCommand,
     name="help",
-    description="Shows help info and commands",
+    description="Show help info and commands",
 ):
     @lb.invoke
     async def invoke(self, ctx: lb.Context):

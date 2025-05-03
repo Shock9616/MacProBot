@@ -137,39 +137,39 @@ glossary = {
 help_menu_items = [
     {
         "title": "/agwcheck <game name>",
-        "desc": "Quickly check game compatibility on AppleGamingWiki",
+        "desc": "Get the compatibility ratings for the searched game from AppleGamingWiki",
     },
     {
         "title": "/cxcheck <game name>",
-        "desc": "Quickly check the CodeWeavers compatibility database",
+        "desc": "Get the searched game's star rating on the CrossOver Compatibility Database",
     },
     {
         "title": "/define <term>",
-        "desc": "Get a quick definition for the given Mac gaming related term",
+        "desc": "Get a definition from a glossary of Mac gaming related terms",
     },
     {
         "title": "/ev",
-        "desc": "Lists common CrossOver bottle environment variables",
+        "desc": "Useful environment variables for Mac gaming",
     },
     {
         "title": "/metalhud",
-        "desc": "Lists some helpful utilities/instructions for the Metal HUD",
+        "desc": "Instructions for setting up the MetalHUD toolbar shortcut",
     },
     {
         "title": "/support",
-        "desc": "Lists helpful info for troubleshooting issues",
-    },
-    {
-        "title": "/support1",
-        "desc": "Gives some helpful tips for recording footage for troubleshooting",
+        "desc": "A quick form to fill out to help with game troubleshooting",
     },
     {
         "title": "/updatedxmt",
-        "desc": "Link to a tutorial and download for updating DXMT",
+        "desc": "Link to a quick tutorial on how to update DXMT in CrossOver",
+    },
+    {
+        "title": "/videofaq",
+        "desc": "Helpful tips for recording footage for troubleshooting",
     },
     {
         "title": "/wallpaper",
-        "desc": "Select a random wallpaper from the #wallpapers channel",
+        "desc": "Randomly select a wallpaper from the #wallpapers channel",
     },
 ]
 
