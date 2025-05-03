@@ -134,11 +134,20 @@ class Wallpaper(
 ):
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
-        await ctx.defer()  # Tell Discord that this command might take a while
+        # Tell Discord that this command might take a while
+        await ctx.defer()
+
+        wallpapers_channel = int(os.environ["WALLPAPERS_CHANNEL_ID"])
+
+        if ctx.channel_id == wallpapers_channel:
+            _ = await ctx.respond(
+                "To avoid creating duplicates, this command is disabled in the wallpapers channel",
+            )
+            return
 
         # Get a list of all messages in the wallpapers channel
         messages: Sequence[hk.Message] = await ctx.client.rest.fetch_messages(
-            int(os.environ["WALLPAPERS_CHANNEL_ID"])
+            wallpapers_channel
         )
 
         message: hk.Message | None = None
