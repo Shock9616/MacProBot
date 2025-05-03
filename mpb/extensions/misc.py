@@ -4,8 +4,14 @@
 # Miscellaneous commands for the server
 #
 
+from collections.abc import Sequence
+import random
+import hikari as hk
 import lightbulb as lb
+import dotenv
+import os
 
+_ = dotenv.load_dotenv()
 
 loader = lb.Loader()
 
@@ -118,3 +124,31 @@ class UpdateDxmt(
             "- [**How to update DXMT inside CrossOver ↗**](https://www.youtube.com/watch?v=5uIEd-6DqFM)\n"
             + "- [**Link to download the latest DXMT version ↗**](https://github.com/3Shain/dxmt/releases)\n"
         )
+
+
+@loader.command
+class Wallpaper(
+    lb.SlashCommand,
+    name="wallpaper",
+    description="Reply with a randomly selected wallpaper from the #wallpapers channel",
+):
+    @lb.invoke
+    async def invoke(self, ctx: lb.Context):
+        await ctx.defer()  # Tell Discord that this command might take a while
+
+        # Get a list of all messages in the wallpapers channel
+        messages: Sequence[hk.Message] = await ctx.client.rest.fetch_messages(
+            int(os.environ["WALLPAPERS_CHANNEL_ID"])
+        )
+
+        message: hk.Message | None = None
+
+        while message is None:
+            # Select random message
+            message = messages[random.randint(0, len(messages) - 1)]
+
+            # Account for if the selected message has no wallpaper attached
+            if len(message.attachments) == 0:
+                message = None
+
+        _ = await ctx.respond("", attachment=random.choice(message.attachments))
