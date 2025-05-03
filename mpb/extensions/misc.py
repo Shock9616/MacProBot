@@ -11,60 +11,6 @@ loader = lb.Loader()
 
 
 @loader.command
-class Support(
-    lb.SlashCommand,
-    name="support",
-    description="Reply with a quick form to fill out to help with game troubleshooting",
-):
-    @lb.invoke
-    async def invoke(self, ctx: lb.Context):
-        _ = await ctx.respond(
-            "🔧 Automated response!\n"
-            + "**To help troubleshoot your issue, please provide the following details:**\n"
-            + "macOS version:\n"
-            + "Mac model:\n"
-            + "Memory (RAM):\n"
-            + "CrossOver version:\n"
-            + "Game platform (Steam, GOG, other):\n"
-        )
-
-
-@loader.command
-class Support1(
-    lb.SlashCommand,
-    name="support1",
-    description="Guidelines for video recording for troubleshooting",
-):
-    @lb.invoke
-    async def invoke(self, ctx: lb.Context):
-        _ = await ctx.respond(
-            ":red_circle: **Recording Guidelines for Support**: *If possible, please include a screen recording that shows:*\n"
-            + "1. Opening CrossOver and your bottle settings\n"
-            + "2. Launching the game platform (Steam, GOG, Epic, etc.)\n"
-            + "3. Starting the game and any errors that appear\n\n"
-            + ":bulb: **Tip**: *You can use QuickTime Player to record your screen—especially helpful if the issue happens in-game:*\n"
-            + "1. Open QuickTime Player and go to `File`\n"
-            + "2. Select `New Screen Recording` or press `⌘ + ⌃ + N`\n"
-            + "3. If you have multiple displays, choose which one to record\n"
-            + "4. Press `⌘ + ⌃ + Esc` to stop recording\n"
-        )
-
-
-@loader.command
-class UpdateDxmt(
-    lb.SlashCommand,
-    name="updatedxmt",
-    description="Reply with a link to a quick tutorial on how to update DXMT in CrossOver",
-):
-    @lb.invoke
-    async def invoke(self, ctx: lb.Context):
-        _ = await ctx.respond(
-            "- [**How to update DXMT inside CrossOver ↗**](https://www.youtube.com/watch?v=5uIEd-6DqFM)\n"
-            + "- [**Link to download the latest DXMT version ↗**](https://github.com/3Shain/dxmt/releases)\n"
-        )
-
-
-@loader.command
 class EnvironmentVariables(
     lb.SlashCommand,
     name="ev",
@@ -117,4 +63,58 @@ class MetalHud(
             + "### Keyboard Shorcuts\n"
             + "`Fn + Shift + F9` to show/hide the Metal HUD once enabled\n"
             + "`Fn + Shift + F7` to move the Metal HUD around the screen\n"
+        )
+
+
+@loader.command
+class Support(
+    lb.SlashCommand,
+    name="support",
+    description="Reply with a quick form to fill out to help with game troubleshooting",
+):
+    @lb.invoke
+    async def invoke(self, ctx: lb.Context):
+        _ = await ctx.respond(
+            "🔧 Automated response!\n"
+            + "**To help troubleshoot your issue, please provide the following details:**\n"
+            + "macOS version:\n"
+            + "Mac model:\n"
+            + "Memory (RAM):\n"
+            + "CrossOver version:\n"
+            + "Game platform (Steam, GOG, other):\n"
+        )
+
+
+@loader.command
+class Support1(
+    lb.SlashCommand,
+    name="support1",
+    description="Guidelines for video recording for troubleshooting",
+):
+    @lb.invoke
+    async def invoke(self, ctx: lb.Context):
+        _ = await ctx.respond(
+            ":red_circle: **Recording Guidelines for Support**: *If possible, please include a screen recording that shows:*\n"
+            + "1. Opening CrossOver and your bottle settings\n"
+            + "2. Launching the game platform (Steam, GOG, Epic, etc.)\n"
+            + "3. Starting the game and any errors that appear\n\n"
+            + ":bulb: **Tip**: *You can use QuickTime Player to record your screen—especially helpful if the issue happens in-game:*\n"
+            + "1. Open QuickTime Player and go to `File`\n"
+            + "2. Select `New Screen Recording` or press `⌘ + ⌃ + N`\n"
+            + "3. If you have multiple displays, choose which one to record\n"
+            + "4. Press `⌘ + ⌃ + Esc` to stop recording\n"
+        )
+
+
+@loader.command
+class UpdateDxmt(
+    lb.SlashCommand,
+    name="updatedxmt",
+    description="Reply with a link to a quick tutorial on how to update DXMT in CrossOver",
+):
+    @lb.invoke
+    async def invoke(self, ctx: lb.Context):
+        _ = await ctx.respond(
+            "- [**How to update DXMT inside CrossOver ↗**](https://www.youtube.com/watch?v=5uIEd-6DqFM)\n"
+            + "- [**Link to download the latest DXMT version ↗**](https://github.com/3Shain/dxmt/releases)\n"
         )
