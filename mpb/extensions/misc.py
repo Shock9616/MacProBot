@@ -92,27 +92,6 @@ class Support(
 
 
 @loader.command
-class Support1(
-    lb.SlashCommand,
-    name="support1",
-    description="Guidelines for video recording for troubleshooting",
-):
-    @lb.invoke
-    async def invoke(self, ctx: lb.Context):
-        _ = await ctx.respond(
-            ":red_circle: **Recording Guidelines for Support**: *If possible, please include a screen recording that shows:*\n"
-            + "1. Opening CrossOver and your bottle settings\n"
-            + "2. Launching the game platform (Steam, GOG, Epic, etc.)\n"
-            + "3. Starting the game and any errors that appear\n\n"
-            + ":bulb: **Tip**: *You can use QuickTime Player to record your screen—especially helpful if the issue happens in-game:*\n"
-            + "1. Open QuickTime Player and go to `File`\n"
-            + "2. Select `New Screen Recording` or press `⌘ + ⌃ + N`\n"
-            + "3. If you have multiple displays, choose which one to record\n"
-            + "4. Press `⌘ + ⌃ + Esc` to stop recording\n"
-        )
-
-
-@loader.command
 class UpdateDxmt(
     lb.SlashCommand,
     name="updatedxmt",
@@ -123,6 +102,30 @@ class UpdateDxmt(
         _ = await ctx.respond(
             "- [**How to update DXMT inside CrossOver ↗**](https://www.youtube.com/watch?v=5uIEd-6DqFM)\n"
             + "- [**Link to download the latest DXMT version ↗**](https://github.com/3Shain/dxmt/releases)\n"
+        )
+
+
+@loader.command
+class VideoFaq(
+    lb.SlashCommand,
+    name="videofaq",
+    description="Guidelines for video recording for troubleshooting",
+):
+    @lb.invoke
+    async def invoke(self, ctx: lb.Context):
+        _ = await ctx.respond(
+            ":red_circle: **Recording Guidelines for Support**: *If possible, please include a screen recording that shows:*\n"
+            + "1. Opening CrossOver and your bottle settings\n"
+            + "2. Launching the game platform (Steam, GOG, Epic, etc.)\n"
+            + "3. Starting the game and any errors that appear\n"
+            + " \n"
+            + ":bulb: **Tip**: *You can use QuickTime Player to record your screen—especially helpful if the issue happens in-game:*\n"
+            + "1. Open QuickTime Player and go to `File`\n"
+            + "2. Select `New Screen Recording` or press `⌘ + ⌃ + N`\n"
+            + "3. If you have multiple displays, choose which one to record\n"
+            + "4. Press `⌘ + ⌃ + Esc` to stop recording\n"
+            + " \n"
+            + ":macprotip: **MacProTip**: We recommend [**QuickRecorder**](https://lihaoyun6.github.io/quickrecorder/) - a **free open-source**, light-weight, powerful screen recorder for macOS\n"
         )
 
 
