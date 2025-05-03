@@ -125,7 +125,7 @@ class VideoFaq(
             + "3. If you have multiple displays, choose which one to record\n"
             + "4. Press `⌘ + ⌃ + Esc` to stop recording\n"
             + " \n"
-            + ":macprotip: **MacProTip**: We recommend [**QuickRecorder**](https://lihaoyun6.github.io/quickrecorder/) - a **free open-source**, light-weight, powerful screen recorder for macOS\n"
+            + "<:macprotip:1368106561045659678> **MacProTip**: We recommend [**QuickRecorder**](https://lihaoyun6.github.io/quickrecorder/) - a **free open-source**, light-weight, powerful screen recorder for macOS\n"
         )
 
 
