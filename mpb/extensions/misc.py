@@ -100,8 +100,8 @@ class UpdateDxmt(
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
         _ = await ctx.respond(
-            "- [**How to update DXMT inside CrossOver ↗**](<https://www.youtube.com/watch?v=5uIEd-6DqFM>)\n"
-            + "- [**Link to download the latest DXMT version ↗**](<https://github.com/3Shain/dxmt/releases>)\n"
+            "- [**How to update DXMT inside CrossOver ↗**](https://www.youtube.com/watch?v=5uIEd-6DqFM)\n"
+            + "- [**Link to download the latest DXMT version ↗**](https://github.com/3Shain/dxmt/releases)\n"
         )
 
 
