@@ -69,6 +69,11 @@ class MetalHud(
             + "### Keyboard Shorcuts\n"
             + "`Fn + Shift + F9` to show/hide the Metal HUD once enabled\n"
             + "`Fn + Shift + F7` to move the Metal HUD around the screen\n"
+            + "### Terminal Commands\n"
+            + "Enable MetalHUD:\n"
+            + "```/bin/launchctl setenv MTL_HUD_ENABLED 1```\n"
+            + "Disable MetalHUD:\n"
+            + "```/bin/launchctl unsetenv MTL_HUD_ENABLED```\n"
         )
 
 
