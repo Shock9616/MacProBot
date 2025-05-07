@@ -9,16 +9,18 @@ import lightbulb as lb
 import dotenv
 import os
 
-from hikari import Permissions
-
 _ = dotenv.load_dotenv()
 
 loader = lb.Loader()
 
 
-mod_perms = (
-    Permissions.MENTION_ROLES | Permissions.MANAGE_MESSAGES | Permissions.MANAGE_THREADS
-)
+async def is_mod(member: hk.Member) -> bool:
+    """Checks the member's roles to determine if they are a moderator"""
+    for role in await member.fetch_roles():
+        if role.name == "Mod" or role.name == "Admin":
+            return True
+
+    return False
 
 
 @loader.command
@@ -35,7 +37,8 @@ class Announce(
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
         # Check if calling user is a mod
-        if ctx.member is not None and (ctx.member.permissions & mod_perms) != mod_perms:
+        if ctx.member is not None and not await is_mod(ctx.member):
+            print(await ctx.member.fetch_roles())
             _ = await ctx.respond(
                 "Sorry, you don't have permission to execute this command",
                 ephemeral=True,
