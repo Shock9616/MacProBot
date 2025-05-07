@@ -17,13 +17,7 @@ loader = lb.Loader()
 
 
 mod_perms = (
-    Permissions.KICK_MEMBERS
-    | Permissions.BAN_MEMBERS
-    | Permissions.MENTION_ROLES
-    | Permissions.MANAGE_MESSAGES
-    | Permissions.MANAGE_THREADS
-    | Permissions.CREATE_EVENTS
-    | Permissions.MANAGE_EVENTS
+    Permissions.MENTION_ROLES | Permissions.MANAGE_MESSAGES | Permissions.MANAGE_THREADS
 )
 
 
