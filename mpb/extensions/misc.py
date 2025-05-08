@@ -4,12 +4,13 @@
 # Miscellaneous commands for the server
 #
 
-from collections.abc import Sequence
+import os
 import random
+from collections.abc import Sequence
+
+import dotenv
 import hikari as hk
 import lightbulb as lb
-import dotenv
-import os
 
 _ = dotenv.load_dotenv()
 

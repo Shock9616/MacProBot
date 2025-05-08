@@ -4,10 +4,11 @@
 # Extensions for commands only for server admins
 #
 
+import os
+
+import dotenv
 import hikari as hk
 import lightbulb as lb
-import dotenv
-import os
 
 _ = dotenv.load_dotenv()
 

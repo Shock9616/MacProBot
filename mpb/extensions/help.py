@@ -5,6 +5,7 @@
 #
 
 import asyncio
+
 import hikari as hk
 import lightbulb as lb
 from lightbulb.components import InteractiveButton

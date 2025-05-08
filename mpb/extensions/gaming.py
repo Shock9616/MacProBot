@@ -11,7 +11,7 @@ import hikari as hk
 import lightbulb as lb
 import requests
 from bs4 import BeautifulSoup as bs
-from bs4.element import Tag, ResultSet, NavigableString
+from bs4.element import NavigableString, ResultSet, Tag
 
 from ..constants import glossary
 

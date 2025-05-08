@@ -4,16 +4,15 @@
 # The launching point for the bot
 #
 
-from collections.abc import Sequence
-from . import extensions
-
-import hikari as hk
-import lightbulb as lb
-import dotenv
-
 import os
 import random
+from collections.abc import Sequence
 
+import dotenv
+import hikari as hk
+import lightbulb as lb
+
+from . import extensions
 from .constants import sassy_responses
 
 _ = dotenv.load_dotenv()
