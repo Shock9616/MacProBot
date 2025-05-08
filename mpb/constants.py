@@ -54,6 +54,7 @@ sassy_responses = [
     "mACs ArE bETtER tHAn pCs aT gAMinG",
     "Ah, a Mac gamer. Admiring your commitment to playing _checks notes_ four whole games at 15 fps. Truly living on the edge.",
     "Please refer to our #rules and channel topics and then head to #support",
+    "imagine that you have 0 cookies and you split them evenly among 0 friends, how many cookies does each person get? see? it doesn't make sense. and cookie monster is sad that there are no cookies. and _you_ are sad that you have no friends.",
 ]
 
 glossary = {
