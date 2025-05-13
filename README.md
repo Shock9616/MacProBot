@@ -45,3 +45,58 @@ works and will be added in the future.
 
 The bot also responds to pings and has a small chance to respond to any message
 in the server with a snarky AI generated response
+
+## Running For Yourself
+
+This bot is entirely focused on being useful for MacProTips' "Mac Gaming"
+discord server, but if you find yourself wanting to try it for yourself, here's
+how to do it:
+
+1. Clone this repository
+
+```bash
+git clone https://github.com/Shock9616/MacProBot
+```
+
+2. Create and activate virtual environment in repository root (optional but
+   _HIGHLY_ recommended)
+
+```bash
+python -m venv venv
+source venv/bin/activate
+```
+
+3. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+4. Create necessary environment variables in a file called `.env` in the root of
+   the repository with the following contents (replace `<>` with required
+   value):
+
+```
+TOKEN = <DISCORD_BOT_TOKEN>
+AI_API_KEY = <OPENROUTER_API_KEY>
+ANNOUNCEMENTS_CHANNEL_ID = <1234567890>
+MOD_CHANNEL_ID = <1234567890>
+WALLPAPERS_CHANNEL_ID = <1234567890>
+```
+
+- `TOKEN` is the secret key that is used to connect to discord. To get this
+  token, you need to create an application on the
+  [Discord Developer Portal](https://discord.com/developers/applications)
+- `AI_API_KEY` Is used to connect to an LLM on OpenRouter for unprompted
+  responses. This is not necessary to run the bot, but the AI responses will not
+  work without it (Currently disabled)
+- `ANNOUNCEMENTS_CHANNEL_ID`, `MOD_CHANNEL_ID`, and `WALLPAPERS_CHANNEL_ID` are
+  the unique identifiers for the channels used for the `/announce` and
+  `/wallpaper` commands. These aren't necessary to run the bot, but the commands
+  won't work without them
+
+5. Run the bot
+
+```bash
+python main.py
+```
