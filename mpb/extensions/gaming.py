@@ -68,7 +68,7 @@ class AgwCheck(
             except IndexError:
                 # If we still don't have a valid search result, the game is not there
                 _ = await ctx.respond(
-                    f"Sorry, I couldn't find '{self.game}' on AppleGamingWiki. Please check your spelling and try again",
+                    f"Sorry, I couldn't find '{self.game}' on [**AppleGamingWiki**](<https://www.applegamingwiki.com/>). Please check your spelling and try again",
                     ephemeral=True,
                 )
                 return
@@ -182,7 +182,7 @@ class CxCheck(
             apps: ResultSet[Tag] = app_list.find_all("a")
         else:
             _ = await ctx.respond(
-                f"Sorry, I couldn't find '{self.game}' in the CrossOver Compatibility Database. Please check your spelling and try again",
+                f"Sorry, I couldn't find '{self.game}' in the [**CrossOver Compatibility Database**](<https://www.codeweavers.com/compatibility>). Please check your spelling and try again",
                 ephemeral=True,
             )
             return
