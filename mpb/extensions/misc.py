@@ -65,16 +65,14 @@ class MetalHud(
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
         _ = await ctx.respond(
-            "## [**Get MetalHUD shortcut here ↗**](https://discord.com/channels/1235385881586831451/1237550504846823425/1242331906146570351)\n"
-            + "**Instructions**: Unzip `FPS_Counter.zip` , move `FPS Counter.app` into Applications, then launch it. A gamepad icon will appear in top right toolbar. Enable FPS counter and restart CrossOver.\n"
-            + "### Keyboard Shorcuts\n"
-            + "`Fn + Shift + F9` to show/hide the Metal HUD once enabled\n"
-            + "`Fn + Shift + F7` to move the Metal HUD around the screen\n"
-            + "### Terminal Commands\n"
-            + "Enable MetalHUD:\n"
+            "### Metal HUD Terminal Commands\n"
+            + "Enable Metal HUD:\n"
             + "```/bin/launchctl setenv MTL_HUD_ENABLED 1```\n"
-            + "Disable MetalHUD:\n"
+            + "Disable Metal HUD:\n"
             + "```/bin/launchctl unsetenv MTL_HUD_ENABLED```\n"
+            + "`Fn + Shift + F9` to show/hide the Metal HUD once enabled\n"
+            + "`Fn + Shift + F7` to move the Metal HUD around the screen\n\n"
+            + "<:protip:1368106561045659678> **Pro Tip**: We recommend the [**Metal HUD FPS Count ↗**](https://discord.com/channels/1235385881586831451/1237550504846823425/1242331906146570351) App Shortcut as an easier solution to enabling/disabling the Metal HUD"
         )
 
 
@@ -129,7 +127,7 @@ class VideoFaq(
             + "2. Select `New Screen Recording` or press `⌘ + ⌃ + N`\n"
             + "3. If you have multiple displays, choose which one to record\n"
             + "4. Press `⌘ + ⌃ + Esc` to stop recording\n\n"
-            + "<:macprotip:1368106561045659678> **MacProTip**: We recommend [**QuickRecorder**](https://lihaoyun6.github.io/quickrecorder/) - a **free open-source**, light-weight, powerful screen recorder for macOS\n"
+            + "<:protip:1368106561045659678> **MacProTip**: We recommend [**QuickRecorder**](https://lihaoyun6.github.io/quickrecorder/) - a **free open-source**, light-weight, powerful screen recorder for macOS\n"
         )
 
 
