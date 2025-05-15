@@ -149,10 +149,6 @@ help_menu_items = [
         "desc": "Get a definition from a glossary of Mac gaming related terms",
     },
     {
-        "title": "/ev",
-        "desc": "Useful environment variables for Mac gaming",
-    },
-    {
         "title": "/metalhud",
         "desc": "Instructions for setting up the MetalHUD toolbar shortcut",
     },

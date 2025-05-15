@@ -23,8 +23,6 @@ works and will be added in the future.
 - `/define <term>`
   - Responds with a quick definition for one of a number of common Mac gaming
     related terms
-- `/ev` (environment variables)
-  - Lists common CrossOver bottle environment variables
 - `/metalhud`
   - Lists some helpful utilities/instructions for the Metal HUD
 - `/support`
