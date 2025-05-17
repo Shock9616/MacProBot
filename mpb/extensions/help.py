@@ -10,20 +10,18 @@ import hikari as hk
 import lightbulb as lb
 from lightbulb.components import InteractiveButton
 
-from ..constants import help_menu_items
-
 loader = lb.Loader()
 
 
 class HelpMenu(lb.components.Menu):
-    def __init__(self):
+    def __init__(self, command_metadata: list[dict[str, str]]):
         super().__init__()
 
         self.current_page_id: int = 0
 
         self.page_list: list[hk.Embed] = []
-        self.total_pages: int = int(len(help_menu_items) / 5) + (
-            1 if len(help_menu_items) % 5 != 0 else 0
+        self.total_pages: int = int(len(command_metadata) / 5) + (
+            1 if len(command_metadata) % 5 != 0 else 0
         )
 
         for i in range(self.total_pages):
@@ -32,8 +30,8 @@ class HelpMenu(lb.components.Menu):
             for j in range(5):
                 try:
                     _ = page.add_field(
-                        name=f"`{help_menu_items[i * 5 + j]['title']}`",
-                        value=help_menu_items[i * 5 + j]["desc"],
+                        name=f"`{command_metadata[i * 5 + j]['title']}`",
+                        value=command_metadata[i * 5 + j]["desc"],
                         inline=False,
                     )
                 except IndexError:
@@ -106,7 +104,20 @@ class Help(
 ):
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
-        help_menu = HelpMenu()
+        help_menu_items: list[dict[str, str]] = []
+
+        # Generate list of available commands/descriptions
+        for command in ctx.client.registered_commands:
+            # Exclude mod-only commands
+            if command.__module__ != "mpb.extensions.admin":
+                help_menu_items.append(
+                    {
+                        "title": f"/{command._command_data.name}",
+                        "desc": command._command_data.description,
+                    }
+                )
+
+        help_menu = HelpMenu(sorted(help_menu_items, key=lambda d: d["title"]))
 
         _ = await ctx.respond(
             "",

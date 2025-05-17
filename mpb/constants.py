@@ -135,41 +135,6 @@ glossary = {
     },
 }
 
-help_menu_items = [
-    {
-        "title": "/agwcheck <game name>",
-        "desc": "Get the compatibility ratings for the searched game from AppleGamingWiki",
-    },
-    {
-        "title": "/cxcheck <game name>",
-        "desc": "Get the searched game's star rating on the CrossOver Compatibility Database",
-    },
-    {
-        "title": "/define <term>",
-        "desc": "Get a definition from a glossary of Mac gaming related terms",
-    },
-    {
-        "title": "/metalhud",
-        "desc": "Instructions for setting up the MetalHUD toolbar shortcut",
-    },
-    {
-        "title": "/support",
-        "desc": "A quick form to fill out to help with game troubleshooting",
-    },
-    {
-        "title": "/updatedxmt",
-        "desc": "Link to a quick tutorial on how to update DXMT in CrossOver",
-    },
-    {
-        "title": "/videofaq",
-        "desc": "Helpful tips for recording footage for troubleshooting",
-    },
-    {
-        "title": "/wallpaper",
-        "desc": "Randomly select a wallpaper from the #wallpapers channel",
-    },
-]
-
 ai_prompt = (
     "You are a very sassy, sarcastic bot on a mac gaming discord server."
     + "You don't interact much, but you decided to make a very short, witty, and emoji-free exception for the following message"
