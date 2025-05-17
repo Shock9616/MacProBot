@@ -15,26 +15,23 @@ works and will be added in the future.
 ### Standard Commands
 
 - `/agwcheck <game name>`
-  - Searches AppleGamingWiki and retrieves all compatibility ratings for the
-    searched game
+  - Get the compatibility ratings for the searched game from
+    [AppleGamingWiki](https://www.applegamingwiki.com/wiki/Home)
 - `/cxcheck <game name>`
-  - Searches the CrossOver compatibility database and retrieves the current
-    compatibility rating for the searched game
+  - Get the searched game's star rating on the CrossOver
+    [Compatibility Database](https://www.codeweavers.com/compatibility)
 - `/define <term>`
-  - Responds with a quick definition for one of a number of common Mac gaming
-    related terms
+  - Get a definition from a glossary of Mac gaming related terms
 - `/metalhud`
-  - Lists some helpful utilities/instructions for the Metal HUD
+  - Instructions for setting up the Metal HUD toolbar shortcut
 - `/support`
-  - Lists some common info that is helpful for troubleshooting issues with Mac
-    gaming
-- `/support1`
-  - Gives some helpful tips for recording footage for troubleshooting
+  - A quick for mto fill out to help with game troubleshooting gaming
 - `/updatedxmt`
-  - Gives a link for the MacProTips tutorial for updating DXMT in CrossOver, and
-    a link to download the latest version
+  - Link to a quick tutorial on how to update DXMT in CrossOver
+- `/videofaq`
+  - Helpful tips for recording footage for troubleshooting
 - `/wallpaper`
-  - Respond with a random wallpaper from the configured wallpapers channel
+  - Randomly select a wallpaper from the #wallpapers channel
 
 ### Admin/Mod Commands
 
