@@ -36,6 +36,17 @@ class MetalHud(
             + "<:protip:1368106561045659678> **Pro Tip**: We recommend the [**Metal HUD FPS Count ↗**](https://discord.com/channels/1235385881586831451/1237550504846823425/1242331906146570351) App Shortcut as an easier solution to enabling/disabling the Metal HUD"
         )
 
+@loader.command
+class Test(
+    lb.SlashCommand,
+    name="test",
+    description="jfishin sucks",
+):
+    @lb.invoke
+    async def invoke(self, ctx: lb.Context):
+        _ = await ctx.respond(
+           "Jifshin is a big poopy head"
+        )
 
 @loader.command
 class Support(
