@@ -95,5 +95,3 @@ WALLPAPERS_CHANNEL_ID = <1234567890>
 ```bash
 python main.py
 ```
-
-example
