@@ -108,8 +108,11 @@ class Help(
 
         # Generate list of available commands/descriptions
         for command in ctx.client.registered_commands:
-            # Exclude mod-only commands
-            if command.__module__ != "mpb.extensions.admin":
+            # Exclude mod-only commands and the help command
+            if (
+                command.__module__ != "mpb.extensions.admin"
+                and command.__module__ != "mpb.extensions.help"
+            ):
                 help_menu_items.append(
                     {
                         "title": f"/{command._command_data.name}",
