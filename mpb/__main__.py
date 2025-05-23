@@ -59,8 +59,7 @@ async def on_message_created(event: hk.MessageCreateEvent):
     if not event.message.content or event.is_bot:  # Ignore empty messages and bots
         return
 
-    # if len(event.message.content.split()) > 8 and random.randint(0, 100) == 69:
-    if len(event.message.content.split()) > 8:
+    if len(event.message.content.split()) > 8 and random.randint(0, 100) == 69:
         # Respond to ~1/100 messages that are more than 8 words long
 
         client = OpenAI(
