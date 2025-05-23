@@ -84,7 +84,7 @@ WALLPAPERS_CHANNEL_ID = <1234567890>
   [Discord Developer Portal](https://discord.com/developers/applications)
 - `AI_API_KEY` Is used to connect to an LLM on OpenRouter for unprompted
   responses. This is not necessary to run the bot, but the AI responses will not
-  work without it (Currently disabled)
+  work without it
 - `ANNOUNCEMENTS_CHANNEL_ID`, `MOD_CHANNEL_ID`, and `WALLPAPERS_CHANNEL_ID` are
   the unique identifiers for the channels used for the `/announce` and
   `/wallpaper` commands. These aren't necessary to run the bot, but the commands
