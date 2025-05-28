@@ -6,6 +6,7 @@
 
 import os
 import random
+import re
 from collections.abc import Sequence
 
 import dotenv
@@ -14,7 +15,7 @@ import lightbulb as lb
 from openai import OpenAI
 
 from . import extensions
-from .constants import ai_prompt, sassy_responses
+from .constants import ai_prompt, sassy_responses, url_regex
 
 _ = dotenv.load_dotenv()
 
@@ -59,9 +60,11 @@ async def on_message_created(event: hk.MessageCreateEvent):
     if not event.message.content or event.is_bot:  # Ignore empty messages and bots
         return
 
-    if len(event.message.content.split()) > 8 and random.randint(0, 100) == 69:
-        # Respond to ~1/100 messages that are more than 8 words long
-
+    if (
+        len(event.message.content.split()) > 8  # Longer than 8 words
+        and not re.search(url_regex, event.message.content)  # No URLs
+        and random.randint(0, 100) == 69  # 1/100 chance to respond
+    ):
         client = OpenAI(
             base_url="https://openrouter.ai/api/v1",
             api_key=os.environ["AI_API_KEY"],
