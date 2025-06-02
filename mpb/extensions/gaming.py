@@ -81,7 +81,13 @@ class AgwCheck(
             game_page = requests.get(game_page_url)
             soup = bs(game_page.content, "html.parser")
             compat_table = soup.find("table", {"id": "table-compatibility"})
-            assert type(compat_table) is Tag
+
+            if type(compat_table) is not Tag:
+                _ = await ctx.respond(
+                    f"Sorry, I couldn't find '{self.game}' on [**AppleGamingWiki**](<https://www.applegamingwiki.com/>). Please check your spelling and try again",
+                    ephemeral=True,
+                )
+                return
 
         # Get table rows containing compatibility data
         data_rows: ResultSet[Tag] = compat_table.find_all(
