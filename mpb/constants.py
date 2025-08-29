@@ -96,8 +96,8 @@ glossary = {
     },
     "kegworks": {
         "def": "An open-source tool used to make wine wrapped ports of Windows software for macOS.",
-        "link": "https://github.com/Kegworks-App/Kegworks",
-        "name": "Kegworks",
+        "link": "https://github.com/Sikarugir-App/Sikarugir",
+        "name": "Kegworks (Renamed to Sikarugir)",
     },
     "metal": {
         "def": "Apple's low-level, high-performance graphics API, similar to DirectX, Vulkan, or OpenGL",
@@ -118,6 +118,11 @@ glossary = {
         "def": "Pauses or stutters that happen when the game is compiling new shaders on the fly, often during first-time gameplay",
         "link": "https://www.howtogeek.com/846514/what-is-shader-compilation-and-why-does-it-make-pc-games-stutter/",
         "name": "Shader Compilation Stutter",
+    },
+    "sikarugir": {
+        "def": "An open-source tool used to make wine wrapped ports of Windows software for macOS.",
+        "link": "https://github.com/Sikarugir-App/Sikarugir",
+        "name": "Sikarugir (Formerly Kegworks)",
     },
     "steam": {
         "def": "A digital store and launcher for PC games run by Valve",
