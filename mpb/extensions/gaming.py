@@ -42,8 +42,9 @@ class AgwCheck(
         if type(compat_table) is not Tag:
             # No game perfectly matches search, find closest search result instead
 
-            search_results: ResultSet[Tag] = soup.find_all(
-                "div", {"class": "mw-search-result-heading"}
+            search_results = cast(
+                ResultSet[Tag],
+                soup.find_all("div", {"class": "mw-search-result-heading"}),
             )
 
             # Find result with most similar name
@@ -90,8 +91,11 @@ class AgwCheck(
                 return
 
         # Get table rows containing compatibility data
-        data_rows: ResultSet[Tag] = compat_table.find_all(
-            "tr", {"class": "template-infotable-body table-compatibility-body-row"}
+        data_rows = cast(
+            ResultSet[Tag],
+            compat_table.find_all(
+                "tr", {"class": "template-infotable-body table-compatibility-body-row"}
+            ),
         )
 
         # Get proper game title
@@ -185,7 +189,7 @@ class CxCheck(
         # Get list of app links
         app_list = search_page_soup.find(id="teTable-app")
         if type(app_list) is Tag:
-            apps: ResultSet[Tag] = app_list.find_all("a")
+            apps = cast(ResultSet[Tag], app_list.find_all("a"))
         else:
             _ = await ctx.respond(
                 f"Sorry, I couldn't find '{self.game}' in the [**CrossOver Compatibility Database**](<https://www.codeweavers.com/compatibility>). Please check your spelling and try again",
