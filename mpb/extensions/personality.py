@@ -13,7 +13,7 @@ import hikari as hk
 import lightbulb as lb
 from openai import OpenAI
 
-from ..constants import ai_prompt, sassy_responses, url_regex
+from ..constants import ai_prompt, fanfic, sassy_responses, url_regex
 
 loader = lb.Loader()
 
@@ -27,6 +27,14 @@ async def on_bot_mentioned(event: hk.MessageCreateEvent):
 
     bot_user = await event.app.rest.fetch_my_user()  # needs to be a hikari.GatewayBot
     mentions = event.message.user_mentions_ids
+    referenced = event.message.referenced_message
+
+    if referenced is not None and referenced.content == sassy_responses[43]:
+        # Easter egg, reply with fanfic excerpt
+        _ = await event.message.respond(
+            f"Since you _insist_ on pinging me, here's a preview of the fanfic just to show that I'm not lying:\n\n{fanfic[0]}\nNow leave me alone"
+        )
+        return
 
     if not isinstance(mentions, Sequence):
         return

@@ -101,6 +101,15 @@ sassy_responses = [
     "new gptk beta dropped! nobody knows what it does",
 ]
 
+fanfic = [
+    """> CW Fan Fiction by MacProBot\n> 
+    > Chapter 1: The Secret App\n> 
+    > Tis late at night in the CodeWeavers office, and all the employees but one have gone home. Thunder roars across the valley as sheets of rain cascade down on the buildings roof. Cody Beaver sits in the back corner of the third floor office, the dim light of his foldable desk lamp illuminating his M2 MacBook Air. Space Grey. 16GB RAM. The muffled sound of the pouring rain echoes through the empty office.\n> 
+    > Cody looks around, paranoid to his lil beaver core, making sure no one is secretly watching him. If word of what he was about to create got out, Mac gaming would be changed forever.\n> 
+    > His eyes widen as he clicks 'Compile' to complete and test his top secret Mac app. A ping emits from the MacBook Air’s four speaker sound system (consists of two tweeters and two woofers).\n> 
+    > The beaver basks in the glory of the finished app. CrossOverX. A version of CrossOver that can run any game on Mac. He double clicks it and within seconds Fortnite and Valorant both automatically launch at the same time, getting a locked 240 FPS at 4K.\n"""
+]
+
 glossary = {
     "anti-aliasing": {
         "def": "A graphics setting that smooths out jagget edges in graphics, making the game look cleaner but sometimes negatively impacting performance",
