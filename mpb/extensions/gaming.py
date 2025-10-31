@@ -181,76 +181,97 @@ class CxCheck(
 
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
+        # Get game search page data
         game_search = "+".join(self.game.split(" "))
         search_url = f"https://www.codeweavers.com/compatibility?browse=&app_desc=&company=&rating=&platform=&date_start=&date_end=&name={game_search}&search=app#results"
-        search_page = requests.get(search_url)
-        search_page_soup = bs(search_page.content, "html.parser")
+        search_page_soup = self.__get_page(search_url)
 
-        # Get list of app links
+        # Get list of game links
         app_list = search_page_soup.find(id="teTable-app")
         if type(app_list) is Tag:
             apps = cast(ResultSet[Tag], app_list.find_all("a"))
         else:
-            _ = await ctx.respond(
-                f"Sorry, I couldn't find '{self.game}' in the [**CrossOver Compatibility Database**](<https://www.codeweavers.com/compatibility>). Please check your spelling and try again",
-                ephemeral=True,
-            )
+            _ = await self.__resp_no_game(self.game, ctx)
             return
 
-        # Find app with most similar name
+        # Get info for most similar search result
+        game_tag = self.__find_most_similar(self.game, apps)
+        db_name = game_tag.string
+        rel_link = game_tag["href"]
+
+        # Get game page data
+        game_url = f"https://www.codeweavers.com/{rel_link}"
+        game_soup = self.__get_page(game_url)
+
+        # Find current star rating
+        all_star_tables = game_soup.find_all("ul", {"class": "star-rating-table"})
+        star_table: Tag = cast(Tag, all_star_tables[0])
+
+        # Get game performance rating and description
+        rating = self.__get_rating(star_table)
+        rating_desc = self.__get_rating_desc(rating)
+
+        _ = await ctx.respond(
+            "",
+            embed=self.__build_embed(db_name, rating, rating_desc, game_url, ctx),
+        )
+
+    def __get_page(self, url: str) -> bs:
+        """Return parsed page data for the given URL"""
+        page = requests.get(url)
+        return bs(page.content, "html.parser")
+
+    def __find_most_similar(self, game: str, apps: ResultSet[Tag]) -> Tag:
+        """Find the search result with the most similar name to the user's search"""
         most_similar = 0
         most_similar_idx = 0
-        idx = 0
-        for app in apps:
+        for idx, app in enumerate(apps):
             assert type(app.string) is NavigableString
 
-            similarity = SequenceMatcher(None, app.string, self.game).ratio()
+            similarity = SequenceMatcher(None, app.string, game).ratio()
             if similarity > most_similar:
                 most_similar = similarity
                 most_similar_idx = idx
-            idx += 1
 
-        db_name = apps[most_similar_idx].string
-        rel_link = apps[most_similar_idx]["href"]
+        return apps[most_similar_idx]
 
-        # Get page data
-        game_page_url = f"https://www.codeweavers.com/{rel_link}"
-        game_page = requests.get(game_page_url)
-        soup = bs(game_page.content, "html.parser")
+    def __get_rating(self, star_table: Tag) -> int:
+        """Read how many active stars are in the game's rating"""
+        rating = 0
 
-        # Find current star rating
-        all_star_tables = soup.find_all("ul", {"class": "star-rating-table"})
-        star_table: Tag = cast(Tag, all_star_tables[0])
-
-        # Count stars
-        star_count = 0
         for star in star_table:
             assert type(star) is Tag
 
             try:
                 if star["class"] == ["active"]:
-                    star_count += 1
+                    rating += 1
             except KeyError:
                 break
 
-        # Set rating description based on star count
-        match star_count:
-            case 1:
-                rating_desc = "Will Not Install"
-            case 2:
-                rating_desc = "Installs, Will Not Run"
-            case 3:
-                rating_desc = "Limited Functionality"
-            case 4:
-                rating_desc = "Runs Well"
-            case 5:
-                rating_desc = "Runs Great"
-            case _:
-                rating_desc = "Unkown"
+        return rating
 
-        # Create embed for the response
+    def __get_rating_desc(self, rating: int) -> str:
+        """Get the rating description matching the game's star rating"""
+        match rating:
+            case 1:
+                return "Will Not Install"
+            case 2:
+                return "Installs, Will Not Run"
+            case 3:
+                return "Limited Functionality"
+            case 4:
+                return "Runs Well"
+            case 5:
+                return "Runs Great"
+            case _:
+                return "Unknown"
+
+    def __build_embed(
+        self, title: str | None, stars: int, desc: str, game_url: str, ctx: lb.Context
+    ) -> hk.Embed:
+        """Create the response embed showing collected info"""
         embed = hk.Embed(
-            title=db_name,
+            title=title,
             colour=ctx.user.accent_colour,
         )
 
@@ -261,16 +282,23 @@ class CxCheck(
 
         _ = embed.add_field(
             name="Rating",
-            value=f"{':star:' * star_count} ({rating_desc})",
+            value=f"{':star:' * stars} ({desc})",
             inline=False,
         )
 
         _ = embed.add_field(
-            value=f"[**Link ↗**]({game_page_url})",
+            value=f"[**Link ↗**]({game_url})",
             inline=False,
         )
 
-        _ = await ctx.respond("", embed=embed)
+        return embed
+
+    async def __resp_no_game(self, game: str, ctx: lb.Context):
+        """Respond to the user in the event that the game is not found"""
+        _ = await ctx.respond(
+            f"Sorry, I couldn't find '{game}' in the [**CrossOver Compatibility Database**](<https://www.codeweavers.com/compatibility>). Please check your spelling and try again",
+            ephemeral=True,
+        )
 
 
 async def define_autocomplete(ctx: lb.AutocompleteContext[str]):
