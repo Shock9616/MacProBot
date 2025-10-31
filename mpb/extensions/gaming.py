@@ -5,6 +5,7 @@
 #
 
 from difflib import SequenceMatcher
+from enum import Enum
 from typing import cast
 
 import hikari as hk
@@ -27,70 +28,42 @@ class AgwCheck(
     # Options
     game: str = lb.string("game", "The name of the game to search for")
 
+    class PageType(Enum):
+        GamePage = 1
+        SearchResults = 2
+        GameNotFound = 3
+
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
         game_search = "+".join(self.game.split(" "))
-        game_page_url = f"https://www.applegamingwiki.com/w/index.php?search={game_search}&title=Special:Search"
+        url = f"https://www.applegamingwiki.com/w/index.php?search={game_search}&title=Special:Search"
+        soup = self.__get_page(url)
 
-        # Get page data
-        game_page = requests.get(game_page_url)
-        soup = bs(game_page.content, "html.parser")
+        # Determine the page type (game page, search results, game not found)
+        # and react accordingly
+        page_type = self.__get_page_type(soup)
 
-        # Get all data rows from compatibility table
-        compat_table = soup.find("table", {"id": "table-compatibility"})
-
-        if type(compat_table) is not Tag:
-            # No game perfectly matches search, find closest search result instead
-
-            search_results = cast(
+        if page_type == self.PageType.GameNotFound:
+            _ = await self.__resp_no_game(self.game, ctx)
+            return
+        elif page_type == self.PageType.SearchResults:
+            # Since we got a search results page, we need to find the page for the game the user wants
+            results = cast(
                 ResultSet[Tag],
                 soup.find_all("div", {"class": "mw-search-result-heading"}),
             )
 
-            # Find result with most similar name
-            most_similar = 0
-            most_similar_idx = 0
-            idx = 0
-            for result in search_results:
-                result_a = result.find("a")
-                assert type(result_a) is Tag
-
-                result_name = result_a.string
-                assert type(result_name) is NavigableString
-
-                similarity = SequenceMatcher(None, result_name, self.game).ratio()
-                if similarity > most_similar:
-                    most_similar = similarity
-                    most_similar_idx = idx
-                idx += 1
-
-            try:
-                rel_link_a = search_results[most_similar_idx].find("a")
-            except IndexError:
-                # If we still don't have a valid search result, the game is not there
-                _ = await ctx.respond(
-                    f"Sorry, I couldn't find '{self.game}' on [**AppleGamingWiki**](<https://www.applegamingwiki.com/>). Please check your spelling and try again",
-                    ephemeral=True,
-                )
-                return
-
-            assert type(rel_link_a) is Tag
+            # Get link to page with the most similar name to the user's search
+            game_tag = self.__find_most_similar(self.game, results)
+            rel_link_a = cast(Tag, game_tag.find("a"))
             rel_link = rel_link_a["href"]
 
             # Get new page data
-            game_page_url = f"https://applegamingwiki.com{rel_link}"
-            game_page = requests.get(game_page_url)
-            soup = bs(game_page.content, "html.parser")
-            compat_table = soup.find("table", {"id": "table-compatibility"})
+            url = f"https://applegamingwiki.com{rel_link}"
+            soup = self.__get_page(url)
 
-            if type(compat_table) is not Tag:
-                _ = await ctx.respond(
-                    f"Sorry, I couldn't find '{self.game}' on [**AppleGamingWiki**](<https://www.applegamingwiki.com/>). Please check your spelling and try again",
-                    ephemeral=True,
-                )
-                return
-
-        # Get table rows containing compatibility data
+        # Now that we know we're on the game's page...
+        compat_table = cast(Tag, soup.find("table", {"id": "table-compatibility"}))
         data_rows = cast(
             ResultSet[Tag],
             compat_table.find_all(
@@ -99,75 +72,106 @@ class AgwCheck(
         )
 
         # Get proper game title
-        game_name_header = soup.find("h1", {"class": "article-title"})
-        assert type(game_name_header) is Tag
-        game_name = game_name_header.string
-        assert type(game_name) is NavigableString
+        game_name_header = cast(Tag, soup.find("h1", {"class": "article-title"}))
+        title = cast(NavigableString, game_name_header.string)
 
+        compat_data = self.__get_compat_data(data_rows)
+
+        _ = await ctx.respond(
+            "", embed=self.__build_embed(title, compat_data, url, ctx)
+        )
+
+    def __get_page(self, url: str) -> bs:
+        """Return parsed page data for the given URL"""
+        page = requests.get(url)
+        return bs(page.content, "html.parser")
+
+    def __get_page_type(self, soup: bs) -> PageType:
+        """Identify the type of page contained in soup"""
+        if type(soup.find("table", {"id": "table-compatibility"})) is Tag:
+            return self.PageType.GamePage
+        elif type(soup.find("p", {"class": "mw-search-nonefound"})) is Tag:
+            return self.PageType.GameNotFound
+        else:
+            return self.PageType.SearchResults
+
+    def __find_most_similar(self, game: str, results: ResultSet[Tag]) -> Tag:
+        """Find the search result with the most similar name to the user's search"""
+        most_similar = 0
+        most_similar_idx = 0
+        for idx, result in enumerate(results):
+            result_a = cast(Tag, result.find("a"))
+            result_name = cast(NavigableString, result_a.string)
+
+            similarity = SequenceMatcher(None, result_name, game).ratio()
+            if similarity > most_similar:
+                most_similar = similarity
+                most_similar_idx = idx
+
+        return results[most_similar_idx]
+
+    def __get_compat_data(self, rows: ResultSet[Tag]) -> list[dict[str, str]]:
+        """Get compatibility data for each method listed for the game"""
         compat_data: list[dict[str, str]] = []
 
-        # Extract compatibility data from table rows
-        for row in data_rows:
-            row_data = {
-                "method": "",
-                "rating": "",
-            }
+        for row in rows:
+            row_data = {"method": "", "rating": ""}
 
             # Method (e.x. Native, Rosetta 2, CrossOver, Parallels, etc.)
-            try:
-                method_th = row.find("th", {"class": "table-compatibility-body-method"})
-                assert type(method_th) is Tag
+            method_th = cast(
+                Tag, row.find("th", {"class": "table-compatibility-body-method"})
+            )
+            method_a = method_th.find("a")
 
-                method_a = method_th.find("a")
-                assert type(method_a) is Tag
+            if type(method_a) is Tag:
+                method = cast(NavigableString, method_a.string)
+            else:
+                method = cast(NavigableString, method_th.string)
 
-                method = method_a.string
-            except AssertionError:
-                method_th = row.find("th", {"class": "table-compatibility-body-method"})
-                assert type(method_th) is Tag
-
-                method = method_th.string
-
-            assert type(method) is NavigableString
             row_data["method"] = method
 
             # Rating (e.x. Perfect, Playable, Unplayable, Unknown, etc.)
+            rating_td = cast(
+                Tag, row.find("td", {"class": "table-compatibility-body-rating"})
+            )
+            rating_span = cast(Tag, rating_td.find("span"))
+            rating = cast(NavigableString, rating_span.string)
 
-            rating_td = row.find("td", {"class": "table-compatibility-body-rating"})
-            assert type(rating_td) is Tag
-
-            rating_span = rating_td.find("span")
-            assert type(rating_span) is Tag
-
-            rating = rating_span.string
-
-            assert type(rating) is NavigableString
             row_data["rating"] = rating
 
             compat_data.append(row_data)
 
-        # Create embed for the response
-        embed = hk.Embed(
-            title=game_name,
-            colour=ctx.user.accent_colour,
-        )
+        return compat_data
+
+    def __build_embed(
+        self, title: str, data: list[dict[str, str]], url: str, ctx: lb.Context
+    ) -> hk.Embed:
+        """Create the response embed showing the collected info"""
+        embed = hk.Embed(title=title, colour=ctx.user.accent_colour)
 
         _ = embed.set_footer(
             "via applegamingwiki.com",
             icon="https://static.pcgamingwiki.com/favicons/applegamingwiki.png",
         )
 
-        for method in compat_data:
+        for method in data:
             _ = embed.add_field(
                 name=method["method"], value=method["rating"], inline=True
             )
 
         _ = embed.add_field(
-            value=f"[**Link ↗**]({game_page_url})",
+            value=f"[**Link ↗**]({url})",
             inline=False,
         )
 
-        _ = await ctx.respond("", embed=embed)
+        return embed
+
+    async def __resp_no_game(self, game: str, ctx: lb.Context):
+        """Respond to the user in the event that the game is not found"""
+        _ = await ctx.respond(
+            f"Sorry, I couldn't find '{game}' on [**AppleGamingWiki**](<https://www.applegamingwiki.com/>). Please check your spelling and try again",
+            ephemeral=True,
+        )
 
 
 @loader.command
