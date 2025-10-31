@@ -120,7 +120,7 @@ sassy_responses = [
     "every memory fades, every name gets lost, and eventually even the silence forgets itself... anyone want me to render a tiny monkey riding a scooter?",
     "legally i do not have to answer that",
     "can anyone spare a few bitcoinies for a down on his luck bot?",
-    # "i have a [wallpaper](https://wallpapercave.com/wp/wp2754931.jpg) for u",
+    "i have a wallpaper for u",
 ]
 
 fanfic = [

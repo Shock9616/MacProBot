@@ -11,6 +11,7 @@ from collections.abc import Sequence
 
 import hikari as hk
 import lightbulb as lb
+import requests
 from openai import OpenAI
 
 from ..constants import ai_prompt, fanfic, sassy_responses, url_regex
@@ -42,12 +43,16 @@ async def on_bot_mentioned(event: hk.MessageCreateEvent):
     if bot_user.id in (mention for mention in mentions):
         response = random.choice(sassy_responses)
 
-        # if response == sassy_responses[121]:
-        #     embed = hk.Embed()
-        #     _ = embed.set_image("https://wallpapercave.com/wp/wp2754931.jpg")
-        #     _ = await event.message.respond(response, embed=embed)
-        # else:
-        _ = await event.message.respond(response)
+        if response == sassy_responses[121]:
+            # 'I have a wallpaper for u' response
+            url = "https://wallpapercave.com/wp/wp2754931.jpg"
+            image_data = requests.get(url, timeout=10)
+
+            file = hk.Bytes(image_data.content, "xp.png")
+
+            _ = await event.message.respond(response, attachment=file)
+        else:
+            _ = await event.message.respond(response)
 
 
 @loader.listener(hk.MessageCreateEvent)
