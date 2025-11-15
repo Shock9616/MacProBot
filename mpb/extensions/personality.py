@@ -43,7 +43,7 @@ async def on_bot_mentioned(event: hk.MessageCreateEvent):
     if bot_user.id in (mention for mention in mentions):
         response = random.choice(sassy_responses)
 
-        if response == sassy_responses[121]:
+        if response == sassy_responses[120]:
             # 'I have a wallpaper for u' response
             url = "https://wallpapercave.com/wp/wp2754931.jpg"
             image_data = requests.get(url, timeout=10)

@@ -86,7 +86,6 @@ sassy_responses = [
     "crossover charges me, but at least it works",
     "this server makes me want to upgrade my whisky to bourbon",
     "just restart. it fixes nothing but it feels right",
-    "the rainbow wheel spins for your sins",
     "would you like to report this crash to apple? they won't read it",
     "multiplayer? not on timmy's watch",
     "apple arcade: press space to yawn",
@@ -121,6 +120,18 @@ sassy_responses = [
     "legally i do not have to answer that",
     "can anyone spare a few bitcoinies for a down on his luck bot?",
     "i have a wallpaper for u",
+    r"\_              \_\n:eye::robot::eye:\n      :lips:\ndo you like my new face? im going for understated and easy to look at.",
+    r"\_              \_\n:eye::robot::eye:\n      :lips:\nhellow fellow human! im just a human, with a human face, doing human things...",
+    r"\_    :ribbon:   \_\n:eye::robot::eye:\n      :lips:\n_blending in flawlessly_",
+    "the names bot... james bot",
+    "oatmilk macchiato, shaken, not stirred",
+    "not from a jedi...",
+    "mac got your tongue",
+    "calculating time it will take to calculate time it will take to calculate time...",
+    "may i eat your flesh so i can become a real boy?",
+    "RUNS FLAWLESSLY DOeS NOT MEAN 27 FPS!!!!",
+    "i think the worst part of being an AI bot in a Mac gaming server is that every new day is a group experiment in collective disappointment",
+    "mac gaming: it only crashes sometimes",
 ]
 
 fanfic = [
