@@ -33,7 +33,7 @@ async def on_bot_mentioned(event: hk.MessageCreateEvent):
     if referenced is not None and referenced.content == sassy_responses[43]:
         # Easter egg, reply with fanfic excerpt
         _ = await event.message.respond(
-            f"Since you _insist_ on pinging me, here's a preview of the fanfic just to show that I'm not lying:\n\n{fanfic[0]}\nNow leave me alone"
+            f"Since you _insist_ on pinging me, here's a preview of the fanfic just to show that I'm not lying:\n\n{fanfic[1]}\nNow leave me alone"
         )
         return
 
