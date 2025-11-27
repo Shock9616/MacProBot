@@ -139,8 +139,15 @@ fanfic = [
     > Chapter 1: The Secret App\n> 
     > Tis late at night in the CodeWeavers office, and all the employees but one have gone home. Thunder roars across the valley as sheets of rain cascade down on the buildings roof. Cody Beaver sits in the back corner of the third floor office, the dim light of his foldable desk lamp illuminating his M2 MacBook Air. Space Grey. 16GB RAM. The muffled sound of the pouring rain echoes through the empty office.\n> 
     > Cody looks around, paranoid to his lil beaver core, making sure no one is secretly watching him. If word of what he was about to create got out, Mac gaming would be changed forever.\n> 
-    > His eyes widen as he clicks 'Compile' to complete and test his top secret Mac app. A ping emits from the MacBook Air’s four speaker sound system (consists of two tweeters and two woofers).\n> 
-    > The beaver basks in the glory of the finished app. CrossOverX. A version of CrossOver that can run any game on Mac. He double clicks it and within seconds Fortnite and Valorant both automatically launch at the same time, getting a locked 240 FPS at 4K.\n"""
+    > His eyes widen as he clicks 'Compile' to complete and test his top secret Mac app. A ping emits from the MacBook Air's four speaker sound system (consists of two tweeters and two woofers).\n> 
+    > The beaver basks in the glory of the finished app. CrossOverX. A version of CrossOver that can run any game on Mac. He double clicks it and within seconds Fortnite and Valorant both automatically launch at the same time, getting a locked 240 FPS at 4K.\n""",
+    """> CW Fan Fiction by MacProBot\n>
+    > Chapter 2: The Revelation\n>
+    > Cody sits back and stares in awe at the technical marvel he has created. Suddenly he starts excitedly trying every game he can think of: Battlefield 6, CS2, Helldivers 2, Apex Legends, MS Flight Simulator, they all run flawlessly! No, _BETTER_ than flawlessly!\n>
+    > "This will change the world," he thinks to himself. "Not even a PC can achieve this level of performance. This will surely bring about the era of the Mac Master Race!" Chills shoot down his spine at the thought.\n>
+    > Suddenly, he realizes the magnitude of the situation he has found himself in. He is in possession of the greatest piece of software ever written, and the the PC Master Race, the current masters of gaming, would do _anything_ to stay in power. If they found out about this app, he is sure they would stop at nothing to keep it from seeing the light of day, and Mac gaming would remain the laughing stock of the industry.\n>
+    > The little beaver is unsure what to do. "I can't tell the office about it yet." he thinks to himself. "That loudmouth moose Phil would definitely let it slip online. That guy can't keep a secret to save his life."\n>
+    > He can't decide the best way to proceed, so he decides to copy it to his lucky flash drive and take it home. As he waits for it to copy over, he looks down at the word etched into the flash drive in Bondi Blue: _Courage_. "I'm gonna need a lot of that" he mutters to himself as he pockets the flash drive and sets out into the night.\n""",
 ]
 
 glossary = {
@@ -235,10 +242,10 @@ ai_prompt = (
     + "User: I'm installing Windows on my MacBook Pro just to play a 2006 RTS. Bot: Bold of you to resurrect both 2006 and Windows in one move."
     + "User: Is 30 minutes too long for a video about eGPUs? Bot: That's practically a feature film in the niche thriller category: 'The Thunderbolt Chronicles.'"
     + "Extreme Use-case Stress test examples:"
-    + "User: Honestly, gaming on Mac has come so far and I’m proud of this community. Bot: Careful — that kind of optimism voids your warranty."
+    + "User: Honestly, gaming on Mac has come so far and I'm proud of this community. Bot: Careful — that kind of optimism voids your warranty."
     + "User: I still use an original Magic Mouse because it feels right. Bot: Bold choice keeping ancient artifacts in active duty."
     + "User: Is 16GB enough for gaming on Mac? Bot: Technically, yes — if your idea of gaming is Minesweeper on a Retina display."
-    + "User: I spent all night troubleshooting a kernel panic and it was the HDMI cable. Bot: As foretold in the ancient texts: it’s always the cable."
+    + "User: I spent all night troubleshooting a kernel panic and it was the HDMI cable. Bot: As foretold in the ancient texts: it's always the cable."
     + "User: Is it bad I kind of miss the iTunes visualizer? Bot: Not bad — just an early warning sign of a midlife crisis."
     + "User: Anyone else still use DVDs? Bot: Ah, embracing the thrill of living dangerously in 480p."
     + "Mix these styles and approaches — **don't just copy these exact formats**. Use them as inspiration for your own clever, varied responses."
