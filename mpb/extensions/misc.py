@@ -26,14 +26,22 @@ class MetalHud(
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
         _ = await ctx.respond(
-            "### Metal HUD Terminal Commands\n"
+            "**<:protip:1368106561045659678> How to Enable the Metal HUD on Mac**\n"
+            + "IMPORTANT: Make sure both your launcher (Steam, CrossOver, etc.) and your game are fully closed before enabling or disabling the HUD.\n\n"
+            + "**Terminal Commands**\n\n"
             + "Enable Metal HUD:\n"
-            + "```/bin/launchctl setenv MTL_HUD_ENABLED 1```\n"
+            + "```/bin/launchctl setenv MTL_HUD_ENABLED 1```\n\n"
             + "Disable Metal HUD:\n"
-            + "```/bin/launchctl unsetenv MTL_HUD_ENABLED```\n"
+            + "```/bin/launchctl unsetenv MTL_HUD_ENABLED```\n\n"
+            + "**MetalHUDMenu Menu Bar App**\n\n"
+            + "We highly recommend using MetalHUDMenu to enable and customize the Metal HUD system wide!\n"
+            + "[**MetalHUDMenu ↗**](<https://github.com/Jfishin/MetalHUDmenu>)\n"
+            + "[**Guide ↗**](<https://youtu.be/SDs3xhA2Ufo>)\n\n"
+            + "**Metal HUD Keyboard Shortcuts**\n\n"
             + "`Fn + Shift + F9` to show/hide the Metal HUD once enabled\n"
-            + "`Fn + Shift + F7` to move the Metal HUD around the screen\n\n"
-            + "<:protip:1368106561045659678> **Pro Tip**: We recommend the [**Metal HUD FPS Count ↗**](https://discord.com/channels/1235385881586831451/1237550504846823425/1242331906146570351) App Shortcut as an easier solution to enabling/disabling the Metal HUD"
+            + "`Fn + Shift + F7` to move the Metal HUD around the screen\n"
+            + "`Fn + Shift + F12` to customize the HUD\n\n"
+            + "<:protip:1368106561045659678> Pro Tip: You can triple click the HUD to get the customization controls!"
         )
 
 
@@ -73,22 +81,21 @@ class UpdateDxmt(
 @loader.command
 class VideoFaq(
     lb.SlashCommand,
-    name="videofaq",
-    description="Guidelines for video recording for troubleshooting",
+    name="screenrecord",
+    description="Quick instructions for how to record your mac's screen",
 ):
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
         _ = await ctx.respond(
-            ":red_circle: **Recording Guidelines for Support**: *If possible, please include a screen recording that shows:*\n"
-            + "1. Opening CrossOver and your bottle settings\n"
-            + "2. Launching the game platform (Steam, GOG, Epic, etc.)\n"
-            + "3. Starting the game and any errors that appear\n\n"
-            + ":bulb: **Tip**: *You can use QuickTime Player to record your screen—especially helpful if the issue happens in-game:*\n"
-            + "1. Open QuickTime Player and go to `File`\n"
-            + "2. Select `New Screen Recording` or press `⌘ + ⌃ + N`\n"
-            + "3. If you have multiple displays, choose which one to record\n"
-            + "4. Press `⌘ + ⌃ + Esc` to stop recording\n\n"
-            + "<:protip:1368106561045659678> **MacProTip**: We recommend [**QuickRecorder**](https://lihaoyun6.github.io/quickrecorder/) - a **free open-source**, light-weight, powerful screen recorder for macOS\n"
+            "**<:protip:1368106561045659678> How to Record Gameplay/Desktop on a Mac**\n\n"
+            + "**1. QuickTime Player (NO AUDIO)**\n"
+            + "Open QuickTime Player and go to File\n"
+            + "Select New Screen Recording or press `⌘ + ⌃ + N`\n"
+            + "If you have multiple displays, choose which one to record\n"
+            + "Press `⌘ + ⌃ + Esc` to stop recording\n\n"
+            + "**2. Quick Recorder App (YES AUDIO)**\n"
+            + "A free, open-source, light-weight, powerful screen recorder for macOS.\n"
+            + "Download [Quick Recorder↗](https://lihaoyun6.github.io/quickrecorder/)"
         )
 
 
