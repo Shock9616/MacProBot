@@ -36,6 +36,11 @@ async def on_bot_mentioned(event: hk.MessageCreateEvent):
             f"Seriously? Ch. 1 wasn't enough? Fine here's Ch. 2 as well:\n\n{fanfic[1]}\nNow leave me alone"
         )
         return
+    if referenced is not None and referenced.content == sassy_responses[2]:
+        # MPB was asleep but has now been woken up and is cranky
+        _ = await event.message.respond(
+            "did you really just wake me up? this better be good."
+        )
 
     if not isinstance(mentions, Sequence):
         return
