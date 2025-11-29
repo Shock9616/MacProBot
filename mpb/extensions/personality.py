@@ -30,10 +30,10 @@ async def on_bot_mentioned(event: hk.MessageCreateEvent):
     mentions = event.message.user_mentions_ids
     referenced = event.message.referenced_message
 
-    if referenced is not None and referenced.content == sassy_responses[43]:
+    if referenced is not None and referenced.content == sassy_responses[0]:
         # Easter egg, reply with fanfic excerpt
         _ = await event.message.respond(
-            f"Since you _insist_ on pinging me, here's a preview of the fanfic just to show that I'm not lying:\n\n{fanfic[1]}\nNow leave me alone"
+            f"Seriously? Ch. 1 wasn't enough? Fine here's Ch. 2 as well:\n\n{fanfic[1]}\nNow leave me alone"
         )
         return
 
@@ -43,7 +43,7 @@ async def on_bot_mentioned(event: hk.MessageCreateEvent):
     if bot_user.id in (mention for mention in mentions):
         response = random.choice(sassy_responses)
 
-        if response == sassy_responses[120]:
+        if response == sassy_responses[1]:
             # 'I have a wallpaper for u' response
             url = "https://wallpapercave.com/wp/wp2754931.jpg"
             image_data = requests.get(url, timeout=10)
