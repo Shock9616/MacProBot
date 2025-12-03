@@ -46,6 +46,21 @@ class MetalHud(
 
 
 @loader.command
+class Sikarugir(
+    lb.SlashCommand,
+    name="sikarugir",
+    description="Useful links for learning about Sikarugir",
+):
+    @lb.invoke
+    async def invoke(self, ctx: lb.Context):
+        _ = await ctx.respond(
+            "[Sikarugir Beginners Guide Tutorial ↗](<https://youtu.be/pCgYxRPIqjE?si=Fb-5RUywgu9BLo40>)\n"
+            + "[Link to download Sikarugir ↗](<https://github.com/Sikarugir-App/Sikarugir>)\n"
+            + "[Join Sikarugir Discord ↗](https://discord.com/invite/hD48GFpWz5)\n"
+        )
+
+
+@loader.command
 class Support(
     lb.SlashCommand,
     name="support",
