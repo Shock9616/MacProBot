@@ -56,7 +56,6 @@ class Sikarugir(
         _ = await ctx.respond(
             "[Sikarugir Beginners Guide Tutorial ↗](<https://youtu.be/pCgYxRPIqjE?si=Fb-5RUywgu9BLo40>)\n"
             + "[Link to download Sikarugir ↗](<https://github.com/Sikarugir-App/Sikarugir>)\n"
-            + "[Join Sikarugir Discord ↗](https://discord.com/invite/hD48GFpWz5)\n"
         )
 
 
