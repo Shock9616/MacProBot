@@ -46,6 +46,19 @@ class MetalHud(
 
 
 @loader.command
+class Piracy(
+    lb.SlashCommand,
+    name="piracy",
+    description="Quick response for reminding people not to enable piracy",
+):
+    @lb.invoke
+    async def invoke(self, ctx: lb.Context):
+        _ = await ctx.respond(
+            "**We cannot assist with pirated or cracked games.** This includes attempting to get help by hiding the fact that a game is pirated. Asking for such help puts this entire server at risk of deletion under Discord's Terms of Service. \n"
+        )
+
+
+@loader.command
 class Sikarugir(
     lb.SlashCommand,
     name="sikarugir",
