@@ -24,12 +24,15 @@ works and will be added in the future.
   - Get a definition from a glossary of Mac gaming related terms
 - `/metalhud`
   - Instructions for setting up the Metal HUD toolbar shortcut
+- `/screenrecord`
+  - Quick instructions for how to record your mac's screen
+- `/sikarugir`
+  - Useful links for learning about
+    [Sikarugir](https://github.com/Sikarugir-App/Sikarugir)
 - `/support`
-  - A quick for mto fill out to help with game troubleshooting gaming
+  - A quick form to fill out to help with game troubleshooting gaming
 - `/updatedxmt`
   - Link to a quick tutorial on how to update DXMT in CrossOver
-- `/videofaq`
-  - Helpful tips for recording footage for troubleshooting
 - `/wallpaper`
   - Randomly select a wallpaper from the #wallpapers channel
 
