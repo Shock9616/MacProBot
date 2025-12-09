@@ -88,11 +88,20 @@ class ChooseWinner(
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
         # Check if calling user is a mod
-        if ctx.member is not None and not await is_mod(ctx.member):
-            print(await ctx.member.fetch_roles())
+        # if ctx.member is not None and not await is_mod(ctx.member):
+        #     print(await ctx.member.fetch_roles())
+        #     _ = await ctx.respond(
+        #         "Sorry, you don't have permission to execute this command",
+        #         ephemeral=True,
+        #     )
+        #     return
+
+        announcements_channel = int(os.environ["ANNOUNCEMENTS_CHANNEL_ID"])
+        mod_channel = int(os.environ["MOD_CHANNEL_ID"])
+
+        if ctx.channel_id != mod_channel:
             _ = await ctx.respond(
-                "Sorry, you don't have permission to execute this command",
-                ephemeral=True,
+                "Sorry, you can't use that command in this channel", ephemeral=True
             )
             return
 
@@ -114,8 +123,17 @@ class ChooseWinner(
             )
         ]
 
+        if len(reactions) == 0:
+            _ = await ctx.respond(
+                "The provided message doesn't have any '🍎' reactions",
+                ephemeral=True,
+            )
+            return
+
         winner = random.choice(reactions)
 
-        _ = await ctx.respond(
-            f"Congratulations to {winner.mention} on winning the giveaway!"
+        _ = await ctx.client.rest.create_message(
+            announcements_channel,
+            f"Congratulations to {winner.mention} on winning the giveaway!",
         )
+        _ = await ctx.respond("Winner chosen!")
