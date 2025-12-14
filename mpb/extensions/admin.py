@@ -70,10 +70,17 @@ class Announce(
             return
 
         content = await self.msg.read()
-        _ = await ctx.client.rest.create_message(
-            announcements_channel, content.decode("utf-8")
-        )
-        _ = await ctx.respond("Announcement sent!")
+        message = content.decode("utf-8")
+        if len(message) <= 2000:
+            _ = await ctx.client.rest.create_message(announcements_channel, message)
+            _ = await ctx.respond("Announcement sent!")
+        else:
+            _ = await ctx.respond(
+                "The provided message is too long. I can only "
+                + "send announcements with 2000 characters or less. Please "
+                + "shorten or split up the announcement",
+                ephemeral=True,
+            )
 
 
 @loader.command
@@ -88,13 +95,13 @@ class ChooseWinner(
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
         # Check if calling user is a mod
-        # if ctx.member is not None and not await is_mod(ctx.member):
-        #     print(await ctx.member.fetch_roles())
-        #     _ = await ctx.respond(
-        #         "Sorry, you don't have permission to execute this command",
-        #         ephemeral=True,
-        #     )
-        #     return
+        if ctx.member is not None and not await is_mod(ctx.member):
+            print(await ctx.member.fetch_roles())
+            _ = await ctx.respond(
+                "Sorry, you don't have permission to execute this command",
+                ephemeral=True,
+            )
+            return
 
         announcements_channel = int(os.environ["ANNOUNCEMENTS_CHANNEL_ID"])
         mod_channel = int(os.environ["MOD_CHANNEL_ID"])
