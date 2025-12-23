@@ -17,7 +17,11 @@ _ = dotenv.load_dotenv()
 # Create/setup bot
 bot = hk.GatewayBot(
     token=os.environ["TOKEN"],
-    intents=(hk.Intents.GUILD_MESSAGES | hk.Intents.MESSAGE_CONTENT),
+    intents=(
+        hk.Intents.GUILD_MESSAGES
+        | hk.Intents.MESSAGE_CONTENT
+        | hk.Intents.GUILD_MEMBERS
+    ),
 )
 client = lb.client_from_app(bot)
 
