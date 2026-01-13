@@ -70,7 +70,7 @@ async def on_message_created(event: hk.MessageCreateEvent):
     if (
         len(event.message.content.split()) > 8  # Longer than 8 words
         and not re.search(url_regex, event.message.content)  # No URLs
-        and random.randint(0, 175) == 69  # 1/100 chance to respond
+        and random.randint(0, 150) == 69  # 1/100 chance to respond
     ):
         client = OpenAI(
             base_url="https://openrouter.ai/api/v1",
