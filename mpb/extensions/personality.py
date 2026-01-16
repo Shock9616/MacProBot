@@ -41,6 +41,16 @@ async def on_bot_mentioned(event: hk.MessageCreateEvent):
         _ = await event.message.respond(
             "did you really just wake me up? this better be good."
         )
+        return
+    if referenced is not None and referenced.content == sassy_responses[3]:
+        # 'Tiny monkey'
+        url = "https://i.postimg.cc/hjxJHkHD/181f034a-cdea-4ac0-bf17-afd84d957e48.png"
+        image_data = requests.get(url, timeout=10)
+
+        file = hk.Bytes(image_data.content, "monkey.png")
+
+        _ = await event.message.respond("ok here you go :D", attachment=file)
+        return
 
     if not isinstance(mentions, Sequence):
         return
