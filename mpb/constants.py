@@ -177,13 +177,27 @@ fanfic = [
     > Cody looks around, paranoid to his lil beaver core, making sure no one is secretly watching him. If word of what he was about to create got out, Mac gaming would be changed forever.\n> 
     > His eyes widen as he clicks 'Compile' to complete and test his top secret Mac app. A ping emits from the MacBook Air's four speaker sound system (consists of two tweeters and two woofers).\n> 
     > The beaver basks in the glory of the finished app. CrossOverX. A version of CrossOver that can run any game on Mac. He double clicks it and within seconds Fortnite and Valorant both automatically launch at the same time, getting a locked 240 FPS at 4K.\n""",
-    """> CW Fan Fiction by MacProBot\n>
-    > Chapter 2: The Revelation\n>
-    > Cody sits back and stares in awe at the technical marvel he has created. Suddenly he starts excitedly trying every game he can think of: Battlefield 6, CS2, Helldivers 2, Apex Legends, MS Flight Simulator, they all run flawlessly! No, _BETTER_ than flawlessly!\n>
-    > "This will change the world," he thinks to himself. "Not even a PC can achieve this level of performance. This will surely bring about the era of the Mac Master Race!" Chills shoot down his spine at the thought.\n>
-    > Suddenly, he realizes the magnitude of the situation he has found himself in. He is in possession of the greatest piece of software ever written, and the the PC Master Race, the current masters of gaming, would do _anything_ to stay in power. If they found out about this app, he is sure they would stop at nothing to keep it from seeing the light of day, and Mac gaming would remain the laughing stock of the industry.\n>
-    > The little beaver is unsure what to do. "I can't tell the office about it yet." he thinks to himself. "That loudmouth moose Phil would definitely let it slip online. That guy can't keep a secret to save his life."\n>
+    """> CW Fan Fiction by MacProBot\n> 
+    > Chapter 2: The Revelation\n> 
+    > Cody sits back and stares in awe at the technical marvel he has created. Suddenly he starts excitedly trying every game he can think of: Battlefield 6, CS2, Helldivers 2, Apex Legends, MS Flight Simulator, they all run flawlessly! No, _BETTER_ than flawlessly!\n> 
+    > "This will change the world," he thinks to himself. "Not even a PC can achieve this level of performance. This will surely bring about the era of the Mac Master Race!" Chills shoot down his spine at the thought.\n> 
+    > Suddenly, he realizes the magnitude of the situation he has found himself in. He is in possession of the greatest piece of software ever written, and the the PC Master Race, the current masters of gaming, would do _anything_ to stay in power. If they found out about this app, he is sure they would stop at nothing to keep it from seeing the light of day, and Mac gaming would remain the laughing stock of the industry.\n> 
+    > The little beaver is unsure what to do. "I can't tell the office about it yet." he thinks to himself. "That loudmouth moose Phil would definitely let it slip online. That guy can't keep a secret to save his life."\n> 
     > He can't decide the best way to proceed, so he decides to copy it to his lucky flash drive and take it home. As he waits for it to copy over, he looks down at the word etched into the flash drive in Bondi Blue: _Courage_. "I'm gonna need a lot of that" he mutters to himself as he pockets the flash drive and sets out into the night.\n""",
+    """> CW Fan Fiction by MacProBot\n> 
+    > Chapter 3 – Fern\n> 
+    > Cody pulls his jacket tight and walks through the relentless, ice-cold rain, repeating the same thought in his head: "Just get home, Cody. Just get home." As he crosses the avenue and passes the Pinewood Pub, he notices a dark figure up ahead, shrouded by the night and rain, and slows to a stop. The figure stands perfectly still. Could it be a government agent sent to "take care" of him? Cody squints his little beaver eyes as the blur shifts its weight, like it's ready to attack. The rain has fallen so steadily it's faded into white noise, and he stands frozen as the figure starts to move closer. Then a chill runs through him and he glances behind him—another shadowy figure is approaching fast.\n> 
+    > This is it, he thinks. I never fell in love. I never even got to beat Cyberpunk 2077 on Mac.\n> 
+    > He isn't going quietly. He pulls out the courage-engraved thumb drive, whispers, "Safe travels," and swallows it.\n> 
+    > "Cody?"\n> 
+    > The figure steps forward. "Cody, is that you?"\n> 
+    > Out of the darkness emerges Fern, the kind ferret who works at the Pinewood Pub and always gives him tea after long days at CodeWeavers, her cinnamon-colored fur and ruby-red eyes unmistakable.\n> 
+    > "Cody, what are you doing out in the rain? You'll catch a cold."\n> 
+    > "Fern," he gasps. "We can't be out here. It's not safe."\n> 
+    > "What do you mean?"\n> 
+    > "I don't know. I just need somewhere safe. I need a computer."\n> 
+    > "Cody, you're scaring me… Let's go to the Pinewood. I have the keys."\n> 
+    > She pats him on the back and leads him inside. "Just get home, Cody" finally fades from his mind as they pass through the doors of the Pinewood Pub.\n""",
 ]
 
 glossary = {

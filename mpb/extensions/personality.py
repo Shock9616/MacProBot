@@ -33,7 +33,7 @@ async def on_bot_mentioned(event: hk.MessageCreateEvent):
     if referenced is not None and referenced.content == sassy_responses[0]:
         # Easter egg, reply with fanfic excerpt
         _ = await event.message.respond(
-            f"Seriously? Ch. 1 wasn't enough? Fine here's Ch. 2 as well:\n\n{fanfic[1]}\nNow leave me alone"
+            f"Wow we've got a regular fanfic fanatic here. Fine here's Ch. 3:\n\n{fanfic[2]}\nHappy?"
         )
         return
     if referenced is not None and referenced.content == sassy_responses[2]:
