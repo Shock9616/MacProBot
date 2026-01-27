@@ -4,6 +4,7 @@
 # The gaming extension for MacProBot. Contains commands related to Mac gaming
 #
 
+from collections.abc import Iterator
 from difflib import SequenceMatcher
 from enum import Enum
 from typing import cast
@@ -78,7 +79,7 @@ class AgwCheck(
         compat_data = self.__get_compat_data(data_rows)
 
         _ = await ctx.respond(
-            "", embed=self.__build_embed(title, compat_data, url, ctx)
+            "", embed=self.__build_embed(title, list(compat_data), url, ctx)
         )
 
     def __get_page(self, url: str) -> bs:
@@ -110,9 +111,8 @@ class AgwCheck(
 
         return results[most_similar_idx]
 
-    def __get_compat_data(self, rows: ResultSet[Tag]) -> list[dict[str, str]]:
+    def __get_compat_data(self, rows: ResultSet[Tag]) -> Iterator[dict[str, str]]:
         """Get compatibility data for each method listed for the game"""
-        compat_data: list[dict[str, str]] = []
 
         for row in rows:
             row_data = {"method": "", "rating": ""}
@@ -139,9 +139,7 @@ class AgwCheck(
 
             row_data["rating"] = rating
 
-            compat_data.append(row_data)
-
-        return compat_data
+            yield row_data
 
     def __build_embed(
         self, title: str, data: list[dict[str, str]], url: str, ctx: lb.Context
