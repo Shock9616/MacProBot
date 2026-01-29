@@ -167,7 +167,7 @@ sassy_responses = [
     "there are no monsters under the dock... there are no monsters under the dock...",
     "i'm hiding inside a folder labeled 'Cozy Stuff'",
     "whats ur AIM address?",
-    "oh good someone remembered i'm still here. i was worried i would get forgotten with the increasing number of imposters in this server",
+    # "oh good someone remembered i'm still here. i was worried i would get forgotten with the increasing number of imposters in this server",
 ]
 
 fanfic = [
