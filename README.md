@@ -40,6 +40,8 @@ works and will be added in the future.
 
 - `/announce`
   - Send an announcement in the configured announcements channel
+- `/editannouncement`
+  - Edit a previously sent announcement
 
 The bot also responds to pings and has a small chance to respond to any message
 in the server with a snarky AI generated response

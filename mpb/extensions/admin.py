@@ -106,7 +106,6 @@ class EditAnnouncement(
             )
             return
 
-        announcements_channel = int(os.environ["ANNOUNCEMENTS_CHANNEL_ID"])
         mod_channel = int(os.environ["MOD_CHANNEL_ID"])
 
         if ctx.channel_id != mod_channel:
