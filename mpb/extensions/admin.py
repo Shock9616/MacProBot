@@ -5,7 +5,6 @@
 #
 
 import os
-import random
 import re
 
 import dotenv
@@ -81,69 +80,6 @@ class Announce(
                 + "shorten or split up the announcement",
                 ephemeral=True,
             )
-
-
-@loader.command
-class ChooseWinner(
-    lb.SlashCommand,
-    name="choosewinner",
-    description="Select a random user who reacted to a message",
-):
-    # Options
-    link: str = lb.string("message", "The message to choose a user from")
-
-    @lb.invoke
-    async def invoke(self, ctx: lb.Context):
-        # Check if calling user is a mod
-        if ctx.member is not None and not await is_mod(ctx.member):
-            print(await ctx.member.fetch_roles())
-            _ = await ctx.respond(
-                "Sorry, you don't have permission to execute this command",
-                ephemeral=True,
-            )
-            return
-
-        announcements_channel = int(os.environ["ANNOUNCEMENTS_CHANNEL_ID"])
-        mod_channel = int(os.environ["MOD_CHANNEL_ID"])
-
-        if ctx.channel_id != mod_channel:
-            _ = await ctx.respond(
-                "Sorry, you can't use that command in this channel", ephemeral=True
-            )
-            return
-
-        match = MESSAGE_LINK_RE.match(self.link)
-        if not match:
-            _ = await ctx.respond(
-                "Sorry, the provided link is invalid. Please try again with a valid link",
-                ephemeral=True,
-            )
-            return
-
-        channel_id = int(match.group(1))
-        message_id = int(match.group(2))
-
-        reactions = [
-            r
-            async for r in ctx.client.rest.fetch_reactions_for_emoji(
-                channel_id, message_id, "🍎"
-            )
-        ]
-
-        if len(reactions) == 0:
-            _ = await ctx.respond(
-                "The provided message doesn't have any '🍎' reactions",
-                ephemeral=True,
-            )
-            return
-
-        winner = random.choice(reactions)
-
-        _ = await ctx.client.rest.create_message(
-            announcements_channel,
-            f"Congratulations to {winner.mention} on winning the giveaway!",
-        )
-        _ = await ctx.respond("Winner chosen!")
 
 
 @loader.command
