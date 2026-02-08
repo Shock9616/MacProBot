@@ -1,0 +1,14 @@
+[project]
+name = "macprobot"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "beautifulsoup4>=4.14.3",
+    "hikari>=2.5.0",
+    "hikari-lightbulb>=3.2.3",
+    "openai>=2.17.0",
+    "python-dotenv>=1.2.1",
+    "requests>=2.32.5",
+]
