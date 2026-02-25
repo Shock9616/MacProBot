@@ -94,7 +94,11 @@ class AgwCheck(
         elif type(soup.find("p", {"class": "mw-search-nonefound"})) is Tag:
             return self.PageType.GameNotFound
         else:
-            return self.PageType.SearchResults
+            if len(soup.find_all("li", {"class": "mw-search-result"})) == 1:
+                # Probably not actually the search result we're looking for (e.x. GPTK page)
+                return self.PageType.GameNotFound
+            else:
+                return self.PageType.SearchResults
 
     def __find_most_similar(self, game: str, results: ResultSet[Tag]) -> Tag:
         """Find the search result with the most similar name to the user's search"""
