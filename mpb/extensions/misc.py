@@ -185,3 +185,22 @@ class Wallpaper(
                 message = None
 
         _ = await ctx.respond("", attachment=random.choice(message.attachments))
+
+
+@loader.command
+class Whisky(
+    lb.SlashCommand,
+    name="whisky",
+    description="Quick information about Whisky being deprecated and alternatives",
+):
+    @lb.invoke
+    async def invoke(self, ctx: lb.Context):
+        _ = await ctx.respond(
+            "**<:protip:1368106561045659678> !! Whisky is no longer maintained !!**\n"
+            + "As of April 2025, the Whisky project is no longer being actively maintained and as a result, an increasing number of apps and games no longer work and will never be fixed. Here are our top recommendations for alternatives:\n\n"
+            + "**<:crossover:1465953281661468722> CrossOver**\n"
+            + "We _highly_ recommend checking out [CrossOver↗](<https://www.codeweavers.com/crossover/download?srsltid=AfmBOoqix6Ms8u2YJfeLJS2t9gcEc4yLzKeojKj_wumkcn2sslTvCs79>) as a Whisky alternative. It is the best way to run Windows only games on Mac, as it has the best performance and compatibility across the widest number of games. Additionally, all proceeds from CrossOver licenses go directly back into supporting WINE development and the future of Mac Gaming!\n"
+            + "To learn more or to get a code for 15% off CrossOver+, use the command `/crossover`!\n\n"
+            + "**:wine_glass: Sikarugir**\n"
+            + "If you need a free alternative, we recommend Sikarugir↗, however it supports fewer games than CrossOver and is more difficult to set up and use. We're here to help though if you have any questions!"
+        )
