@@ -202,5 +202,5 @@ class Whisky(
             + "We _highly_ recommend checking out [CrossOver↗](<https://www.codeweavers.com/crossover/download?srsltid=AfmBOoqix6Ms8u2YJfeLJS2t9gcEc4yLzKeojKj_wumkcn2sslTvCs79>) as a Whisky alternative. It is the best way to run Windows only games on Mac, as it has the best performance and compatibility across the widest number of games. Additionally, all proceeds from CrossOver licenses go directly back into supporting WINE development and the future of Mac Gaming!\n"
             + "To learn more or to get a code for 15% off CrossOver+, use the command `/crossover`!\n\n"
             + "**:wine_glass: Sikarugir**\n"
-            + "If you need a free alternative, we recommend Sikarugir↗, however it supports fewer games than CrossOver and is more difficult to set up and use. We're here to help though if you have any questions!"
+            + "If you need a free alternative, we recommend [Sikarugir↗](<https://github.com/Sikarugir-App/Sikarugir>), however it supports fewer games than CrossOver and is more difficult to set up and use. We're here to help though if you have any questions!"
         )
