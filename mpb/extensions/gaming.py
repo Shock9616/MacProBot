@@ -49,10 +49,7 @@ class AgwCheck(
             return
         elif page_type == self.PageType.SearchResults:
             # Since we got a search results page, we need to find the page for the game the user wants
-            results = cast(
-                ResultSet[Tag],
-                soup.find_all("div", {"class": "mw-search-result-heading"}),
-            )
+            results = soup.find_all("div", {"class": "mw-search-result-heading"})
 
             # Get link to page with the most similar name to the user's search
             game_tag = self.__find_most_similar(self.game, results)
@@ -65,11 +62,8 @@ class AgwCheck(
 
         # Now that we know we're on the game's page...
         compat_table = cast(Tag, soup.find("table", {"id": "table-compatibility"}))
-        data_rows = cast(
-            ResultSet[Tag],
-            compat_table.find_all(
-                "tr", {"class": "template-infotable-body table-compatibility-body-row"}
-            ),
+        data_rows = compat_table.find_all(
+            "tr", {"class": "template-infotable-body table-compatibility-body-row"}
         )
 
         # Get proper game title
@@ -195,7 +189,7 @@ class CxCheck(
         # Get list of game links
         app_list = search_page_soup.find(id="teTable-app")
         if type(app_list) is Tag:
-            apps = cast(ResultSet[Tag], app_list.find_all("a"))
+            apps = app_list.find_all("a")
         else:
             _ = await self.__resp_no_game(self.game, ctx)
             return
@@ -211,7 +205,7 @@ class CxCheck(
 
         # Find current star rating
         all_star_tables = game_soup.find_all("ul", {"class": "star-rating-table"})
-        star_table: Tag = cast(Tag, all_star_tables[0])
+        star_table = all_star_tables[0]
 
         # Get game performance rating and description
         rating = self.__get_rating(star_table)

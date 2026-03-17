@@ -130,6 +130,6 @@ class Help(
         )
 
         try:
-            _ = await help_menu.attach(ctx.client, wait=True, timeout=30)
+            _ = await help_menu.attach(ctx.client, timeout=30)
         except asyncio.TimeoutError:
             pass
