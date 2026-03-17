@@ -18,6 +18,30 @@ loader = lb.Loader()
 
 
 @loader.command
+class CrossOver(
+    lb.SlashCommand,
+    name="crossover",
+    description="Instructions and tips for setting up and using CrossOver",
+):
+    @lb.invoke
+    async def invoke(self, ctx: lb.Context):
+        _ = await ctx.respond(
+            "**<:protip:1368106561045659678> <:crossover:1465953281661468722>  How to Install CrossOver**\n\n"
+            + "CrossOver is the best way to run Windows only games on Mac. It allows you to run games using WINE, the Apple Game Porting Toolkit, DXMT and DXVK! Games with Anti-Cheat typically will not work.\n"
+            + "You can try the **14 day free trial** without a credit card or payment!\n\n"
+            + "Check out the [Video Guide for Beginners↗](<https://www.youtube.com/watch?v=KbJLOFBl42M>) (Recommended)\n"
+            + "Download the [CrossOver Free Trial↗](<https://www.codeweavers.com/crossover/download?srsltid=AfmBOoqix6Ms8u2YJfeLJS2t9gcEc4yLzKeojKj_wumkcn2sslTvCs79>)\n"
+            + "Check out the [CrossOver Compatibility Database↗](<https://www.codeweavers.com/compatibility?>)\n\n"
+            + "**Purchasing CrossOver**\n"
+            + "CrossOver is not a subscription! When you buy it, you keep the version you have. Your purchase includes 1 year of updates and support, so any new versions released during that time are yours too. After that year ends, the version of CrossOver you have is still yours to use.\n\n"
+            + "**Tips and Tricks**\n"
+            + "Cyber Monday is the best time to buy CrossOver with deals up to 75% OFF! You can also use Creator codes for 15% OFF year round!\n"
+            + "[How to Use an External Drive with CrossOver↗](<https://www.youtube.com/watch?v=KbJLOFBl42M>)\n\n"
+            + "[15% OFF Discount Code↗](<https://www.codeweavers.com/store?ad=1117;deal=GOMEO15>)"
+        )
+
+
+@loader.command
 class MetalHud(
     lb.SlashCommand,
     name="metalhud",
