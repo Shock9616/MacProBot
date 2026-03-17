@@ -4,6 +4,7 @@
 # Miscellaneous commands for the server
 #
 
+import datetime
 import os
 import random
 from collections.abc import Sequence
@@ -11,6 +12,7 @@ from collections.abc import Sequence
 import dotenv
 import hikari as hk
 import lightbulb as lb
+from openai import OpenAI
 
 _ = dotenv.load_dotenv()
 
@@ -113,6 +115,86 @@ class Support(
             + "CrossOver version:\n"
             + "Game platform (Steam, GOG, other):\n"
         )
+
+
+@loader.command
+class Summarize(
+    lb.SlashCommand,
+    name="summarize",
+    description="Get a quick summary of the previous conversation in this channel",
+):
+    MAX_MESSAGES: int = 100
+
+    @lb.invoke
+    async def invoke(self, ctx: lb.Context):
+        channel = await ctx.client.rest.fetch_channel(ctx.channel_id)
+
+        if not isinstance(channel, hk.TextableChannel):
+            return
+
+        # Get messages to summarize
+        messages = await self.__last_12_hours(channel)
+
+        if len(messages) < 25:
+            messages = await self.__last_100_messages(channel)
+
+        # Create prompt and send to LLM for summarizing
+        prompt = self.__create_prompt(
+            channel.name if channel.name is not None else "Unnamed", messages
+        )
+
+        client = OpenAI(
+            base_url="https://openrouter.ai/api/v1",
+            api_key=os.environ["AI_API_KEY"],
+        )
+
+        completion = client.chat.completions.create(
+            extra_headers={},
+            extra_body={},
+            model="google/gemma-3-4b-it:free",
+            messages=[{"role": "user", "content": prompt}],
+        )
+
+        response = completion.choices[0].message.content
+
+        if response is not None:
+            print(response)
+            _ = await ctx.respond(response.strip('"'))
+
+    async def __last_12_hours(self, channel: hk.TextableChannel) -> list[str]:
+        """Return all messages from the last 12 hours in the specified channel"""
+        after = datetime.datetime.now() - datetime.timedelta(hours=12)
+        messages: list[str] = []
+
+        async for msg in channel.fetch_history(after=after):
+            # Get a list of all messages from the last 12 hours (capped at 100)
+            if not msg.author.is_bot and msg.content is not None:
+                messages.append(msg.content)
+
+            if len(messages) >= self.MAX_MESSAGES:
+                break
+
+        return messages
+
+    async def __last_100_messages(self, channel: hk.TextableChannel) -> list[str]:
+        """Return the last 100 messages in the specified channel"""
+        messages: list[str] = []
+
+        async for msg in channel.fetch_history():
+            # Get a list of the last 100 messages instead
+            if not msg.author.is_bot and msg.content is not None:
+                messages.append(msg.content)
+
+            if len(messages) >= self.MAX_MESSAGES:
+                break
+
+        return messages
+
+    def __create_prompt(self, channel_name: str, messages: list[str]) -> str:
+        prompt = f"Please briefly summarize these messages from the {channel_name} channel on the Mac Gaming discord server:\n\n"
+        prompt += "\n".join(messages)
+
+        return prompt
 
 
 @loader.command
