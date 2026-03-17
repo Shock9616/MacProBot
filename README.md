@@ -22,6 +22,9 @@ works and will be added in the future.
     [Compatibility Database](https://www.codeweavers.com/compatibility)
 - `/define <term>`
   - Get a definition from a glossary of Mac gaming related terms
+- `/crossover`
+  - Get some quick information on how to set up and use CrossOver to play
+    Windows games on Mac
 - `/metalhud`
   - Instructions for setting up the Metal HUD toolbar shortcut
 - `/screenrecord`
@@ -35,6 +38,8 @@ works and will be added in the future.
   - Link to a quick tutorial on how to update DXMT in CrossOver
 - `/wallpaper`
   - Randomly select a wallpaper from the #wallpapers channel
+- `/whisky`
+  - Quick notice about Whisky's deprecation and some alternatives
 
 ### Admin/Mod Commands
 
