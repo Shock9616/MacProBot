@@ -127,6 +127,9 @@ class Summarize(
 
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
+        # Tell Discord that this command might take a while
+        await ctx.defer()
+
         channel = await ctx.client.rest.fetch_channel(ctx.channel_id)
 
         if not isinstance(channel, hk.TextableChannel):
@@ -150,15 +153,14 @@ class Summarize(
 
         completion = client.chat.completions.create(
             extra_headers={},
-            extra_body={},
-            model="google/gemma-3-4b-it:free",
+            extra_body={"reasoning": {"enabled": False}},
+            model="z-ai/glm-4.5-air:free",
             messages=[{"role": "user", "content": prompt}],
         )
 
         response = completion.choices[0].message.content
 
         if response is not None:
-            print(response)
             _ = await ctx.respond(response.strip('"'))
 
     async def __last_12_hours(self, channel: hk.TextableChannel) -> list[str]:
@@ -191,7 +193,14 @@ class Summarize(
         return messages
 
     def __create_prompt(self, channel_name: str, messages: list[str]) -> str:
-        prompt = f"Please briefly summarize these messages from the {channel_name} channel on the Mac Gaming discord server:\n\n"
+        """Format the messages into a prompt for the LLM"""
+        prompt = f"""Please briefly summarize these messages from the {channel_name} channel on the Mac Gaming discord server
+            Refrain from making any comments or suggestions. Only respond with the summary and nothing more
+            Keep the summary brief. Ideally in at most 5 short bullet points
+            Focus on the most recent messages. If there is a break where time has clearly passed and users are talking about something else, summarize that and mostly ignore everything else.
+            The messages are listed in reverse chronological order with the most recent ones first\n
+            """
+
         prompt += "\n".join(messages)
 
         return prompt
