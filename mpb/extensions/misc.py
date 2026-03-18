@@ -123,7 +123,7 @@ class Summarize(
     name="summarize",
     description="Get a quick summary of the previous conversation in this channel",
 ):
-    MAX_MESSAGES: int = 100
+    MAX_MESSAGES: int = 300
 
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
@@ -138,8 +138,8 @@ class Summarize(
         # Get messages to summarize
         messages = await self.__last_12_hours(channel)
 
-        if len(messages) < 25:
-            messages = await self.__last_100_messages(channel)
+        if len(messages) < 100:
+            messages = await self.__last_300_messages(channel)
 
         # Create prompt and send to LLM for summarizing
         prompt = self.__create_prompt(
@@ -178,8 +178,8 @@ class Summarize(
 
         return messages
 
-    async def __last_100_messages(self, channel: hk.TextableChannel) -> list[str]:
-        """Return the last 100 messages in the specified channel"""
+    async def __last_300_messages(self, channel: hk.TextableChannel) -> list[str]:
+        """Return the last 300 messages in the specified channel"""
         messages: list[str] = []
 
         async for msg in channel.fetch_history():
@@ -194,12 +194,28 @@ class Summarize(
 
     def __create_prompt(self, channel_name: str, messages: list[str]) -> str:
         """Format the messages into a prompt for the LLM"""
-        prompt = f"""Please briefly summarize these messages from the {channel_name} channel on the Mac Gaming discord server
-            Refrain from making any comments or suggestions. Only respond with the summary and nothing more
-            Keep the summary brief. Ideally in at most 5 short bullet points
-            Focus on the most recent messages. If there is a break where time has clearly passed and users are talking about something else, summarize that and mostly ignore everything else.
-            The messages are listed in reverse chronological order with the most recent ones first\n
-            """
+        prompt = f"""You are a chat summarizer for the Mac Gaming Discord server.
+            **Input:**
+            - A list of {len(messages)} messages from the {channel_name} channel
+            - Messages are in reverse chronological order, most recent first
+
+            **Output rules:**
+            - Respond with bullet points only
+            - No preamble, comments, or suggestions
+            - Order bullets chronologically — earliest topic first, most recent last
+            - One bullet per distinct topic or thread
+            - Aim for no more than 8 bullets, but use your judgement
+            - Do not pad — if there are only 2 topics, write 2 bullets
+
+            **What to summarize:**
+            - Substantive discussion and decisions
+            - New threads that emerge after a clear time gap or topic shift
+
+            **What to ignore:**
+            - One-word replies and reactions
+            - Spam
+            - Low-signal filler content unless it's central to the conversation
+        """
 
         prompt += "\n".join(messages)
 
