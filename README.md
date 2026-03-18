@@ -23,8 +23,9 @@ works and will be added in the future.
 - `/define <term>`
   - Get a definition from a glossary of Mac gaming related terms
 - `/crossover`
-  - Get some quick information on how to set up and use CrossOver to play
-    Windows games on Mac
+  - Get some quick information on how to set up and use
+    [CrossOver](https://www.codeweavers.com/crossover) to play Windows games on
+    Mac
 - `/metalhud`
   - Instructions for setting up the Metal HUD toolbar shortcut
 - `/screenrecord`
@@ -32,14 +33,19 @@ works and will be added in the future.
 - `/sikarugir`
   - Useful links for learning about
     [Sikarugir](https://github.com/Sikarugir-App/Sikarugir)
+- `/summarize`
+  - Summarize recent conversation in the current channel
 - `/support`
   - A quick form to fill out to help with game troubleshooting gaming
 - `/updatedxmt`
-  - Link to a quick tutorial on how to update DXMT in CrossOver
+  - Link to a quick tutorial on how to update
+    [DXMT](https://github.com/3Shain/dxmt) in
+    [CrossOver](https://www.codeweavers.com/crossover)
 - `/wallpaper`
   - Randomly select a wallpaper from the #wallpapers channel
 - `/whisky`
-  - Quick notice about Whisky's deprecation and some alternatives
+  - Quick notice about [Whisky](https://getwhisky.app/)'s deprecation and some
+    alternatives
 
 ### Admin/Mod Commands
 
