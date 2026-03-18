@@ -4,6 +4,7 @@
 # Miscellaneous commands for the server
 #
 
+import asyncio
 import datetime
 import os
 import random
@@ -12,6 +13,7 @@ from collections.abc import Sequence
 import dotenv
 import hikari as hk
 import lightbulb as lb
+import openai
 from openai import OpenAI
 
 _ = dotenv.load_dotenv()
@@ -130,38 +132,37 @@ class Summarize(
         # Tell Discord that this command might take a while
         await ctx.defer()
 
-        channel = await ctx.client.rest.fetch_channel(ctx.channel_id)
+        try:
+            channel = await ctx.client.rest.fetch_channel(ctx.channel_id)
 
-        if not isinstance(channel, hk.TextableChannel):
-            return
+            if not isinstance(channel, hk.TextableChannel):
+                return
 
-        # Get messages to summarize
-        messages = await self.__last_12_hours(channel)
+            # Get messages to summarize
+            messages = await self.__last_12_hours(channel)
 
-        if len(messages) < 100:
-            messages = await self.__last_300_messages(channel)
+            if len(messages) < 100:
+                messages = await self.__last_300_messages(channel)
 
-        # Create prompt and send to LLM for summarizing
-        prompt = self.__create_prompt(
-            channel.name if channel.name is not None else "Unnamed", messages
-        )
+            # Create prompt and send to LLM for summarizing
+            prompt = self.__create_prompt(
+                channel.name if channel.name is not None else "Unnamed", messages
+            )
 
-        client = OpenAI(
-            base_url="https://openrouter.ai/api/v1",
-            api_key=os.environ["AI_API_KEY"],
-        )
+            response = await asyncio.wait_for(
+                asyncio.to_thread(self.__generate_summary, prompt), timeout=42
+            )
 
-        completion = client.chat.completions.create(
-            extra_headers={},
-            extra_body={"reasoning": {"enabled": False}},
-            model="z-ai/glm-4.5-air:free",
-            messages=[{"role": "user", "content": prompt}],
-        )
-
-        response = completion.choices[0].message.content
-
-        if response is not None:
-            _ = await ctx.respond(response.strip('"'))
+            if response is not None:
+                _ = await ctx.respond(response.strip('"'))
+        except openai.RateLimitError:
+            _ = await ctx.respond(
+                "Unfortunately this command has been rate-limited. Please try again later",
+            )
+        except asyncio.TimeoutError:
+            _ = await ctx.respond(
+                "Generating a summary took too long. Please try again",
+            )
 
     async def __last_12_hours(self, channel: hk.TextableChannel) -> list[str]:
         """Return all messages from the last 12 hours in the specified channel"""
@@ -220,6 +221,23 @@ class Summarize(
         prompt += "\n".join(messages)
 
         return prompt
+
+    def __generate_summary(self, prompt: str) -> str | None:
+        """Send the provided prompt to an LLM to generate a summary"""
+
+        client = OpenAI(
+            base_url="https://openrouter.ai/api/v1",
+            api_key=os.environ["AI_API_KEY"],
+        )
+
+        completion = client.chat.completions.create(
+            extra_headers={},
+            extra_body={"reasoning": {"enabled": False}},
+            model="z-ai/glm-4.5-air:free",
+            messages=[{"role": "user", "content": prompt}],
+        )
+
+        return completion.choices[0].message.content
 
 
 @loader.command
