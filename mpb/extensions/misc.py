@@ -216,6 +216,7 @@ class Summarize(
             - One-word replies and reactions
             - Spam
             - Low-signal filler content unless it's central to the conversation
+            - Messages that may be potentially embarassing or personal
         """
 
         prompt += "\n".join(messages)
