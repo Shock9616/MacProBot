@@ -217,6 +217,9 @@ class Summarize(
             - Spam
             - Low-signal filler content unless it's central to the conversation
             - Messages that may be potentially embarassing or personal
+            - Arguments between users
+            - Messages mentioning personal details like medical diagnoses
+            - Derogatory language and name calling
         """
 
         prompt += "\n".join(messages)
