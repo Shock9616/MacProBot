@@ -1,0 +1,14 @@
+[project]
+name = "macprobot"
+version = "1.12.0"
+description = "The official discord bot for the Mac Gaming discord server hosted by MacProTips!"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "beautifulsoup4>=4.13.4",
+    "hikari>=2.3.1",
+    "hikari-lightbulb>=3.0.0a19",
+    "openai==1.74.0",
+    "python-dotenv>=1.1.0",
+    "requests>=2.32.3",
+]
