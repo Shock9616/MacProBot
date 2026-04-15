@@ -37,24 +37,8 @@ class MetalHud(
 ):
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
-        _ = await ctx.respond(
-            "**<:protip:1368106561045659678> How to Enable the Metal HUD on Mac**\n"
-            + "IMPORTANT: Make sure both your launcher (Steam, CrossOver, etc.) and your game are fully closed before enabling or disabling the HUD.\n\n"
-            + "**Terminal Commands**\n\n"
-            + "Enable Metal HUD:\n"
-            + "```/bin/launchctl setenv MTL_HUD_ENABLED 1```\n\n"
-            + "Disable Metal HUD:\n"
-            + "```/bin/launchctl unsetenv MTL_HUD_ENABLED```\n\n"
-            + "**MetalHUDMenu Menu Bar App**\n\n"
-            + "We highly recommend using MetalHUDMenu to enable and customize the Metal HUD system wide!\n"
-            + "[**MetalHUDMenu ↗**](<https://github.com/Jfishin/MetalHUDmenu>)\n"
-            + "[**Guide ↗**](<https://youtu.be/SDs3xhA2Ufo>)\n\n"
-            + "**Metal HUD Keyboard Shortcuts**\n\n"
-            + "`Fn + Shift + F9` to show/hide the Metal HUD once enabled\n"
-            + "`Fn + Shift + F7` to move the Metal HUD around the screen\n"
-            + "`Fn + Shift + F12` to customize the HUD\n\n"
-            + "<:protip:1368106561045659678> Pro Tip: You can triple click the HUD to get the customization controls!"
-        )
+        with open("mpb/info_cmd_msgs/metalhud.txt") as file:
+            _ = await ctx.respond(file.read())
 
 
 @loader.command

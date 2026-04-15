@@ -1,0 +1,24 @@
+**<:protip:1368106561045659678> How to Enable the Metal HUD on Mac**
+IMPORTANT: Make sure both your launcher (Steam, CrossOver, etc.) and your game are fully closed before enabling or disabling the HUD.
+
+**Terminal Commands**
+
+Enable Metal HUD:
+```/bin/launchctl setenv MTL_HUD_ENABLED 1```
+
+Disable Metal HUD:
+```/bin/launchctl unsetenv MTL_HUD_ENABLED```
+
+**MetalHUDMenu Menu Bar App**
+
+We highly recommend using MetalHUDMenu to enable and customize the Metal HUD system wide!
+[**MetalHUDMenu ↗**](<https://github.com/Jfishin/MetalHUDmenu>)
+[**Guide ↗**](<https://youtu.be/SDs3xhA2Ufo>)
+
+**Metal HUD Keyboard Shortcuts**
+
+`Fn + Shift + F9` to show/hide the Metal HUD once enabled
+`Fn + Shift + F7` to move the Metal HUD around the screen
+`Fn + Shift + F12` to customize the HUD
+
+<:protip:1368106561045659678> Pro Tip: You can triple click the HUD to get the customization controls!
