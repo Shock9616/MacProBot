@@ -30,15 +30,6 @@ class Services:
         cursor = conn.cursor()
 
         cursor.execute("BEGIN")
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS reminders (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                user_id INTEGER NOT NULL,
-                channel_id INTEGER NOT NULL,
-                message TEXT NOT NULL,
-                date INTEGER NOT NULL
-            );
-        """)
 
         cursor.execute(
             """
@@ -64,6 +55,23 @@ class Services:
 
         conn = sqlite3.connect("reminders.db")
         cursor = conn.cursor()
+
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS reminders (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id INTEGER NOT NULL,
+                channel_id INTEGER NOT NULL,
+                message TEXT NOT NULL,
+                date INTEGER NOT NULL
+            );
+        """)
+
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS users (
+                user_id INTEGER PRIMARY KEY,
+                timezone TEXT NOT NULL
+            );
+        """)
 
         cursor.execute("BEGIN")
         cursor.execute("SELECT id, user_id, channel_id, message, date FROM reminders")
