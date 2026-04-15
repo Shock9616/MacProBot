@@ -61,10 +61,8 @@ class Sikarugir(
 ):
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
-        _ = await ctx.respond(
-            "[Sikarugir Beginners Guide Tutorial ↗](<https://youtu.be/pCgYxRPIqjE?si=Fb-5RUywgu9BLo40>)\n"
-            + "[Link to download Sikarugir ↗](<https://github.com/Sikarugir-App/Sikarugir>)\n"
-        )
+        with open("mpb/info_cmd_msgs/sikarugir.txt") as file:
+            _ = await ctx.respond(file.read())
 
 
 @loader.command
