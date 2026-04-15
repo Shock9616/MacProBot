@@ -49,9 +49,8 @@ class Piracy(
 ):
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
-        _ = await ctx.respond(
-            "**We cannot provide support for pirated/cracked games and apps.** Asking for help with illegal files puts the entire server at risk of deletion under Discord's Terms of Service. Thanks!"
-        )
+        with open("mpb/info_cmd_msgs/piracy.txt") as file:
+            _ = await ctx.respond(file.read())
 
 
 @loader.command
