@@ -1,0 +1,11 @@
+**<:protip:1368106561045659678> How to Record Gameplay/Desktop on a Mac**
+
+**1. QuickTime Player (NO AUDIO)**
+Open QuickTime Player and go to File
+Select New Screen Recording or press `⌘ + ⌃ + N`
+If you have multiple displays, choose which one to record
+Press `⌘ + ⌃ + Esc` to stop recording
+
+**2. Quick Recorder App (YES AUDIO)**
+A free, open-source, light-weight, powerful screen recorder for macOS.
+Download [Quick Recorder↗](https://lihaoyun6.github.io/quickrecorder/)

@@ -90,24 +90,15 @@ class UpdateDxmt(
 
 
 @loader.command
-class VideoFaq(
+class ScreenRecord(
     lb.SlashCommand,
     name="screenrecord",
     description="Quick instructions for how to record your mac's screen",
 ):
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
-        _ = await ctx.respond(
-            "**<:protip:1368106561045659678> How to Record Gameplay/Desktop on a Mac**\n\n"
-            + "**1. QuickTime Player (NO AUDIO)**\n"
-            + "Open QuickTime Player and go to File\n"
-            + "Select New Screen Recording or press `⌘ + ⌃ + N`\n"
-            + "If you have multiple displays, choose which one to record\n"
-            + "Press `⌘ + ⌃ + Esc` to stop recording\n\n"
-            + "**2. Quick Recorder App (YES AUDIO)**\n"
-            + "A free, open-source, light-weight, powerful screen recorder for macOS.\n"
-            + "Download [Quick Recorder↗](https://lihaoyun6.github.io/quickrecorder/)"
-        )
+        with open("mpb/info_cmd_msgs/screenrecord.txt") as file:
+            _ = await ctx.respond(file.read())
 
 
 @loader.command
