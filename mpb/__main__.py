@@ -10,6 +10,8 @@ import dotenv
 import hikari as hk
 import lightbulb as lb
 
+from mpb.services import Services
+
 from . import extensions
 
 _ = dotenv.load_dotenv()
@@ -28,9 +30,14 @@ client = lb.client_from_app(bot)
 
 @bot.listen(hk.StartingEvent)
 async def on_starting(_: hk.StartingEvent) -> None:
-    """Load bot extensions on startup"""
+    """Load bot extensions and services on startup"""
 
     await client.load_extensions_from_package(extensions)
+
+    registry = client.di.registry_for(lb.di.Contexts.DEFAULT)
+    registry.register_factory(Services, Services)
+
+    Services(client)  # Force initialization of services on startup
 
     await client.start()
 

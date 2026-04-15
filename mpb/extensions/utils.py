@@ -5,18 +5,46 @@
 #
 
 import asyncio
-import datetime
+import datetime as dt
 import os
 
+import dateparser as dp
 import dotenv
 import hikari as hk
 import lightbulb as lb
 import openai
 from openai import OpenAI
 
+from mpb.services import Services
+
 _ = dotenv.load_dotenv()
 
 loader = lb.Loader()
+
+
+@loader.command
+class RemindMe(
+    lb.SlashCommand,
+    name="remindme",
+    description="Set a reminder to be sent in this channel",
+):
+    message: str = lb.string("message", "The message to be sent")
+    time: str = lb.string("time", "When the reminder should be sent")
+
+    @lb.invoke
+    async def invoke(self, ctx: lb.Context, services: Services):
+        user_id = ctx.user.id
+        channel_id = ctx.channel_id
+        date: dt.datetime = dp.parse(self.time)
+
+        services.add_reminder(user_id, channel_id, self.message, date)
+
+        await ctx.respond(
+            f"Got it! I will send the message '{self.message}' on {self.__to_discord_timestamp(date)}"
+        )
+
+    def __to_discord_timestamp(self, date: dt.datetime) -> str:
+        return f"<t:{int(date.astimezone(dt.timezone.utc).timestamp())}:F>"
 
 
 @loader.command
@@ -66,7 +94,7 @@ class Summarize(
 
     async def __last_12_hours(self, channel: hk.TextableChannel) -> list[str]:
         """Return all messages from the last 12 hours in the specified channel"""
-        after = datetime.datetime.now() - datetime.timedelta(hours=12)
+        after = dt.datetime.now() - dt.timedelta(hours=12)
         messages: list[str] = []
 
         async for msg in channel.fetch_history(after=after):
