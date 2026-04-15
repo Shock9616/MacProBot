@@ -73,15 +73,8 @@ class Support(
 ):
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
-        _ = await ctx.respond(
-            "🔧 Automated response!\n"
-            + "**To help troubleshoot your issue, please provide the following details:**\n"
-            + "macOS version:\n"
-            + "Mac model:\n"
-            + "Memory (RAM):\n"
-            + "CrossOver version:\n"
-            + "Game platform (Steam, GOG, other):\n"
-        )
+        with open("mpb/info_cmd_msgs/support.txt") as file:
+            _ = await ctx.respond(file.read())
 
 
 @loader.command

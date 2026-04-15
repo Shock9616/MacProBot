@@ -1,0 +1,7 @@
+🔧 Automated response!
+**To help troubleshoot your issue, please provide the following details:**
+macOS version:
+Mac model:
+Memory (RAM):
+CrossOver version:
+Game platform (Steam, GOG, other):
