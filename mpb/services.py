@@ -29,8 +29,6 @@ class Services:
         conn = sqlite3.connect("reminders.db")
         cursor = conn.cursor()
 
-        cursor.execute("BEGIN")
-
         cursor.execute(
             """
             INSERT INTO reminders (user_id, channel_id, message, date)
@@ -73,7 +71,6 @@ class Services:
             );
         """)
 
-        cursor.execute("BEGIN")
         cursor.execute("SELECT id, user_id, channel_id, message, date FROM reminders")
         conn.commit()
 
@@ -108,7 +105,6 @@ class Services:
 
         conn = sqlite3.connect("reminders.db")
         cursor = conn.cursor()
-        cursor.execute("BEGIN")
 
         cursor.execute("DELETE FROM reminders WHERE id = ?", (id,))
         conn.commit()

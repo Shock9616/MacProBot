@@ -5,12 +5,14 @@
 #
 
 
+import asyncio
 import datetime as dt
 import sqlite3
 from zoneinfo import ZoneInfo, available_timezones
 
 import dateparser as dp
 import dotenv
+import hikari as hk
 import lightbulb as lb
 
 from mpb.services import Services
@@ -139,3 +141,65 @@ class RemindMe(
             return None
 
         return ZoneInfo(timezone[0])
+
+
+class RemindersList(lb.components.Menu):
+    def __init__(self, reminders: list[tuple[int, int, int, str, int]]):
+        super().__init__()
+
+        self.page = hk.Embed(title="Your Reminders")
+
+        for i, r in enumerate(reminders):
+            message = r[3]
+            time = int(r[4])
+
+            self.page.add_field(
+                name=f"{i + 1}: {self.__to_discord_timestamp(dt.datetime.fromtimestamp(time))}",
+                value=message,
+                inline=False,
+            )
+
+    def __to_discord_timestamp(self, date: dt.datetime) -> str:
+        return f"<t:{int(date.timestamp())}:F>"
+
+
+@loader.command
+class ListReminders(
+    lb.SlashCommand,
+    name="listreminders",
+    description="Show a list of all your current reminders",
+):
+    @lb.invoke
+    async def invoke(self, ctx: lb.Context):
+        reminders = self.__get_user_reminders(ctx.user.id)
+
+        if not reminders:
+            await ctx.respond("You have no currently set reminders", ephemeral=True)
+            return
+
+        reminders_list = RemindersList(reminders)
+
+        await ctx.respond(
+            "", embed=reminders_list.page, components=reminders_list, ephemeral=True
+        )
+
+        try:
+            await reminders_list.attach(ctx.client, timeout=30)
+        except asyncio.TimeoutError:
+            pass
+
+    def __get_user_reminders(
+        self, user_id: int
+    ) -> list[tuple[int, int, int, str, int]] | None:
+        """Get a list of the user's current reminders, or return none if they haven't set any"""
+        conn = sqlite3.connect("reminders.db")
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT * FROM reminders WHERE user_id = ?", (user_id,))
+
+        reminders = cursor.fetchall()
+
+        if not reminders:
+            return None
+
+        return reminders
