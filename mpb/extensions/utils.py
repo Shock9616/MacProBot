@@ -73,14 +73,13 @@ class RemindMe(
         cursor = conn.cursor()
 
         cursor.execute("SELECT timezone FROM users WHERE user_id = ?", (user_id,))
-        conn.commit()
 
         timezone = cursor.fetchone()
 
         if not timezone:
             return None
 
-        return ZoneInfo(timezone)
+        return ZoneInfo(timezone[0])
 
 
 async def timezone_autocomplete(ctx: lb.AutocompleteContext[str]):
