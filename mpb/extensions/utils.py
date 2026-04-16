@@ -56,7 +56,16 @@ class RemindMe(
             )
             return
 
-        date: dt.datetime = dp.parse(self.time, settings={"TIMEZONE": str(timezone)})
+        date: dt.datetime = dp.parse(
+            self.time,
+            settings={
+                "TIMEZONE": str(timezone),
+                "RETURN_AS_TIMEZONE_AWARE": True,
+                "PREFER_DATES_FROM": "future",
+            },
+        )
+
+        date = date.astimezone(dt.timezone.utc)
 
         services.add_reminder(user_id, channel_id, self.message, date)
 
