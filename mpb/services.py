@@ -46,7 +46,18 @@ class Services:
             "date",
             run_date=date,
             args=[id, user_id, channel_id, message],
+            id=f"reminder-{id}",
         )
+
+    def del_reminder(self, id: int) -> None:
+        """Remove the reminder with the provided id from the database and unschedule it"""
+        conn = sqlite3.connect("reminders.db")
+        cursor = conn.cursor()
+
+        cursor.execute("DELETE FROM reminders WHERE id = ?", (id,))
+        conn.commit()
+
+        self.scheduler.remove_job(f"reminder-{id}")
 
     def __load_reminders_from_db(self) -> None:
         """Retrieve all reminders from the database and remove old ones"""
@@ -84,6 +95,7 @@ class Services:
                     "date",
                     run_date=date,
                     args=[id, user_id, channel_id, message],
+                    id=f"reminder-{id}",
                 )
             else:
                 # Send reminders that were supposed to be sent while bot was offline
@@ -92,6 +104,7 @@ class Services:
                     "date",
                     run_date=dt.datetime.now(),
                     args=[id, user_id, channel_id, message],
+                    id=f"reminder-{id}",
                 )
 
     async def __send_reminder(

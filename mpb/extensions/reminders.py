@@ -85,6 +85,21 @@ class SetTimeZone(
         )
 
 
+def get_user_reminders(user_id: int) -> list[tuple[int, int, int, str, int]] | None:
+    """Get a list of the user's current reminders, or return none if they haven't set any"""
+    conn = sqlite3.connect("reminders.db")
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM reminders WHERE user_id = ?", (user_id,))
+
+    reminders = cursor.fetchall()
+
+    if not reminders:
+        return None
+
+    return reminders
+
+
 @loader.command
 class RemindMe(
     lb.SlashCommand,
@@ -159,6 +174,12 @@ class RemindersList(lb.components.Menu):
                 inline=False,
             )
 
+        self.page.add_field(
+            name="",
+            value="Delete a reminder using `/dontremindme` and the number you see next to it in this list",
+            inline=False,
+        )
+
     def __to_discord_timestamp(self, date: dt.datetime) -> str:
         return f"<t:{int(date.timestamp())}:F>"
 
@@ -171,7 +192,7 @@ class ListReminders(
 ):
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
-        reminders = self.__get_user_reminders(ctx.user.id)
+        reminders = get_user_reminders(ctx.user.id)
 
         if not reminders:
             await ctx.respond("You have no currently set reminders", ephemeral=True)
@@ -188,18 +209,33 @@ class ListReminders(
         except asyncio.TimeoutError:
             pass
 
-    def __get_user_reminders(
-        self, user_id: int
-    ) -> list[tuple[int, int, int, str, int]] | None:
-        """Get a list of the user's current reminders, or return none if they haven't set any"""
-        conn = sqlite3.connect("reminders.db")
-        cursor = conn.cursor()
 
-        cursor.execute("SELECT * FROM reminders WHERE user_id = ?", (user_id,))
+@loader.command
+class DontRemindMe(
+    lb.SlashCommand,
+    name="dontremindme",
+    description="Remove a reminder from your reminders list",
+):
+    reminder: int = lb.integer(
+        "reminder",
+        "The number corresponding to the reminder you want to delete",
+    )
 
-        reminders = cursor.fetchall()
+    @lb.invoke
+    async def invoke(self, ctx: lb.Context, services: Services):
+        reminders = get_user_reminders(ctx.user.id)
 
         if not reminders:
-            return None
+            await ctx.respond("Sorry, you have no reminders to delete")
+            return
 
-        return reminders
+        id_map: dict[int, int] = {}
+
+        for i, r in enumerate(reminders):
+            id_map[i] = r[0]
+
+        services.del_reminder(id_map[self.reminder - 1])
+
+        await ctx.respond(
+            f"Ok! I've removed reminder {self.reminder} from your list", ephemeral=True
+        )
