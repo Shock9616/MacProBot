@@ -23,7 +23,7 @@ loader = lb.Loader()
 
 # Pre-calculated timezone data for timezone autocomplete
 TIMEZONES = sorted(available_timezones())
-TZ_DATA = []
+TZ_DATA: list[tuple[str, str, str]] = []
 for tz in TIMEZONES:
     tz_lower = tz.lower()
     city = tz.split("/")[-1].replace("_", " ").lower()
@@ -38,7 +38,7 @@ async def timezone_autocomplete(ctx: lb.AutocompleteContext[str]):
 
     query = ctx.focused.value.lower() if ctx.focused.value else ""
 
-    contains = []
+    contains: list[str] = []
 
     for tz, tz_lower, city in TZ_DATA:
         if query in tz_lower or query in city:
@@ -176,7 +176,7 @@ class RemindersList(lb.components.Menu):
 
         self.page.add_field(
             name="",
-            value="Delete a reminder using `/dontremindme` and the number you see next to it in this list",
+            value="Delete a reminder using `/dontremindme`",
             inline=False,
         )
 
@@ -210,15 +210,44 @@ class ListReminders(
             pass
 
 
+async def dontremindme_autocomplete(ctx: lb.AutocompleteContext[str]):
+    """Generate autocomplete list for dontremindme"""
+    if not isinstance(ctx.focused.value, str):
+        return
+
+    query = ctx.focused.value.lower() if ctx.focused.value else ""
+
+    contains: list[tuple[str, str]] = []
+    reminders = get_user_reminders(ctx.interaction.user.id)
+
+    if not reminders:
+        return
+
+    for r in reminders:
+        id = r[0]
+        message = r[3]
+        timestamp = int(r[4])
+
+        date = dt.datetime.fromtimestamp(timestamp)
+
+        label = f"[{date.strftime('%b %d %I:%M %p')}] {message[:50]}"
+
+        if query in label.lower():
+            contains.append((label, str(id)))
+
+    await ctx.respond(contains[:25])
+
+
 @loader.command
 class DontRemindMe(
     lb.SlashCommand,
     name="dontremindme",
     description="Remove a reminder from your reminders list",
 ):
-    reminder: int = lb.integer(
+    reminder: str = lb.string(
         "reminder",
         "The number corresponding to the reminder you want to delete",
+        autocomplete=dontremindme_autocomplete,
     )
 
     @lb.invoke
@@ -229,13 +258,8 @@ class DontRemindMe(
             await ctx.respond("Sorry, you have no reminders to delete")
             return
 
-        id_map: dict[int, int] = {}
-
-        for i, r in enumerate(reminders):
-            id_map[i] = r[0]
-
-        services.del_reminder(id_map[self.reminder - 1])
+        services.del_reminder(int(self.reminder))
 
         await ctx.respond(
-            f"Ok! I've removed reminder {self.reminder} from your list", ephemeral=True
+            "Ok! I've removed that reminder from your list", ephemeral=True
         )
