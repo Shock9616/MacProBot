@@ -7,6 +7,7 @@
 
 import asyncio
 import datetime as dt
+import random
 import sqlite3
 from zoneinfo import ZoneInfo, available_timezones
 
@@ -15,6 +16,7 @@ import dotenv
 import hikari as hk
 import lightbulb as lb
 
+from mpb.constants import reminder_add_messages, reminder_delete_messages
 from mpb.services import Services
 
 _ = dotenv.load_dotenv()
@@ -137,7 +139,9 @@ class RemindMe(
         services.add_reminder(user_id, channel_id, self.message, date)
 
         await ctx.respond(
-            f"Got it! I will send the message '{self.message}' on {self.__to_discord_timestamp(date)}"
+            random.choice(reminder_add_messages).format(
+                msg=self.message, time=self.__to_discord_timestamp(date)
+            )
         )
 
     def __to_discord_timestamp(self, date: dt.datetime) -> str:
@@ -261,5 +265,6 @@ class DontRemindMe(
         services.del_reminder(int(self.reminder))
 
         await ctx.respond(
-            "Ok! I've removed that reminder from your list", ephemeral=True
+            random.choice(reminder_delete_messages),
+            ephemeral=True,
         )

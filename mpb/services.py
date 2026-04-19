@@ -5,10 +5,13 @@
 #
 
 import datetime as dt
+import random
 import sqlite3
 
 import lightbulb as lb
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
+
+from mpb.constants import reminder_messages
 
 
 class Services:
@@ -113,7 +116,9 @@ class Services:
         """Send reminder message and remove it from the database"""
 
         await self.bot.rest.create_message(
-            channel_id, f"<@{user_id}>\n{message}", user_mentions=True
+            channel_id,
+            f"<@{user_id}> {random.choice(reminder_messages)}\n{message}",
+            user_mentions=True,
         )
 
         conn = sqlite3.connect("reminders.db")

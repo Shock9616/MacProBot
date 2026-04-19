@@ -312,3 +312,33 @@ ai_prompt = (
 )
 
 url_regex = R"(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)"
+
+reminder_messages = [
+    "a note from your past self, who trusted me with this:",
+    'this just in from the "you\'ll forget this" department:',
+    "scheduled interruption achieved:",
+    "as requested, with zero emotional investment:",
+    "your past self scheduled this like it was a great idea:",
+    "reminder delivery. Signed, sealed, mildly inconvenient:",
+    "just in case you thought you'd escaped from your responsibilities:",
+    "this seemed important at some point:",
+    "your calendar insisted I pass this along:",
+    "a little surprise from the version of you that believed in organization:",
+]
+
+reminder_delete_messages = [
+    "That reminder has been quietly escorted out of your schedule like it was never on the guest list",
+    "Gone from the list. No trace, no forwarding address, no dramatic farewell speech",
+    "I've removed it, and now it's enjoying its new life in the great void of \"things you don't have to think about.\"",
+    "It has been deleted. Cleanly, quietly, and with the emotional weight of a backspace key held down a little too long.",
+    "It's gone, like a sticky note that finally lost the battle with gravity",
+]
+
+reminder_add_messages = [
+    'Locking this in: "{msg}" is queued for delivery at {time}, assuming time itself continues behaving.',
+    'Consider it done. "{msg}" will surface at {time}, right after you\'ll have conveniently forgotten about it.',
+    'Reminder saved. "{msg}" will show up at {time}, because apparently we\'re doing scheduled thoughts now.',
+    'Reminder set. "{msg}" will ambush you at {time}, as all good decisions do.',
+    'Filed under "things you\'ll pretend you remembered": "{msg}" at {time}',
+    'Your calendar now contains a future inconvenience labeled: "{msg}" at {time}',
+]
