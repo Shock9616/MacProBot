@@ -26,8 +26,14 @@ works and will be added in the future.
   - Get some quick information on how to set up and use
     [CrossOver](https://www.codeweavers.com/crossover) to play Windows games on
     Mac
+- `/dontremindme <reminder>`
+  - Remove a previously set reminder from your list
+- `/listreminders`
+  - Show a list of all your currently set reminders
 - `/metalhud`
   - Instructions for setting up the Metal HUD toolbar shortcut
+- `/remindme <message> <time>`
+  - Schedule a reminder for later
 - `/screenrecord`
   - Quick instructions for how to record your mac's screen
 - `/sikarugir`
