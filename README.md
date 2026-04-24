@@ -32,6 +32,8 @@ works and will be added in the future.
   - Show a list of all your currently set reminders
 - `/metalhud`
   - Instructions for setting up the Metal HUD toolbar shortcut
+- `/news <title> <link>`
+  - Create a news post and open a thread for discussion
 - `/remindme <message> <time>`
   - Schedule a reminder for later
 - `/screenrecord`
