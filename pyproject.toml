@@ -1,6 +1,6 @@
 [project]
 name = "macprobot"
-version = "1.14.2"
+version = "1.14.3"
 description = "The official discord bot for the Mac Gaming discord server hosted by MacProTips!"
 readme = "README.md"
 requires-python = ">=3.13"
