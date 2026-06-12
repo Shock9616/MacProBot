@@ -203,7 +203,7 @@ class Summarize(
         completion = client.chat.completions.create(
             extra_headers={},
             extra_body={"reasoning": {"enabled": False}},
-            model="z-ai/glm-4.5-air:free",
+            model="google/gemma-4-31b-it:free",
             messages=[{"role": "user", "content": prompt}],
         )
 
