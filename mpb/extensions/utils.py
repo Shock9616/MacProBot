@@ -12,8 +12,6 @@ import dotenv
 import hikari as hk
 import lightbulb as lb
 import openai
-import requests
-from bs4 import BeautifulSoup as bs
 from openai import OpenAI
 
 _ = dotenv.load_dotenv()
@@ -21,68 +19,68 @@ _ = dotenv.load_dotenv()
 loader = lb.Loader()
 
 
-@loader.command
-class News(lb.SlashCommand, name="news", description="Make a post in the news channel"):
-    title: str = lb.string("title", "Title of the news post")
-    link: str = lb.string("link", "The link to the news source")
-
-    @lb.invoke
-    async def invoke(self, ctx: lb.Context):
-        news_channel = int(os.environ["NEWS_CHANNEL_ID"])
-
-        if ctx.channel_id != news_channel:
-            await ctx.respond(
-                f"Sorry, this command can only be run in <#{news_channel}>",
-                ephemeral=True,
-            )
-            return
-
-        embed = hk.Embed(
-            title=self.title,
-            url=self.link,
-            description=self.__get_description(self.link),
-        )
-        embed.set_footer(f"Shared by {self.__get_name(ctx.user)}")
-        embed.set_image(self.__get_image_link(self.link))
-
-        await ctx.respond("", embed=embed)
-
-        thread = await ctx.client.rest.create_thread(
-            ctx.channel_id, hk.ChannelType.GUILD_PUBLIC_THREAD, self.title
-        )
-        await ctx.client.rest.create_message(thread, self.link)
-
-    def __get_page(self, url: str) -> bs:
-        """Return parsed page data for the given URL"""
-        page = requests.get(url)
-        return bs(page.content, "html.parser")
-
-    def __get_image_link(self, url: str) -> str | None:
-        """Return a link to the link's thumbnail image"""
-        soup = self.__get_page(url)
-        og_image = soup.find("meta", property="og:image")
-        image_url = og_image["content"] if og_image else None
-
-        if isinstance(image_url, str):
-            return image_url
-
-    def __get_description(self, url: str) -> str | None:
-        """Return the description of the link's content"""
-        soup = self.__get_page(url)
-        desc = soup.find("meta", property="og:description")
-        desc_str = desc["content"] if desc else None
-
-        if isinstance(desc_str, str):
-            return desc_str
-
-    def __get_name(self, user: hk.User) -> str:
-        """Return either the user's display name or their username"""
-        name = user.display_name
-
-        if not isinstance(name, str):
-            name = user.username
-
-        return name
+# @loader.command
+# class News(lb.SlashCommand, name="news", description="Make a post in the news channel"):
+#     title: str = lb.string("title", "Title of the news post")
+#     link: str = lb.string("link", "The link to the news source")
+#
+#     @lb.invoke
+#     async def invoke(self, ctx: lb.Context):
+#         news_channel = int(os.environ["NEWS_CHANNEL_ID"])
+#
+#         if ctx.channel_id != news_channel:
+#             await ctx.respond(
+#                 f"Sorry, this command can only be run in <#{news_channel}>",
+#                 ephemeral=True,
+#             )
+#             return
+#
+#         embed = hk.Embed(
+#             title=self.title,
+#             url=self.link,
+#             description=self.__get_description(self.link),
+#         )
+#         embed.set_footer(f"Shared by {self.__get_name(ctx.user)}")
+#         embed.set_image(self.__get_image_link(self.link))
+#
+#         await ctx.respond("", embed=embed)
+#
+#         thread = await ctx.client.rest.create_thread(
+#             ctx.channel_id, hk.ChannelType.GUILD_PUBLIC_THREAD, self.title
+#         )
+#         await ctx.client.rest.create_message(thread, self.link)
+#
+#     def __get_page(self, url: str) -> bs:
+#         """Return parsed page data for the given URL"""
+#         page = requests.get(url)
+#         return bs(page.content, "html.parser")
+#
+#     def __get_image_link(self, url: str) -> str | None:
+#         """Return a link to the link's thumbnail image"""
+#         soup = self.__get_page(url)
+#         og_image = soup.find("meta", property="og:image")
+#         image_url = og_image["content"] if og_image else None
+#
+#         if isinstance(image_url, str):
+#             return image_url
+#
+#     def __get_description(self, url: str) -> str | None:
+#         """Return the description of the link's content"""
+#         soup = self.__get_page(url)
+#         desc = soup.find("meta", property="og:description")
+#         desc_str = desc["content"] if desc else None
+#
+#         if isinstance(desc_str, str):
+#             return desc_str
+#
+#     def __get_name(self, user: hk.User) -> str:
+#         """Return either the user's display name or their username"""
+#         name = user.display_name
+#
+#         if not isinstance(name, str):
+#             name = user.username
+#
+#         return name
 
 
 @loader.command

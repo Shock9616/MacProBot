@@ -500,7 +500,7 @@ wheels = [
 
 [[package]]
 name = "macprobot"
-version = "1.14.3"
+version = "1.14.4"
 source = { virtual = "." }
 dependencies = [
     { name = "apscheduler" },
