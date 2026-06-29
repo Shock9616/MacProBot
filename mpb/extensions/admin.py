@@ -31,6 +31,24 @@ async def is_mod(member: hk.Member) -> bool:
 
 
 @loader.command
+class ThirdPartyApp(
+    lb.SlashCommand, name="3papp", description="Gentle warning about 3rd party apps"
+):
+    @lb.invoke
+    async def invoke(self, ctx: lb.Context):
+        # Check if calling user is a mod
+        if ctx.member is not None and not await is_mod(ctx.member):
+            _ = await ctx.respond(
+                "Sorry, you don't have permission to execute this command",
+                ephemeral=True,
+            )
+            return
+
+        with open("mpb/info_cmd_msgs/3rdpartyapp.txt") as file:
+            _ = await ctx.respond(file.read())
+
+
+@loader.command
 class Announce(
     lb.SlashCommand,
     name="announce",
@@ -45,7 +63,6 @@ class Announce(
     async def invoke(self, ctx: lb.Context):
         # Check if calling user is a mod
         if ctx.member is not None and not await is_mod(ctx.member):
-            print(await ctx.member.fetch_roles())
             _ = await ctx.respond(
                 "Sorry, you don't have permission to execute this command",
                 ephemeral=True,
@@ -99,7 +116,6 @@ class EditAnnouncement(
     async def invoke(self, ctx: lb.Context):
         # Check if calling user is a mod
         if ctx.member is not None and not await is_mod(ctx.member):
-            print(await ctx.member.fetch_roles())
             _ = await ctx.respond(
                 "Sorry, you don't have permission to execute this command",
                 ephemeral=True,
