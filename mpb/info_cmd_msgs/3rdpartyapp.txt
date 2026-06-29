@@ -1,0 +1,12 @@
+**<:protip:1368106561045659678> I detect a 3rd party app was shared! Quick safety reminder!**
+
+The app above may not be harmful, but whenever any third-party app, tool, launcher, patch, or helper is posted, please be careful before downloading or running it!
+
+Before installing anything on your Mac, its important to verify where it came from, who made it, and whether its been notarized by Apple. **Notarization does not mean an app is automatically safe**, but it does mean Apple has checked it for known malware and verified the developer identity.
+
+Always:
+
+* Download from the official website or a trusted source when possible.
+* Understand the risk of giving Accessibility, Screen Recording, Full Disk Access, or admin permissions.
+* Check the developer, website, GitHub/release history, and community reputation.
+* Ask in the server first if you are unsure.
