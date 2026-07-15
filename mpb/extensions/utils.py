@@ -171,6 +171,7 @@ class Summarize(
             - One bullet per distinct topic or thread
             - Aim for no more than 8 bullets, but use your judgement
             - Do not pad — if there are only 2 topics, write 2 bullets
+            - Your summary MUST be under 2000 characters in length
 
             **What to summarize:**
             - Substantive discussion and decisions
