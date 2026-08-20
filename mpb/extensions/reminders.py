@@ -5,17 +5,16 @@
 #
 
 
-import asyncio
 import datetime as dt
 import random
-import sqlite3
-from zoneinfo import ZoneInfo, available_timezones
+from zoneinfo import available_timezones
 
 import dateparser as dp
 import dotenv
 import hikari as hk
 import lightbulb as lb
 
+from mpb import dbutils
 from mpb.constants import reminder_add_messages, reminder_delete_messages
 from mpb.services import Services
 
@@ -70,36 +69,11 @@ class SetTimeZone(
             )
             return
 
-        conn = sqlite3.connect("reminders.db")
-        cursor = conn.cursor()
-
-        cursor.execute(
-            """
-            INSERT INTO users (user_id, timezone) VALUES (?, ?)
-            ON CONFLICT(user_id) DO UPDATE SET timezone = excluded.timezone
-            """,
-            (ctx.user.id, self.timezone),
-        )
-        conn.commit()
+        dbutils.set_user_timezone(ctx.user.id, self.timezone)
 
         await ctx.respond(
             f"Ok! I have set your timezone to {self.timezone}!", ephemeral=True
         )
-
-
-def get_user_reminders(user_id: int) -> list[tuple[int, int, int, str, int]] | None:
-    """Get a list of the user's current reminders, or return none if they haven't set any"""
-    conn = sqlite3.connect("reminders.db")
-    cursor = conn.cursor()
-
-    cursor.execute("SELECT * FROM reminders WHERE user_id = ?", (user_id,))
-
-    reminders = cursor.fetchall()
-
-    if not reminders:
-        return None
-
-    return reminders
 
 
 @loader.command
@@ -116,7 +90,7 @@ class RemindMe(
         user_id = ctx.user.id
         channel_id = ctx.channel_id
 
-        timezone = self.__get_user_timezone(user_id)
+        timezone = dbutils.get_user_timezone(user_id)
 
         if not timezone:
             await ctx.respond(
@@ -134,7 +108,7 @@ class RemindMe(
             },
         )
 
-        date = date.astimezone(dt.timezone.utc)
+        date = date.astimezone(dt.UTC)
 
         services.add_reminder(user_id, channel_id, self.message, date)
 
@@ -146,20 +120,6 @@ class RemindMe(
 
     def __to_discord_timestamp(self, date: dt.datetime) -> str:
         return f"<t:{int(date.timestamp())}:F>"
-
-    def __get_user_timezone(self, user_id: int) -> ZoneInfo | None:
-        """Get the user's timezone, or return none if they haven't set one"""
-        conn = sqlite3.connect("reminders.db")
-        cursor = conn.cursor()
-
-        cursor.execute("SELECT timezone FROM users WHERE user_id = ?", (user_id,))
-
-        timezone = cursor.fetchone()
-
-        if not timezone:
-            return None
-
-        return ZoneInfo(timezone[0])
 
 
 class RemindersList(lb.components.Menu):
@@ -196,7 +156,7 @@ class ListReminders(
 ):
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
-        reminders = get_user_reminders(ctx.user.id)
+        reminders = dbutils.get_user_reminders(ctx.user.id)
 
         if not reminders:
             await ctx.respond("You have no currently set reminders", ephemeral=True)
@@ -210,7 +170,7 @@ class ListReminders(
 
         try:
             await reminders_list.attach(ctx.client, timeout=30)
-        except asyncio.TimeoutError:
+        except TimeoutError:
             pass
 
 
@@ -222,7 +182,7 @@ async def dontremindme_autocomplete(ctx: lb.AutocompleteContext[str]):
     query = ctx.focused.value.lower() if ctx.focused.value else ""
 
     contains: list[tuple[str, str]] = []
-    reminders = get_user_reminders(ctx.interaction.user.id)
+    reminders = dbutils.get_user_reminders(ctx.interaction.user.id)
 
     if not reminders:
         return
@@ -256,7 +216,7 @@ class DontRemindMe(
 
     @lb.invoke
     async def invoke(self, ctx: lb.Context, services: Services):
-        reminders = get_user_reminders(ctx.user.id)
+        reminders = dbutils.get_user_reminders(ctx.user.id)
 
         if not reminders:
             await ctx.respond("Sorry, you have no reminders to delete")
