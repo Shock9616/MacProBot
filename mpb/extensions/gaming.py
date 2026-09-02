@@ -186,34 +186,23 @@ class CxCheck(
         search_url = f"https://www.codeweavers.com/compatibility?browse=&app_desc=&company=&rating=&platform=&date_start=&date_end=&name={game_search}&search=app#results"
         search_page_soup = self.__get_page(search_url)
 
-        # Get list of game links
+        # # Get list of game rows
         app_list = search_page_soup.find(id="teTable-app")
-        if type(app_list) is Tag:
-            apps = app_list.find_all("a")
+
+        if app_list is not None:
+            apps = app_list.find_all("tr")
         else:
             _ = await self.__resp_no_game(self.game, ctx)
             return
 
-        # Get info for most similar search result
-        game_tag = self.__find_most_similar(self.game, apps)
-        db_name = game_tag.string
-        rel_link = game_tag["href"]
-
-        # Get game page data
-        game_url = f"https://www.codeweavers.com/{rel_link}"
-        game_soup = self.__get_page(game_url)
-
-        # Find current star rating
-        all_star_tables = game_soup.find_all("ul", {"class": "star-rating-table"})
-        star_table = all_star_tables[0]
+        game_row = self.__find_most_similar(self.game, apps)
 
         # Get game performance rating and description
-        rating = self.__get_rating(star_table)
-        rating_desc = self.__get_rating_desc(rating)
+        db_name, link, rating, rating_desc = self.__get_game_info(game_row)
 
         _ = await ctx.respond(
             "",
-            embed=self.__build_embed(db_name, rating, rating_desc, game_url, ctx),
+            embed=self.__build_embed(db_name, rating, rating_desc, link, ctx),
         )
 
     def __get_page(self, url: str) -> bs:
@@ -223,32 +212,27 @@ class CxCheck(
 
     def __find_most_similar(self, game: str, apps: ResultSet[Tag]) -> Tag:
         """Find the search result with the most similar name to the user's search"""
-        most_similar = 0
-        most_similar_idx = 0
-        for idx, app in enumerate(apps):
-            assert type(app.string) is NavigableString
 
-            similarity = SequenceMatcher(None, app.string, game).ratio()
-            if similarity > most_similar:
-                most_similar = similarity
-                most_similar_idx = idx
+        def similarity(app: Tag) -> float:
+            link = app.find("a")
+            if link is None:
+                return 0
 
-        return apps[most_similar_idx]
+            return SequenceMatcher(None, link.get_text(strip=True), game).ratio()
 
-    def __get_rating(self, star_table: Tag) -> int:
+        return max(apps, key=similarity)
+
+    def __get_game_info(self, game_row: Tag) -> tuple[str, str, int, str]:
         """Read how many active stars are in the game's rating"""
-        rating = 0
+        anchor = game_row.select_one("td:first-child a")
+        assert anchor is not None
 
-        for star in star_table:
-            assert type(star) is Tag
+        name = anchor.get_text(strip=True)
+        link = f"https://codeweavers.com/{anchor['href']}"
+        rating = len(game_row.select("li.active"))
+        desc = self.__get_rating_desc(rating)
 
-            try:
-                if star["class"] == ["active"]:
-                    rating += 1
-            except KeyError:
-                break
-
-        return rating
+        return (name, link, rating, desc)
 
     def __get_rating_desc(self, rating: int) -> str:
         """Get the rating description matching the game's star rating"""
