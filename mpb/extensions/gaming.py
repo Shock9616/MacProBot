@@ -316,7 +316,7 @@ class Define(
             self.term = self.term.lower()  # Make search case-insensitive
 
         # Respond with definition for the requested term if it exists
-        if self.term in glossary.keys():
+        if self.term in glossary:
             # Create embed for the response
             embed = hk.Embed(
                 title=glossary[self.term]["name"],
