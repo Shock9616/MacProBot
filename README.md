@@ -14,9 +14,6 @@ works and will be added in the future.
 
 ### Standard Commands
 
-- `/agwcheck <game name>`
-  - Get the compatibility ratings for the searched game from
-    [AppleGamingWiki](https://www.applegamingwiki.com/wiki/Home)
 - `/cxcheck <game name>`
   - Get the searched game's star rating on the CrossOver
     [Compatibility Database](https://www.codeweavers.com/compatibility)
