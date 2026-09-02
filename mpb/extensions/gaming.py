@@ -4,170 +4,167 @@
 # The gaming extension for MacProBot. Contains commands related to Mac gaming
 #
 
-from collections.abc import Iterator
 from difflib import SequenceMatcher
-from enum import Enum
-from typing import cast
 
 import hikari as hk
 import lightbulb as lb
 import requests
 from bs4 import BeautifulSoup as bs
-from bs4.element import NavigableString, ResultSet, Tag
+from bs4.element import ResultSet, Tag
 
 from ..constants import glossary
 
 loader = lb.Loader()
 
 
-@loader.command
-class AgwCheck(
-    lb.SlashCommand,
-    name="agwcheck",
-    description="Get the compatibility ratings for the searched game from AppleGamingWiki",
-):
-    # Options
-    game: str = lb.string("game", "The name of the game to search for")
-
-    class PageType(Enum):
-        GamePage = 1
-        SearchResults = 2
-        GameNotFound = 3
-
-    @lb.invoke
-    async def invoke(self, ctx: lb.Context):
-        game_search = "+".join(self.game.split(" "))
-        url = f"https://www.applegamingwiki.com/w/index.php?search={game_search}&title=Special:Search"
-        soup = self.__get_page(url)
-
-        # Determine the page type (game page, search results, game not found)
-        # and react accordingly
-        page_type = self.__get_page_type(soup)
-
-        if page_type == self.PageType.GameNotFound:
-            _ = await self.__resp_no_game(self.game, ctx)
-            return
-        elif page_type == self.PageType.SearchResults:
-            # Since we got a search results page, we need to find the page for the game the user wants
-            results = soup.find_all("div", {"class": "mw-search-result-heading"})
-
-            # Get link to page with the most similar name to the user's search
-            game_tag = self.__find_most_similar(self.game, results)
-            rel_link_a = cast(Tag, game_tag.find("a"))
-            rel_link = rel_link_a["href"]
-
-            # Get new page data
-            url = f"https://applegamingwiki.com{rel_link}"
-            soup = self.__get_page(url)
-
-        # Now that we know we're on the game's page...
-        compat_table = cast(Tag, soup.find("table", {"id": "table-compatibility"}))
-        data_rows = compat_table.find_all(
-            "tr", {"class": "template-infotable-body table-compatibility-body-row"}
-        )
-
-        # Get proper game title
-        game_name_header = cast(Tag, soup.find("h1", {"class": "article-title"}))
-        title = cast(NavigableString, game_name_header.string)
-
-        compat_data = self.__get_compat_data(data_rows)
-
-        _ = await ctx.respond(
-            "", embed=self.__build_embed(title, list(compat_data), url, ctx)
-        )
-
-    def __get_page(self, url: str) -> bs:
-        """Return parsed page data for the given URL"""
-        page = requests.get(url)
-        return bs(page.content, "html.parser")
-
-    def __get_page_type(self, soup: bs) -> PageType:
-        """Identify the type of page contained in soup"""
-        if type(soup.find("table", {"id": "table-compatibility"})) is Tag:
-            return self.PageType.GamePage
-        elif type(soup.find("p", {"class": "mw-search-nonefound"})) is Tag:
-            return self.PageType.GameNotFound
-        else:
-            if len(soup.find_all("li", {"class": "mw-search-result"})) == 1:
-                # Probably not actually the search result we're looking for (e.x. GPTK page)
-                return self.PageType.GameNotFound
-            else:
-                return self.PageType.SearchResults
-
-    def __find_most_similar(self, game: str, results: ResultSet[Tag]) -> Tag:
-        """Find the search result with the most similar name to the user's search"""
-        most_similar = 0
-        most_similar_idx = 0
-        for idx, result in enumerate(results):
-            result_a = cast(Tag, result.find("a"))
-            result_name = cast(NavigableString, result_a.string)
-
-            similarity = SequenceMatcher(None, result_name, game).ratio()
-            if similarity > most_similar:
-                most_similar = similarity
-                most_similar_idx = idx
-
-        return results[most_similar_idx]
-
-    def __get_compat_data(self, rows: ResultSet[Tag]) -> Iterator[dict[str, str]]:
-        """Get compatibility data for each method listed for the game"""
-
-        for row in rows:
-            row_data = {"method": "", "rating": ""}
-
-            # Method (e.x. Native, Rosetta 2, CrossOver, Parallels, etc.)
-            method_th = cast(
-                Tag, row.find("th", {"class": "table-compatibility-body-method"})
-            )
-            method_a = method_th.find("a")
-
-            if type(method_a) is Tag:
-                method = cast(NavigableString, method_a.string)
-            else:
-                method = cast(NavigableString, method_th.string)
-
-            row_data["method"] = method
-
-            # Rating (e.x. Perfect, Playable, Unplayable, Unknown, etc.)
-            rating_td = cast(
-                Tag, row.find("td", {"class": "table-compatibility-body-rating"})
-            )
-            rating_span = cast(Tag, rating_td.find("span"))
-            rating = cast(NavigableString, rating_span.string)
-
-            row_data["rating"] = rating
-
-            yield row_data
-
-    def __build_embed(
-        self, title: str, data: list[dict[str, str]], url: str, ctx: lb.Context
-    ) -> hk.Embed:
-        """Create the response embed showing the collected info"""
-        embed = hk.Embed(title=title, colour=ctx.user.accent_colour)
-
-        _ = embed.set_footer(
-            "via applegamingwiki.com",
-            icon="https://static.pcgamingwiki.com/favicons/applegamingwiki.png",
-        )
-
-        for method in data:
-            _ = embed.add_field(
-                name=method["method"], value=method["rating"], inline=True
-            )
-
-        _ = embed.add_field(
-            value=f"[**Link ↗**]({url})",
-            inline=False,
-        )
-
-        return embed
-
-    async def __resp_no_game(self, game: str, ctx: lb.Context):
-        """Respond to the user in the event that the game is not found"""
-        _ = await ctx.respond(
-            f"Sorry, I couldn't find '{game}' on [**AppleGamingWiki**](<https://www.applegamingwiki.com/>). Please check your spelling and try again",
-            ephemeral=True,
-        )
+# @loader.command
+# class AgwCheck(
+#     lb.SlashCommand,
+#     name="agwcheck",
+#     description="Get the compatibility ratings for the searched game from AppleGamingWiki",
+# ):
+#     # Options
+#     game: str = lb.string("game", "The name of the game to search for")
+#
+#     class PageType(Enum):
+#         GamePage = 1
+#         SearchResults = 2
+#         GameNotFound = 3
+#
+#     @lb.invoke
+#     async def invoke(self, ctx: lb.Context):
+#         game_search = "+".join(self.game.split(" "))
+#         url = f"https://www.applegamingwiki.com/w/index.php?search={game_search}&title=Special:Search"
+#         soup = self.__get_page(url)
+#
+#         # Determine the page type (game page, search results, game not found)
+#         # and react accordingly
+#         page_type = self.__get_page_type(soup)
+#
+#         if page_type == self.PageType.GameNotFound:
+#             _ = await self.__resp_no_game(self.game, ctx)
+#             return
+#         elif page_type == self.PageType.SearchResults:
+#             # Since we got a search results page, we need to find the page for the game the user wants
+#             results = soup.find_all("div", {"class": "mw-search-result-heading"})
+#
+#             # Get link to page with the most similar name to the user's search
+#             game_tag = self.__find_most_similar(self.game, results)
+#             rel_link_a = cast(Tag, game_tag.find("a"))
+#             rel_link = rel_link_a["href"]
+#
+#             # Get new page data
+#             url = f"https://applegamingwiki.com{rel_link}"
+#             soup = self.__get_page(url)
+#
+#         # Now that we know we're on the game's page...
+#         compat_table = cast(Tag, soup.find("table", {"id": "table-compatibility"}))
+#         data_rows = compat_table.find_all(
+#             "tr", {"class": "template-infotable-body table-compatibility-body-row"}
+#         )
+#
+#         # Get proper game title
+#         game_name_header = cast(Tag, soup.find("h1", {"class": "article-title"}))
+#         title = cast(NavigableString, game_name_header.string)
+#
+#         compat_data = self.__get_compat_data(data_rows)
+#
+#         _ = await ctx.respond(
+#             "", embed=self.__build_embed(title, list(compat_data), url, ctx)
+#         )
+#
+#     def __get_page(self, url: str) -> bs:
+#         """Return parsed page data for the given URL"""
+#         page = requests.get(url)
+#         return bs(page.content, "html.parser")
+#
+#     def __get_page_type(self, soup: bs) -> PageType:
+#         """Identify the type of page contained in soup"""
+#         if type(soup.find("table", {"id": "table-compatibility"})) is Tag:
+#             return self.PageType.GamePage
+#         elif type(soup.find("p", {"class": "mw-search-nonefound"})) is Tag:
+#             return self.PageType.GameNotFound
+#         else:
+#             if len(soup.find_all("li", {"class": "mw-search-result"})) == 1:
+#                 # Probably not actually the search result we're looking for (e.x. GPTK page)
+#                 return self.PageType.GameNotFound
+#             else:
+#                 return self.PageType.SearchResults
+#
+#     def __find_most_similar(self, game: str, results: ResultSet[Tag]) -> Tag:
+#         """Find the search result with the most similar name to the user's search"""
+#         most_similar = 0
+#         most_similar_idx = 0
+#         for idx, result in enumerate(results):
+#             result_a = cast(Tag, result.find("a"))
+#             result_name = cast(NavigableString, result_a.string)
+#
+#             similarity = SequenceMatcher(None, result_name, game).ratio()
+#             if similarity > most_similar:
+#                 most_similar = similarity
+#                 most_similar_idx = idx
+#
+#         return results[most_similar_idx]
+#
+#     def __get_compat_data(self, rows: ResultSet[Tag]) -> Iterator[dict[str, str]]:
+#         """Get compatibility data for each method listed for the game"""
+#
+#         for row in rows:
+#             row_data = {"method": "", "rating": ""}
+#
+#             # Method (e.x. Native, Rosetta 2, CrossOver, Parallels, etc.)
+#             method_th = cast(
+#                 Tag, row.find("th", {"class": "table-compatibility-body-method"})
+#             )
+#             method_a = method_th.find("a")
+#
+#             if type(method_a) is Tag:
+#                 method = cast(NavigableString, method_a.string)
+#             else:
+#                 method = cast(NavigableString, method_th.string)
+#
+#             row_data["method"] = method
+#
+#             # Rating (e.x. Perfect, Playable, Unplayable, Unknown, etc.)
+#             rating_td = cast(
+#                 Tag, row.find("td", {"class": "table-compatibility-body-rating"})
+#             )
+#             rating_span = cast(Tag, rating_td.find("span"))
+#             rating = cast(NavigableString, rating_span.string)
+#
+#             row_data["rating"] = rating
+#
+#             yield row_data
+#
+#     def __build_embed(
+#         self, title: str, data: list[dict[str, str]], url: str, ctx: lb.Context
+#     ) -> hk.Embed:
+#         """Create the response embed showing the collected info"""
+#         embed = hk.Embed(title=title, colour=ctx.user.accent_colour)
+#
+#         _ = embed.set_footer(
+#             "via applegamingwiki.com",
+#             icon="https://static.pcgamingwiki.com/favicons/applegamingwiki.png",
+#         )
+#
+#         for method in data:
+#             _ = embed.add_field(
+#                 name=method["method"], value=method["rating"], inline=True
+#             )
+#
+#         _ = embed.add_field(
+#             value=f"[**Link ↗**]({url})",
+#             inline=False,
+#         )
+#
+#         return embed
+#
+#     async def __resp_no_game(self, game: str, ctx: lb.Context):
+#         """Respond to the user in the event that the game is not found"""
+#         _ = await ctx.respond(
+#             f"Sorry, I couldn't find '{game}' on [**AppleGamingWiki**](<https://www.applegamingwiki.com/>). Please check your spelling and try again",
+#             ephemeral=True,
+#         )
 
 
 @loader.command
