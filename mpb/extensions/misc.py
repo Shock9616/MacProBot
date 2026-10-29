@@ -27,7 +27,7 @@ class CrossOver(
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
         async with await anyio.open_file("mpb/info_cmd_msgs/crossover.txt") as file:
-            _ = await ctx.respond(file.read())
+            _ = await ctx.respond(await file.read())
 
 
 @loader.command
@@ -39,7 +39,7 @@ class MetalHud(
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
         async with await anyio.open_file("mpb/info_cmd_msgs/metalhud.txt") as file:
-            _ = await ctx.respond(file.read())
+            _ = await ctx.respond(await file.read())
 
 
 @loader.command
@@ -51,7 +51,7 @@ class NotProton(
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
         async with await anyio.open_file("mpb/info_cmd_msgs/notproton.txt") as file:
-            _ = await ctx.respond(file.read())
+            _ = await ctx.respond(await file.read())
 
 
 @loader.command
@@ -63,7 +63,7 @@ class Piracy(
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
         async with await anyio.open_file("mpb/info_cmd_msgs/piracy.txt") as file:
-            _ = await ctx.respond(file.read())
+            _ = await ctx.respond(await file.read())
 
 
 @loader.command
@@ -75,7 +75,7 @@ class Sikarugir(
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
         async with await anyio.open_file("mpb/info_cmd_msgs/sikarugir.txt") as file:
-            _ = await ctx.respond(file.read())
+            _ = await ctx.respond(await file.read())
 
 
 @loader.command
@@ -87,7 +87,7 @@ class Support(
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
         async with await anyio.open_file("mpb/info_cmd_msgs/support.txt") as file:
-            _ = await ctx.respond(file.read())
+            _ = await ctx.respond(await file.read())
 
 
 @loader.command
@@ -99,7 +99,7 @@ class UpdateDxmt(
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
         async with await anyio.open_file("mpb/info_cmd_msgs/updatedxmt.txt") as file:
-            _ = await ctx.respond(file.read())
+            _ = await ctx.respond(await file.read())
 
 
 @loader.command
@@ -111,7 +111,7 @@ class ScreenRecord(
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
         async with await anyio.open_file("mpb/info_cmd_msgs/screenrecord.txt") as file:
-            _ = await ctx.respond(file.read())
+            _ = await ctx.respond(await file.read())
 
 
 @loader.command
@@ -160,4 +160,4 @@ class Whisky(
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
         async with await anyio.open_file("mpb/info_cmd_msgs/whisky.txt") as file:
-            _ = await ctx.respond(file.read())
+            _ = await ctx.respond(await file.read())
