@@ -42,6 +42,18 @@ class MetalHud(
 
 
 @loader.command
+class NotProton(
+    lb.SlashCommand,
+    name="notproton",
+    description="Instructions and tips for setting up and using NotProton",
+):
+    @lb.invoke
+    async def invoke(self, ctx: lb.Context):
+        with open("mpb/info_cmd_msgs/notproton.txt") as file:
+            _ = await ctx.respond(file.read())
+
+
+@loader.command
 class Piracy(
     lb.SlashCommand,
     name="piracy",

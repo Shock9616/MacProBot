@@ -1,0 +1,11 @@
+**<:protip:1368106561045659678> :ringed_planet: How to Install NotProton**
+
+NotProton is a tool that brings the Linux Steam Play experience to macOS with CrossOver! It allows you to install and run the Windows version of games through the macOS Steam client without ever having to open CrossOver!
+
+Check out Andy Tsai's [NotProton Installation Guide↗](<https://youtu.be/Y0tR-1WUxCo?si=CZ05RRqBBr5Wp0e1>)
+Download [NotProton↗](<https://github.com/NotProtonNot/NotProton/releases>)
+
+**Disclaimer**
+The official NotProton _only_ works with CrossOver, and while there are community-maintained forks to enable similar functionality with free tools like Sikarugir, we recommend using the official NotProton for the most up-to-date version, better compatibility via CrossOver, and for the warm, fuzzy feeling of supporting the future of Mac Gaming!
+
+For more information about CrossOver and a 15% discount, run `/crossover`
