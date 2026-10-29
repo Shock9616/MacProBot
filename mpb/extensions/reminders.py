@@ -5,7 +5,6 @@
 #
 
 
-import asyncio
 import datetime as dt
 import random
 import sqlite3
@@ -134,7 +133,7 @@ class RemindMe(
             },
         )
 
-        date = date.astimezone(dt.timezone.utc)
+        date = date.astimezone(dt.UTC)
 
         services.add_reminder(user_id, channel_id, self.message, date)
 
@@ -210,7 +209,7 @@ class ListReminders(
 
         try:
             await reminders_list.attach(ctx.client, timeout=30)
-        except asyncio.TimeoutError:
+        except TimeoutError:
             pass
 
 

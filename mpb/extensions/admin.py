@@ -7,6 +7,7 @@
 import os
 import re
 
+import anyio
 import dotenv
 import hikari as hk
 import lightbulb as lb
@@ -44,7 +45,7 @@ class ThirdPartyApp(
             )
             return
 
-        with open("mpb/info_cmd_msgs/3rdpartyapp.txt") as file:
+        async with await anyio.open_file("mpb/info_cmd_msgs/3rdpartyapp.txt") as file:
             _ = await ctx.respond(file.read())
 
 

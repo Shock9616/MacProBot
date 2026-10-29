@@ -123,7 +123,7 @@ class Summarize(
             _ = await ctx.respond(
                 "Unfortunately this command has been rate-limited. Please try again later",
             )
-        except asyncio.TimeoutError:
+        except TimeoutError:
             _ = await ctx.respond(
                 "Generating a summary took too long. Please try again",
             )

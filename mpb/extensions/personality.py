@@ -4,6 +4,7 @@
 # Sassy responses galore
 #
 
+import asyncio
 import os
 import random
 import re
@@ -45,7 +46,7 @@ async def on_bot_mentioned(event: hk.MessageCreateEvent):
     if referenced is not None and referenced.content == sassy_responses[3]:
         # 'Tiny monkey'
         url = "https://i.postimg.cc/hjxJHkHD/181f034a-cdea-4ac0-bf17-afd84d957e48.png"
-        image_data = requests.get(url, timeout=10)
+        image_data = await asyncio.to_thread(requests.get, url, timeout=10)
 
         file = hk.Bytes(image_data.content, "monkey.png")
 
@@ -61,7 +62,7 @@ async def on_bot_mentioned(event: hk.MessageCreateEvent):
         if response == sassy_responses[1]:
             # 'I have a wallpaper for u' response
             url = "https://wallpapercave.com/wp/wp2754931.jpg"
-            image_data = requests.get(url, timeout=10)
+            image_data = await asyncio.to_thread(requests.get, url, timeout=10)
 
             file = hk.Bytes(image_data.content, "xp.png")
 

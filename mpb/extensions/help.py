@@ -4,7 +4,6 @@
 # Separate extension for the help command
 #
 
-import asyncio
 
 import hikari as hk
 import lightbulb as lb
@@ -131,5 +130,5 @@ class Help(
 
         try:
             _ = await help_menu.attach(ctx.client, timeout=30)
-        except asyncio.TimeoutError:
+        except TimeoutError:
             pass

@@ -8,6 +8,7 @@ import os
 import random
 from collections.abc import Sequence
 
+import anyio
 import dotenv
 import hikari as hk
 import lightbulb as lb
@@ -25,7 +26,7 @@ class CrossOver(
 ):
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
-        with open("mpb/info_cmd_msgs/crossover.txt") as file:
+        async with await anyio.open_file("mpb/info_cmd_msgs/crossover.txt") as file:
             _ = await ctx.respond(file.read())
 
 
@@ -37,7 +38,7 @@ class MetalHud(
 ):
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
-        with open("mpb/info_cmd_msgs/metalhud.txt") as file:
+        async with await anyio.open_file("mpb/info_cmd_msgs/metalhud.txt") as file:
             _ = await ctx.respond(file.read())
 
 
@@ -49,7 +50,7 @@ class NotProton(
 ):
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
-        with open("mpb/info_cmd_msgs/notproton.txt") as file:
+        async with await anyio.open_file("mpb/info_cmd_msgs/notproton.txt") as file:
             _ = await ctx.respond(file.read())
 
 
@@ -61,7 +62,7 @@ class Piracy(
 ):
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
-        with open("mpb/info_cmd_msgs/piracy.txt") as file:
+        async with await anyio.open_file("mpb/info_cmd_msgs/piracy.txt") as file:
             _ = await ctx.respond(file.read())
 
 
@@ -73,7 +74,7 @@ class Sikarugir(
 ):
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
-        with open("mpb/info_cmd_msgs/sikarugir.txt") as file:
+        async with await anyio.open_file("mpb/info_cmd_msgs/sikarugir.txt") as file:
             _ = await ctx.respond(file.read())
 
 
@@ -85,7 +86,7 @@ class Support(
 ):
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
-        with open("mpb/info_cmd_msgs/support.txt") as file:
+        async with await anyio.open_file("mpb/info_cmd_msgs/support.txt") as file:
             _ = await ctx.respond(file.read())
 
 
@@ -97,7 +98,7 @@ class UpdateDxmt(
 ):
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
-        with open("mpb/info_cmd_msgs/updatedxmt.txt") as file:
+        async with await anyio.open_file("mpb/info_cmd_msgs/updatedxmt.txt") as file:
             _ = await ctx.respond(file.read())
 
 
@@ -109,7 +110,7 @@ class ScreenRecord(
 ):
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
-        with open("mpb/info_cmd_msgs/screenrecord.txt") as file:
+        async with await anyio.open_file("mpb/info_cmd_msgs/screenrecord.txt") as file:
             _ = await ctx.respond(file.read())
 
 
@@ -158,5 +159,5 @@ class Whisky(
 ):
     @lb.invoke
     async def invoke(self, ctx: lb.Context):
-        with open("mpb/info_cmd_msgs/whisky.txt") as file:
+        async with await anyio.open_file("mpb/info_cmd_msgs/whisky.txt") as file:
             _ = await ctx.respond(file.read())
